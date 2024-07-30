@@ -71,5 +71,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-# external 임시 제외
+# external, Packages 임시 제외
 /[Aa]ssets/_[Ee]xternal/
+/[Pp]ackages/
