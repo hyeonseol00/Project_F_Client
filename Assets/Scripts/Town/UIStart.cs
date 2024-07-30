@@ -135,34 +135,15 @@ public class UIStart : MonoBehaviour
 		SetNicknameUI();
     }
     
+
     void ConfirmNickname()
     {
-        txtMessage.color = UnityEngine.Color.red;
-        
-        if (inputNickname.text.Length < 2)
-        {
-            txtMessage.text = "이름을 2글자 이상 입력해주세요!";
-            return;
-        }
-
-        if (inputNickname.text.Length > 10)
-        {
-            txtMessage.text = "이름을 10글자 이하로 입력해주세요!";
-            return;
-		}
-
-		if (inputPassword.text.Length < 2)
-		{
-			txtMessage.text = "비밀번호를 6글자 이상 입력해주세요!";
-			return;
-		}
-
-		RequestLogIn();
+        RequestLogIn();
     }
 
     void RequestRegist()
 	{
-        C_Register registerPacket = new C_Register
+		C_Register registerPacket = new C_Register
         {
             Nickname = inputNickname.text,
             Password = inputPassword.text
@@ -171,17 +152,17 @@ public class UIStart : MonoBehaviour
 		GameManager.Network.Send(registerPacket);
 	}
 
-    public void SuccessRegist()
+    public void SuccessRegist(string msg)
 	{
 		txtMessage.color = UnityEngine.Color.white;
-		txtMessage.text = "회원가입에 성공했습니다!";
-		inputNickname.text = string.Empty;
+		txtMessage.text = msg;
+		inputPassword.text = string.Empty;
 	}
 
-    public void FailRegist()
+    public void FailRegist(string msg)
 	{
 		txtMessage.color = UnityEngine.Color.red;
-		txtMessage.text = "회원가입에 실패했습니다.";
+		txtMessage.text = msg;
 		inputNickname.text = string.Empty;
 		inputPassword.text = string.Empty;
 	}
@@ -197,10 +178,11 @@ public class UIStart : MonoBehaviour
 		GameManager.Network.Send(logInPacket);
 	}
 
-	public void FailLogIn()
+	public void FailLogIn(string msg)
 	{
 		txtMessage.color = UnityEngine.Color.red;
-		txtMessage.text = "로그인에 실패했습니다.";
+		txtMessage.text = msg;
+		inputPassword.text = string.Empty;
 	}
 
 	public void StartGame()

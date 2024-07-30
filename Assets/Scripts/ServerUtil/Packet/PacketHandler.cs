@@ -237,9 +237,9 @@ class PacketHandler
 			return;
 
 		if (pkt.Success)
-			TownManager.Instance.UiStart.SuccessRegist();
+			TownManager.Instance.UiStart.SuccessRegist(pkt.Message);
 		else
-			TownManager.Instance.UiStart.FailRegist();
+			TownManager.Instance.UiStart.FailRegist(pkt.Message);
 	}
 
 	public static void S_LogInHandler(PacketSession session, IMessage packet)
@@ -251,7 +251,7 @@ class PacketHandler
 		if (pkt.Success)
 			TownManager.Instance.UiStart.StartGame();
 		else
-			TownManager.Instance.UiStart.FailLogIn();
+			TownManager.Instance.UiStart.FailLogIn(pkt.Message);
 	}
 
 	#endregion

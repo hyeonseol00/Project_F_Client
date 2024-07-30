@@ -61,8 +61,8 @@ class PacketManager
 		_handler.Add((ushort)MsgId.SMonsterAction, PacketHandler.S_MonsterActionHandler);
 		_onRecv.Add((ushort)MsgId.SRegister, MakePacket<S_Register>);
 		_handler.Add((ushort)MsgId.SRegister, PacketHandler.S_RegisterHandler);
-		_onRecv.Add((ushort)MsgId.SLogin, MakePacket<S_LogIn>);
-		_handler.Add((ushort)MsgId.SLogin, PacketHandler.S_LogInHandler);
+		_onRecv.Add((ushort)MsgId.SLogIn, MakePacket<S_LogIn>);
+		_handler.Add((ushort)MsgId.SLogIn, PacketHandler.S_LogInHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)
