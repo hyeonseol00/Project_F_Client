@@ -34,7 +34,7 @@ public class ServerSession : PacketSession
 		IsConnected = true;
 		
 		
-		TownManager.Instance.Connected();
+		// TownManager.Instance.Connected();
 		
 		PacketManager.Instance.CustomHandler = (s, m, i) =>
 		{
