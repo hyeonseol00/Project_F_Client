@@ -26,6 +26,7 @@ public class TownManager : MonoBehaviour
     [SerializeField] private UIAnimation uiAnimation;
     [SerializeField] private UIChat uiChat;
 
+    public UIStart UiStart => uiStart;
     public UIChat UiChat => uiChat;
     
     [SerializeField] private TMP_Text txtServer;
@@ -59,13 +60,19 @@ public class TownManager : MonoBehaviour
         }
     }
 
-    public void GameStart(string gameServer, string port, string userName, int classIdx)
+	public void ConnectServer(string gameServer, string port)
+	{
+		GameManager.Network.Init(gameServer, port);
+
+		txtServer.text = gameServer;
+	}
+
+	public void GameStart(string userName, int classIdx)
     {
-        GameManager.Network.Init(gameServer, port);
         GameManager.Instance.UserName = userName;
         GameManager.Instance.ClassIdx = classIdx + 1001;
 
-        txtServer.text = gameServer;
+        Connected();
     }
 
     public void Connected()

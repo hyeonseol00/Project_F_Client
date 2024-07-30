@@ -230,6 +230,30 @@ class PacketHandler
 		EffectManager.Instance.SetEffectToPlayer(pkt.ActionSet.EffectCode);
 	}
 
+	public static void S_RegisterHandler(PacketSession session, IMessage packet)
+	{
+		S_Register pkt = packet as S_Register;
+		if (pkt == null)
+			return;
+
+		if (pkt.Success)
+			TownManager.Instance.UiStart.SuccessRegist();
+		else
+			TownManager.Instance.UiStart.FailRegist();
+	}
+
+	public static void S_LogInHandler(PacketSession session, IMessage packet)
+	{
+		S_LogIn pkt = packet as S_LogIn;
+		if (pkt == null)
+			return;
+
+		if (pkt.Success)
+			TownManager.Instance.UiStart.StartGame();
+		else
+			TownManager.Instance.UiStart.FailLogIn();
+	}
+
 	#endregion
 }
 
