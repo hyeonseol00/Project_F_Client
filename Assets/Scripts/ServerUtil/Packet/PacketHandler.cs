@@ -210,11 +210,13 @@ class PacketHandler
 		if (pkt == null)
 			return;
 
-		Monster monster = BattleManager.Instance.GetMonster(pkt.TargetMonsterIdx);
-		monster.Hit();
-		
+		if(pkt.TargetMonsterIdx != -1){
+			Monster monster = BattleManager.Instance.GetMonster(pkt.TargetMonsterIdx);
+			monster.Hit();
+			EffectManager.Instance.SetEffectToMonster(pkt.TargetMonsterIdx, pkt.ActionSet.EffectCode);
+		}
+
 		BattleManager.Instance.PlayerAnim(pkt.ActionSet.AnimCode);
-		EffectManager.Instance.SetEffectToMonster(pkt.TargetMonsterIdx, pkt.ActionSet.EffectCode);
 	}
 	
 	public static void S_MonsterActionHandler(PacketSession session, IMessage packet)
@@ -228,7 +230,7 @@ class PacketHandler
 		
 		if(pkt.ActionSet.AnimCode == 0 || pkt.ActionSet.AnimCode == 1)
 		{
-			if(pkt.ActionSet.EffectCode != 0)
+			if(pkt.ActionSet.EffectCode != -1)
 			{
         			BattleManager.Instance.PlayerHit();
     			}
