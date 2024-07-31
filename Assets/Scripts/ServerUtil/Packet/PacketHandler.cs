@@ -230,9 +230,9 @@ class PacketHandler
 		{
 			if(pkt.ActionSet.EffectCode != 0)
 			{
-        BattleManager.Instance.PlayerHit();
-    	}
-    }
+        			BattleManager.Instance.PlayerHit();
+    			}
+    		}
 		EffectManager.Instance.SetEffectToPlayer(pkt.ActionSet.EffectCode);
 	}
 
