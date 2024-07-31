@@ -11,10 +11,10 @@ public class UIChat : MonoBehaviour
     [SerializeField] private Scrollbar scroll;
     [SerializeField] private RectTransform rectBg;
 
-    [SerializeField] private Transform chatItemRoot; // ÀüÃ¼ Ã¤ÆÃ ¾ÆÀÌÅÛ ·çÆ®
-    [SerializeField] private Transform teamChatItemRoot; // ÆÀ Ã¤ÆÃ ¾ÆÀÌÅÛ ·çÆ®
-    [SerializeField] private Transform dmChatItemRoot; // DM Ã¤ÆÃ ¾ÆÀÌÅÛ ·çÆ®
-    [SerializeField] private Transform sysChatItemRoot; // ½Ã½ºÅÛ Ã¤ÆÃ ¾ÆÀÌÅÛ ·çÆ®
+    [SerializeField] private Transform chatItemRoot; // ï¿½ï¿½Ã¼ Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®
+    [SerializeField] private Transform teamChatItemRoot; // ï¿½ï¿½ Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®
+    [SerializeField] private Transform dmChatItemRoot; // DM Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®
+    [SerializeField] private Transform sysChatItemRoot; // ï¿½Ã½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®
 
     [SerializeField] private TMP_Text txtChatItemBase;
 
@@ -37,6 +37,7 @@ public class UIChat : MonoBehaviour
     private bool isOpen = true;
     private int currentTab = 0; // 0 all 1 team 2 dm 3 system 
     private List<Transform> chatRoots;
+    private Transform curChatRoots;
 
     private List<MessageData> allMessages = new List<MessageData>();
     private List<MessageData> teamMessages = new List<MessageData>();
@@ -46,16 +47,17 @@ public class UIChat : MonoBehaviour
     private void Start()
     {
         chatRoots = new List<Transform> { chatItemRoot, teamChatItemRoot, dmChatItemRoot, sysChatItemRoot };
+        curChatRoots = chatItemRoot;
         _baseChatItemWidth = txtChatItemBase.rectTransform.sizeDelta.x;
 
         player = TownManager.Instance.myPlayer;
 
         btnSend.onClick.AddListener(SendMessage);
         btnToggle.onClick.AddListener(ToggleChatWindow);
-        tabAll.onClick.AddListener(delegate { SwitchTab(0); }); // ÀüÃ¼ Ã¤ÆÃ
-        tabTeam.onClick.AddListener(delegate { SwitchTab(1); }); // ÆÀ Ã¤ÆÃ
-        tabDM.onClick.AddListener(delegate { SwitchTab(2); }); // dm Ã¤ÆÃ
-        tabSys.onClick.AddListener(delegate { SwitchTab(3); }); // system Ã¤ÆÃ
+        tabAll.onClick.AddListener(delegate { SwitchTab(0); }); // ï¿½ï¿½Ã¼ Ã¤ï¿½ï¿½
+        tabTeam.onClick.AddListener(delegate { SwitchTab(1); }); // ï¿½ï¿½ Ã¤ï¿½ï¿½
+        tabDM.onClick.AddListener(delegate { SwitchTab(2); }); // dm Ã¤ï¿½ï¿½
+        tabSys.onClick.AddListener(delegate { SwitchTab(3); }); // system Ã¤ï¿½ï¿½
     }
 
     private void Update()
@@ -109,11 +111,17 @@ public class UIChat : MonoBehaviour
             alarm.DOShakePosition(1f, 10);
         }
 
-        Transform parent;
-        List<MessageData> messageList;
+        Transform parent = null;
+        List<MessageData> messageList = new List<MessageData>(); ;
         Color messageColor = Color.white;
 
-        if (msg.StartsWith("[Team]"))
+        if (msg.StartsWith("[All]"))
+        {
+            parent = chatItemRoot;
+            messageList = allMessages;
+            messageColor = myChat ? Color.green : Color.white; // ï¿½ï¿½Ã¼ Ã¤ï¿½ï¿½ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½
+        }
+        else if (msg.StartsWith("[Team]"))
         {
             parent = teamChatItemRoot;
             messageList = teamMessages;
@@ -129,22 +137,26 @@ public class UIChat : MonoBehaviour
         {
             parent = sysChatItemRoot;
             messageList = sysMessages;
-            messageColor = new Color(1f, 0.64f, 0f); // ÁÖÈ²»ö
-        }
-        else
-        {
-            parent = chatItemRoot;
-            messageList = allMessages;
-            messageColor = myChat ? Color.green : Color.white; // ÀüÃ¼ Ã¤ÆÃÀº ±âº» »ö»ó
+            messageColor = new Color(1f, 0.64f, 0f); // ï¿½ï¿½È²ï¿½ï¿½
         }
 
         var msgItem = Instantiate(txtChatItemBase);
         msgItem.color = messageColor;
         msgItem.text = $"{msg}";
-        msgItem.gameObject.SetActive(true);
 
-        msgItem.transform.SetParent(parent, false);
-        msgItem.transform.SetAsLastSibling(); // ¸¶Áö¸· ÀÚ½ÄÀ¸·Î ¼³Á¤
+        // ë„£ì„ íƒ­ì´ë‘ í˜„ì¬ ë³´ê³ ìˆëŠ” íƒ­ì´ ê°™ìœ¼ë©´ ì•¡í‹°ë¸Œë¥¼ trueë¡œ í•œë‹¤. ì•„ë‹ˆë©´ false.
+        if(curChatRoots == parent) msgItem.gameObject.SetActive(true);
+        else msgItem.gameObject.SetActive(false);
+
+        // ì „ì²´ íƒ­ì—ì„œ ì‹œìŠ¤í…œê°™ì€ ë‹¤ë¥¸ íƒ­ì— ë‚˜ì™€ì•¼í• ê²Œ ì•ˆë‚˜ì˜´ í•´ê²°ì½”ë“œ
+        if (curChatRoots == chatRoots[0])
+        {
+            msgItem.transform.SetParent(chatRoots[0], false);
+            msgItem.gameObject.SetActive(true);
+        }
+        else msgItem.transform.SetParent(parent, false);
+
+        msgItem.transform.SetAsLastSibling(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
         var messageData = new MessageData { Message = msgItem, Timestamp = DateTime.Now };
         messageList.Add(messageData);
@@ -179,6 +191,8 @@ public class UIChat : MonoBehaviour
                 {
                     msg.Message.gameObject.SetActive(true);
                     msg.Message.transform.SetParent(chatItemRoot, false);
+
+                    curChatRoots = chatRoots[0];
                 }
                 break;
             case 1:
@@ -186,6 +200,8 @@ public class UIChat : MonoBehaviour
                 {
                     msg.Message.gameObject.SetActive(true);
                     msg.Message.transform.SetParent(teamChatItemRoot, false);
+
+                    curChatRoots = chatRoots[1];
                 }
                 break;
             case 2:
@@ -193,6 +209,8 @@ public class UIChat : MonoBehaviour
                 {
                     msg.Message.gameObject.SetActive(true);
                     msg.Message.transform.SetParent(dmChatItemRoot, false);
+
+                    curChatRoots = chatRoots[2];
                 }
                 break;
             case 3:
@@ -200,6 +218,8 @@ public class UIChat : MonoBehaviour
                 {
                     msg.Message.gameObject.SetActive(true);
                     msg.Message.transform.SetParent(sysChatItemRoot, false);
+
+                    curChatRoots = chatRoots[3];
                 }
                 break;
         }
