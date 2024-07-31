@@ -29,7 +29,7 @@ public class UIMonsterInformation : MonoBehaviour
 
     private void Update()
     {
-        //transform.rotation = camTr.rotation;
+        transform.rotation = camTr.rotation;
     }
 
     public void SetName(string nickname)
