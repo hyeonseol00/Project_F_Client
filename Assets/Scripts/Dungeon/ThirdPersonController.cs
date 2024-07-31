@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ThirdPersonController : MonoBehaviour
 {
+    float speed = 5.0f;
+
     [SerializeField] private Transform characterBody;
     [SerializeField] private Transform cameraArm;
 
@@ -19,6 +21,7 @@ public class ThirdPersonController : MonoBehaviour
     void Update()
     {
         LookAround();
+        Move();
     }
 
     private void LookAround()
@@ -26,7 +29,7 @@ public class ThirdPersonController : MonoBehaviour
         Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         Vector3 camAngle = cameraArm.rotation.eulerAngles;
 
-        float x = camAngle.x - mouseDelta.y;
+        float x = camAngle.x + mouseDelta.y;
 
         if (x < 180.0f)
         {
@@ -37,6 +40,24 @@ public class ThirdPersonController : MonoBehaviour
             x = Mathf.Clamp(x, 335.0f, 361.0f);
         }
 
-        cameraArm.rotation = Quaternion.Euler(x, camAngle.y - mouseDelta.x, camAngle.z);
+        cameraArm.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);
     }
+
+	private void Move()
+	{
+        Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+
+		animator.SetFloat("Move", moveInput.magnitude);
+
+		bool isMove = moveInput.magnitude != 0;
+		if (isMove)
+        {
+            Vector3 lookForward = new Vector3(cameraArm.forward.x, 0.0f, cameraArm.forward.z).normalized;
+            Vector3 lookRight = new Vector3(cameraArm.right.x, 0.0f, cameraArm.right.z).normalized;
+            Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
+
+            characterBody.forward = lookForward;
+            transform.position += moveDir * Time.deltaTime * speed;
+        }
+	}
 }
