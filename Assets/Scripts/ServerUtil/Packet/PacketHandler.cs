@@ -228,8 +228,11 @@ class PacketHandler
 		
 		if(pkt.ActionSet.AnimCode == 0 || pkt.ActionSet.AnimCode == 1)
 		{
-            BattleManager.Instance.PlayerHit();
-        }
+			if(pkt.ActionSet.EffectCode != 0)
+			{
+        BattleManager.Instance.PlayerHit();
+    	}
+    }
 		EffectManager.Instance.SetEffectToPlayer(pkt.ActionSet.EffectCode);
 	}
 
