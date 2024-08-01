@@ -25,6 +25,10 @@ public class Player : MonoBehaviour
     public bool IsMine  { get; private set; }
     private bool isInit = false;
 
+    public int gold { get; private set; }
+    public StatInfo statInfo  { get; private set; }
+    public Inventory inven { get; private set; }
+
     private Vector3 lastPos;
 
     void Start()
@@ -59,6 +63,20 @@ public class Player : MonoBehaviour
         isInit = true;
     }
 
+    public void SetGold(int gold)
+    {
+        this.gold = gold;
+    }
+
+    public void SetStatInfo(StatInfo statInfo)
+    {
+        this.statInfo = statInfo;
+    }
+
+    public void SetInventory(Inventory inven)
+    {
+        this.inven = inven;
+    }
 
     private void Update()
     {
