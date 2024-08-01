@@ -34,87 +34,83 @@ namespace Google.Protobuf.Protocol
                   "AiABKAkiLQoHQ19Mb2dJbhIQCghuaWNrbmFtZRgBIAEoCRIQCghwYXNzd29y",
                   "ZBgCIAEoCSIrCgdTX0xvZ0luEg8KB3N1Y2Nlc3MYASABKAgSDwoHbWVzc2Fn",
                   "ZRgCIAEoCSIoChBDX1BsYXllclJlc3BvbnNlEhQKDHJlc3BvbnNlQ29kZRgB",
-                  "IAEoBSLzAQoKUGxheWVySW5mbxIQCghwbGF5ZXJJZBgBIAEoBRIQCghuaWNr",
+                  "IAEoBSKCAgoKUGxheWVySW5mbxIQCghwbGF5ZXJJZBgBIAEoBRIQCghuaWNr",
                   "bmFtZRgCIAEoCRINCgVjbGFzcxgDIAEoBRIMCgRnb2xkGAQgASgFEjoKCXRy",
                   "YW5zZm9ybRgFIAEoCzInLkdvb2dsZS5Qcm90b2J1Zi5Qcm90b2NvbC5UcmFu",
                   "c2Zvcm1JbmZvEjQKCHN0YXRJbmZvGAYgASgLMiIuR29vZ2xlLlByb3RvYnVm",
-                  "LlByb3RvY29sLlN0YXRJbmZvEjIKBWludmVuGAcgASgLMiMuR29vZ2xlLlBy",
-                  "b3RvYnVmLlByb3RvY29sLkludmVudG9yeSJGCg1UcmFuc2Zvcm1JbmZvEgwK",
-                  "BHBvc1gYASABKAISDAoEcG9zWRgCIAEoAhIMCgRwb3NaGAMgASgCEgsKA3Jv",
-                  "dBgEIAEoAiLKAQoIU3RhdEluZm8SDQoFbGV2ZWwYASABKAUSCgoCaHAYAiAB",
-                  "KAISDQoFbWF4SHAYAyABKAISCgoCbXAYBCABKAISDQoFbWF4TXAYBSABKAIS",
-                  "CwoDYXRrGAYgASgCEgsKA2RlZhgHIAEoAhINCgVtYWdpYxgIIAEoAhINCgVz",
-                  "cGVlZBgJIAEoAhIQCghjcml0UmF0ZRgKIAEoAhIPCgdjcml0RG1nGAsgASgC",
-                  "EhEKCWF2b2lkUmF0ZRgMIAEoAhILCgNleHAYDSABKAUiPgoJSW52ZW50b3J5",
-                  "EjEKBWl0ZW1zGAEgAygLMiIuR29vZ2xlLlByb3RvYnVmLlByb3RvY29sLkl0",
-                  "ZW1JbmZvIuQBCghJdGVtSW5mbxIKCgJpZBgBIAEoBRIMCgRuYW1lGAIgASgJ",
-                  "EhMKC2Rlc2NyaXB0aW9uGAMgASgJEgwKBHR5cGUYBCABKAkSCgoCaHAYBSAB",
-                  "KAISCgoCbXAYBiABKAISCwoDYXRrGAcgASgCEgsKA2RlZhgIIAEoAhINCgVt",
-                  "YWdpYxgJIAEoAhINCgVzcGVlZBgKIAEoAhIUCgxyZXF1aXJlTGV2ZWwYCyAB",
-                  "KAUSEQoJYXZvaWRSYXRlGAwgASgCEhAKCGNyaXRSYXRlGA0gASgCEhAKCHF1",
-                  "YW50aXR5GA4gASgFIpkCCgpTY3JlZW5UZXh0EgsKA21zZxgBIAEoCRIXCg90",
-                  "eXBpbmdBbmltYXRpb24YAiABKAgSRQoJYWxpZ25tZW50GAMgASgLMi0uR29v",
-                  "Z2xlLlByb3RvYnVmLlByb3RvY29sLlNjcmVlblRleHRBbGlnbm1lbnRIAIgB",
-                  "ARI3Cgl0ZXh0Q29sb3IYBCABKAsyHy5Hb29nbGUuUHJvdG9idWYuUHJvdG9j",
-                  "b2wuQ29sb3JIAYgBARI5CgtzY3JlZW5Db2xvchgFIAEoCzIfLkdvb2dsZS5Q",
-                  "cm90b2J1Zi5Qcm90b2NvbC5Db2xvckgCiAEBQgwKCl9hbGlnbm1lbnRCDAoK",
-                  "X3RleHRDb2xvckIOCgxfc2NyZWVuQ29sb3IiKwoTU2NyZWVuVGV4dEFsaWdu",
-                  "bWVudBIJCgF4GAEgASgFEgkKAXkYAiABKAUiKAoFQ29sb3ISCQoBchgBIAEo",
-                  "BRIJCgFnGAIgASgFEgkKAWIYAyABKAUiXQoLRHVuZ2VvbkluZm8SEwoLZHVu",
-                  "Z2VvbkNvZGUYASABKAUSOQoIbW9uc3RlcnMYAiADKAsyJy5Hb29nbGUuUHJv",
-                  "dG9idWYuUHJvdG9jb2wuTW9uc3RlclN0YXR1cyJhCg1Nb25zdGVyU3RhdHVz",
-                  "EhIKCm1vbnN0ZXJJZHgYASABKAUSFAoMbW9uc3Rlck1vZGVsGAIgASgFEhMK",
-                  "C21vbnN0ZXJOYW1lGAMgASgJEhEKCW1vbnN0ZXJIcBgEIAEoAiIxCglBY3Rp",
-                  "b25TZXQSEAoIYW5pbUNvZGUYASABKAUSEgoKZWZmZWN0Q29kZRgCIAEoBSKi",
-                  "AQoMUGxheWVyU3RhdHVzEhMKC3BsYXllckNsYXNzGAEgASgFEhMKC3BsYXll",
-                  "ckxldmVsGAIgASgFEhIKCnBsYXllck5hbWUYAyABKAkSFAoMcGxheWVyRnVs",
-                  "bEhwGAQgASgCEhQKDHBsYXllckZ1bGxNcBgFIAEoAhITCgtwbGF5ZXJDdXJI",
-                  "cBgGIAEoAhITCgtwbGF5ZXJDdXJNcBgHIAEoAiJiCglCYXR0bGVMb2cSCwoD",
-                  "bXNnGAEgASgJEhcKD3R5cGluZ0FuaW1hdGlvbhgCIAEoCBIvCgRidG5zGAMg",
-                  "AygLMiEuR29vZ2xlLlByb3RvYnVmLlByb3RvY29sLkJ0bkluZm8iJgoHQnRu",
-                  "SW5mbxILCgNtc2cYASABKAkSDgoGZW5hYmxlGAIgASgIIioKB0NfRW50ZXIS",
-                  "EAoIbmlja25hbWUYASABKAkSDQoFY2xhc3MYAiABKAUiRAoGQ19Nb3ZlEjoK",
-                  "CXRyYW5zZm9ybRgBIAEoCzInLkdvb2dsZS5Qcm90b2J1Zi5Qcm90b2NvbC5U",
-                  "cmFuc2Zvcm1JbmZvIh8KC0NfQW5pbWF0aW9uEhAKCGFuaW1Db2RlGAEgASgF",
-                  "Ij8KBkNfQ2hhdBIQCghwbGF5ZXJJZBgBIAEoBRISCgpzZW5kZXJOYW1lGAIg",
-                  "ASgJEg8KB2NoYXRNc2cYAyABKAkiJQoOQ19FbnRlckR1bmdlb24SEwoLZHVu",
-                  "Z2VvbkNvZGUYASABKAUiPwoHU19FbnRlchI0CgZwbGF5ZXIYASABKAsyJC5H",
-                  "b29nbGUuUHJvdG9idWYuUHJvdG9jb2wuUGxheWVySW5mbyJACgdTX1NwYXdu",
-                  "EjUKB3BsYXllcnMYASADKAsyJC5Hb29nbGUuUHJvdG9idWYuUHJvdG9jb2wu",
-                  "UGxheWVySW5mbyJWCgZTX01vdmUSEAoIcGxheWVySWQYASABKAUSOgoJdHJh",
-                  "bnNmb3JtGAIgASgLMicuR29vZ2xlLlByb3RvYnVmLlByb3RvY29sLlRyYW5z",
-                  "Zm9ybUluZm8iMQoLU19BbmltYXRpb24SEAoIcGxheWVySWQYASABKAUSEAoI",
-                  "YW5pbUNvZGUYAiABKAUiKwoGU19DaGF0EhAKCHBsYXllcklkGAEgASgFEg8K",
-                  "B2NoYXRNc2cYAiABKAki9gEKDlNfRW50ZXJEdW5nZW9uEjoKC2R1bmdlb25J",
-                  "bmZvGAEgASgLMiUuR29vZ2xlLlByb3RvYnVmLlByb3RvY29sLkR1bmdlb25J",
-                  "bmZvEjYKBnBsYXllchgCIAEoCzImLkdvb2dsZS5Qcm90b2J1Zi5Qcm90b2Nv",
-                  "bC5QbGF5ZXJTdGF0dXMSOAoKc2NyZWVuVGV4dBgDIAEoCzIkLkdvb2dsZS5Q",
-                  "cm90b2J1Zi5Qcm90b2NvbC5TY3JlZW5UZXh0EjYKCWJhdHRsZUxvZxgEIAEo",
-                  "CzIjLkdvb2dsZS5Qcm90b2J1Zi5Qcm90b2NvbC5CYXR0bGVMb2ciHgoJU19E",
-                  "ZXNwYXduEhEKCXBsYXllcklkcxgCIAMoBSIQCg5TX0xlYXZlRHVuZ2VvbiJI",
-                  "CgxTX1NjcmVlblRleHQSOAoKc2NyZWVuVGV4dBgBIAEoCzIkLkdvb2dsZS5Q",
-                  "cm90b2J1Zi5Qcm90b2NvbC5TY3JlZW5UZXh0Ig4KDFNfU2NyZWVuRG9uZSJF",
-                  "CgtTX0JhdHRsZUxvZxI2CgliYXR0bGVMb2cYASABKAsyIy5Hb29nbGUuUHJv",
-                  "dG9idWYuUHJvdG9jb2wuQmF0dGxlTG9nIhsKDVNfU2V0UGxheWVySHASCgoC",
-                  "aHAYASABKAIiGwoNU19TZXRQbGF5ZXJNcBIKCgJtcBgBIAEoAiIwCg5TX1Nl",
-                  "dE1vbnN0ZXJIcBISCgptb25zdGVySWR4GAEgASgFEgoKAmhwGAIgASgCImIK",
-                  "DlNfUGxheWVyQWN0aW9uEhgKEHRhcmdldE1vbnN0ZXJJZHgYASABKAUSNgoJ",
-                  "YWN0aW9uU2V0GAIgASgLMiMuR29vZ2xlLlByb3RvYnVmLlByb3RvY29sLkFj",
-                  "dGlvblNldCJjCg9TX01vbnN0ZXJBY3Rpb24SGAoQYWN0aW9uTW9uc3Rlcklk",
-                  "eBgBIAEoBRI2CglhY3Rpb25TZXQYAiABKAsyIy5Hb29nbGUuUHJvdG9idWYu",
-                  "UHJvdG9jb2wuQWN0aW9uU2V0KooECgVNc2dJZBILCgdDX0VOVEVSEAASCwoH",
-                  "U19FTlRFUhABEgsKB1NfU1BBV04QAhILCgdDX0xFQVZFEAMSCwoHU19MRUFW",
-                  "RRAEEg0KCVNfREVTUEFXThAFEgoKBkNfTU9WRRAGEgoKBlNfTU9WRRAHEg8K",
-                  "C0NfQU5JTUFUSU9OEAgSDwoLU19BTklNQVRJT04QCRIUChBDX0NIQU5HRV9D",
-                  "T1NUVU1FEAoSFAoQU19DSEFOR0VfQ09TVFVNRRALEgoKBkNfQ0hBVBAMEgoK",
-                  "BlNfQ0hBVBANEhMKD0NfRU5URVJfRFVOR0VPThAOEhUKEUNfUExBWUVSX1JF",
-                  "U1BPTlNFEA8SEwoPU19FTlRFUl9EVU5HRU9OEBASEwoPU19MRUFWRV9EVU5H",
-                  "RU9OEBESEQoNU19TQ1JFRU5fVEVYVBASEhEKDVNfU0NSRUVOX0RPTkUQExIQ",
-                  "CgxTX0JBVFRMRV9MT0cQFBITCg9TX1NFVF9QTEFZRVJfSFAQFRITCg9TX1NF",
-                  "VF9QTEFZRVJfTVAQFhIUChBTX1NFVF9NT05TVEVSX0hQEBcSEwoPU19QTEFZ",
-                  "RVJfQUNUSU9OEBgSFAoQU19NT05TVEVSX0FDVElPThAZEg4KCkNfUkVHSVNU",
-                  "RVIQGhIOCgpTX1JFR0lTVEVSEBsSDAoIQ19MT0dfSU4QHBIMCghTX0xPR19J",
-                  "ThAdYgZwcm90bzM="));
+                  "LlByb3RvY29sLlN0YXRJbmZvEjcKBWludmVuGAcgASgLMiMuR29vZ2xlLlBy",
+                  "b3RvYnVmLlByb3RvY29sLkludmVudG9yeUgAiAEBQggKBl9pbnZlbiJGCg1U",
+                  "cmFuc2Zvcm1JbmZvEgwKBHBvc1gYASABKAISDAoEcG9zWRgCIAEoAhIMCgRw",
+                  "b3NaGAMgASgCEgsKA3JvdBgEIAEoAiLKAQoIU3RhdEluZm8SDQoFbGV2ZWwY",
+                  "ASABKAUSCgoCaHAYAiABKAISDQoFbWF4SHAYAyABKAISCgoCbXAYBCABKAIS",
+                  "DQoFbWF4TXAYBSABKAISCwoDYXRrGAYgASgCEgsKA2RlZhgHIAEoAhINCgVt",
+                  "YWdpYxgIIAEoAhINCgVzcGVlZBgJIAEoAhIQCghjcml0UmF0ZRgKIAEoAhIP",
+                  "Cgdjcml0RG1nGAsgASgCEhEKCWF2b2lkUmF0ZRgMIAEoAhILCgNleHAYDSAB",
+                  "KAUiPgoJSW52ZW50b3J5EjEKBWl0ZW1zGAEgAygLMiIuR29vZ2xlLlByb3Rv",
+                  "YnVmLlByb3RvY29sLkl0ZW1JbmZvIigKCEl0ZW1JbmZvEgoKAmlkGAEgASgF",
+                  "EhAKCHF1YW50aXR5GAIgASgFIpkCCgpTY3JlZW5UZXh0EgsKA21zZxgBIAEo",
+                  "CRIXCg90eXBpbmdBbmltYXRpb24YAiABKAgSRQoJYWxpZ25tZW50GAMgASgL",
+                  "Mi0uR29vZ2xlLlByb3RvYnVmLlByb3RvY29sLlNjcmVlblRleHRBbGlnbm1l",
+                  "bnRIAIgBARI3Cgl0ZXh0Q29sb3IYBCABKAsyHy5Hb29nbGUuUHJvdG9idWYu",
+                  "UHJvdG9jb2wuQ29sb3JIAYgBARI5CgtzY3JlZW5Db2xvchgFIAEoCzIfLkdv",
+                  "b2dsZS5Qcm90b2J1Zi5Qcm90b2NvbC5Db2xvckgCiAEBQgwKCl9hbGlnbm1l",
+                  "bnRCDAoKX3RleHRDb2xvckIOCgxfc2NyZWVuQ29sb3IiKwoTU2NyZWVuVGV4",
+                  "dEFsaWdubWVudBIJCgF4GAEgASgFEgkKAXkYAiABKAUiKAoFQ29sb3ISCQoB",
+                  "chgBIAEoBRIJCgFnGAIgASgFEgkKAWIYAyABKAUiXQoLRHVuZ2VvbkluZm8S",
+                  "EwoLZHVuZ2VvbkNvZGUYASABKAUSOQoIbW9uc3RlcnMYAiADKAsyJy5Hb29n",
+                  "bGUuUHJvdG9idWYuUHJvdG9jb2wuTW9uc3RlclN0YXR1cyJhCg1Nb25zdGVy",
+                  "U3RhdHVzEhIKCm1vbnN0ZXJJZHgYASABKAUSFAoMbW9uc3Rlck1vZGVsGAIg",
+                  "ASgFEhMKC21vbnN0ZXJOYW1lGAMgASgJEhEKCW1vbnN0ZXJIcBgEIAEoAiIx",
+                  "CglBY3Rpb25TZXQSEAoIYW5pbUNvZGUYASABKAUSEgoKZWZmZWN0Q29kZRgC",
+                  "IAEoBSKiAQoMUGxheWVyU3RhdHVzEhMKC3BsYXllckNsYXNzGAEgASgFEhMK",
+                  "C3BsYXllckxldmVsGAIgASgFEhIKCnBsYXllck5hbWUYAyABKAkSFAoMcGxh",
+                  "eWVyRnVsbEhwGAQgASgCEhQKDHBsYXllckZ1bGxNcBgFIAEoAhITCgtwbGF5",
+                  "ZXJDdXJIcBgGIAEoAhITCgtwbGF5ZXJDdXJNcBgHIAEoAiJiCglCYXR0bGVM",
+                  "b2cSCwoDbXNnGAEgASgJEhcKD3R5cGluZ0FuaW1hdGlvbhgCIAEoCBIvCgRi",
+                  "dG5zGAMgAygLMiEuR29vZ2xlLlByb3RvYnVmLlByb3RvY29sLkJ0bkluZm8i",
+                  "JgoHQnRuSW5mbxILCgNtc2cYASABKAkSDgoGZW5hYmxlGAIgASgIIioKB0Nf",
+                  "RW50ZXISEAoIbmlja25hbWUYASABKAkSDQoFY2xhc3MYAiABKAUiRAoGQ19N",
+                  "b3ZlEjoKCXRyYW5zZm9ybRgBIAEoCzInLkdvb2dsZS5Qcm90b2J1Zi5Qcm90",
+                  "b2NvbC5UcmFuc2Zvcm1JbmZvIh8KC0NfQW5pbWF0aW9uEhAKCGFuaW1Db2Rl",
+                  "GAEgASgFIj8KBkNfQ2hhdBIQCghwbGF5ZXJJZBgBIAEoBRISCgpzZW5kZXJO",
+                  "YW1lGAIgASgJEg8KB2NoYXRNc2cYAyABKAkiJQoOQ19FbnRlckR1bmdlb24S",
+                  "EwoLZHVuZ2VvbkNvZGUYASABKAUiPwoHU19FbnRlchI0CgZwbGF5ZXIYASAB",
+                  "KAsyJC5Hb29nbGUuUHJvdG9idWYuUHJvdG9jb2wuUGxheWVySW5mbyJACgdT",
+                  "X1NwYXduEjUKB3BsYXllcnMYASADKAsyJC5Hb29nbGUuUHJvdG9idWYuUHJv",
+                  "dG9jb2wuUGxheWVySW5mbyJWCgZTX01vdmUSEAoIcGxheWVySWQYASABKAUS",
+                  "OgoJdHJhbnNmb3JtGAIgASgLMicuR29vZ2xlLlByb3RvYnVmLlByb3RvY29s",
+                  "LlRyYW5zZm9ybUluZm8iMQoLU19BbmltYXRpb24SEAoIcGxheWVySWQYASAB",
+                  "KAUSEAoIYW5pbUNvZGUYAiABKAUiKwoGU19DaGF0EhAKCHBsYXllcklkGAEg",
+                  "ASgFEg8KB2NoYXRNc2cYAiABKAki9gEKDlNfRW50ZXJEdW5nZW9uEjoKC2R1",
+                  "bmdlb25JbmZvGAEgASgLMiUuR29vZ2xlLlByb3RvYnVmLlByb3RvY29sLkR1",
+                  "bmdlb25JbmZvEjYKBnBsYXllchgCIAEoCzImLkdvb2dsZS5Qcm90b2J1Zi5Q",
+                  "cm90b2NvbC5QbGF5ZXJTdGF0dXMSOAoKc2NyZWVuVGV4dBgDIAEoCzIkLkdv",
+                  "b2dsZS5Qcm90b2J1Zi5Qcm90b2NvbC5TY3JlZW5UZXh0EjYKCWJhdHRsZUxv",
+                  "ZxgEIAEoCzIjLkdvb2dsZS5Qcm90b2J1Zi5Qcm90b2NvbC5CYXR0bGVMb2ci",
+                  "HgoJU19EZXNwYXduEhEKCXBsYXllcklkcxgCIAMoBSIQCg5TX0xlYXZlRHVu",
+                  "Z2VvbiJICgxTX1NjcmVlblRleHQSOAoKc2NyZWVuVGV4dBgBIAEoCzIkLkdv",
+                  "b2dsZS5Qcm90b2J1Zi5Qcm90b2NvbC5TY3JlZW5UZXh0Ig4KDFNfU2NyZWVu",
+                  "RG9uZSJFCgtTX0JhdHRsZUxvZxI2CgliYXR0bGVMb2cYASABKAsyIy5Hb29n",
+                  "bGUuUHJvdG9idWYuUHJvdG9jb2wuQmF0dGxlTG9nIhsKDVNfU2V0UGxheWVy",
+                  "SHASCgoCaHAYASABKAIiGwoNU19TZXRQbGF5ZXJNcBIKCgJtcBgBIAEoAiIw",
+                  "Cg5TX1NldE1vbnN0ZXJIcBISCgptb25zdGVySWR4GAEgASgFEgoKAmhwGAIg",
+                  "ASgCImIKDlNfUGxheWVyQWN0aW9uEhgKEHRhcmdldE1vbnN0ZXJJZHgYASAB",
+                  "KAUSNgoJYWN0aW9uU2V0GAIgASgLMiMuR29vZ2xlLlByb3RvYnVmLlByb3Rv",
+                  "Y29sLkFjdGlvblNldCJjCg9TX01vbnN0ZXJBY3Rpb24SGAoQYWN0aW9uTW9u",
+                  "c3RlcklkeBgBIAEoBRI2CglhY3Rpb25TZXQYAiABKAsyIy5Hb29nbGUuUHJv",
+                  "dG9idWYuUHJvdG9jb2wuQWN0aW9uU2V0KooECgVNc2dJZBILCgdDX0VOVEVS",
+                  "EAASCwoHU19FTlRFUhABEgsKB1NfU1BBV04QAhILCgdDX0xFQVZFEAMSCwoH",
+                  "U19MRUFWRRAEEg0KCVNfREVTUEFXThAFEgoKBkNfTU9WRRAGEgoKBlNfTU9W",
+                  "RRAHEg8KC0NfQU5JTUFUSU9OEAgSDwoLU19BTklNQVRJT04QCRIUChBDX0NI",
+                  "QU5HRV9DT1NUVU1FEAoSFAoQU19DSEFOR0VfQ09TVFVNRRALEgoKBkNfQ0hB",
+                  "VBAMEgoKBlNfQ0hBVBANEhMKD0NfRU5URVJfRFVOR0VPThAOEhUKEUNfUExB",
+                  "WUVSX1JFU1BPTlNFEA8SEwoPU19FTlRFUl9EVU5HRU9OEBASEwoPU19MRUFW",
+                  "RV9EVU5HRU9OEBESEQoNU19TQ1JFRU5fVEVYVBASEhEKDVNfU0NSRUVOX0RP",
+                  "TkUQExIQCgxTX0JBVFRMRV9MT0cQFBITCg9TX1NFVF9QTEFZRVJfSFAQFRIT",
+                  "Cg9TX1NFVF9QTEFZRVJfTVAQFhIUChBTX1NFVF9NT05TVEVSX0hQEBcSEwoP",
+                  "U19QTEFZRVJfQUNUSU9OEBgSFAoQU19NT05TVEVSX0FDVElPThAZEg4KCkNf",
+                  "UkVHSVNURVIQGhIOCgpTX1JFR0lTVEVSEBsSDAoIQ19MT0dfSU4QHBIMCghT",
+                  "X0xPR19JThAdYgZwcm90bzM="));
             descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
                 new pbr::FileDescriptor[] { },
                 new pbr::GeneratedClrTypeInfo(new[] { typeof(global::Google.Protobuf.Protocol.MsgId), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -123,11 +119,11 @@ namespace Google.Protobuf.Protocol
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.C_LogIn), global::Google.Protobuf.Protocol.C_LogIn.Parser, new[]{ "Nickname", "Password" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.S_LogIn), global::Google.Protobuf.Protocol.S_LogIn.Parser, new[]{ "Success", "Message" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.C_PlayerResponse), global::Google.Protobuf.Protocol.C_PlayerResponse.Parser, new[]{ "ResponseCode" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.PlayerInfo), global::Google.Protobuf.Protocol.PlayerInfo.Parser, new[]{ "PlayerId", "Nickname", "Class", "Gold", "Transform", "StatInfo", "Inven" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.PlayerInfo), global::Google.Protobuf.Protocol.PlayerInfo.Parser, new[]{ "PlayerId", "Nickname", "Class", "Gold", "Transform", "StatInfo", "Inven" }, new[]{ "Inven" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.TransformInfo), global::Google.Protobuf.Protocol.TransformInfo.Parser, new[]{ "PosX", "PosY", "PosZ", "Rot" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.StatInfo), global::Google.Protobuf.Protocol.StatInfo.Parser, new[]{ "Level", "Hp", "MaxHp", "Mp", "MaxMp", "Atk", "Def", "Magic", "Speed", "CritRate", "CritDmg", "AvoidRate", "Exp" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.Inventory), global::Google.Protobuf.Protocol.Inventory.Parser, new[]{ "Items" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.ItemInfo), global::Google.Protobuf.Protocol.ItemInfo.Parser, new[]{ "Id", "Name", "Description", "Type", "Hp", "Mp", "Atk", "Def", "Magic", "Speed", "RequireLevel", "AvoidRate", "CritRate", "Quantity" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.ItemInfo), global::Google.Protobuf.Protocol.ItemInfo.Parser, new[]{ "Id", "Quantity" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.ScreenText), global::Google.Protobuf.Protocol.ScreenText.Parser, new[]{ "Msg", "TypingAnimation", "Alignment", "TextColor", "ScreenColor" }, new[]{ "Alignment", "TextColor", "ScreenColor" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.ScreenTextAlignment), global::Google.Protobuf.Protocol.ScreenTextAlignment.Parser, new[]{ "X", "Y" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.Color), global::Google.Protobuf.Protocol.Color.Parser, new[]{ "R", "G", "B" }, null, null, null, null),
@@ -3422,18 +3418,6 @@ namespace Google.Protobuf.Protocol
         public ItemInfo(ItemInfo other) : this()
         {
             id_ = other.id_;
-            name_ = other.name_;
-            description_ = other.description_;
-            type_ = other.type_;
-            hp_ = other.hp_;
-            mp_ = other.mp_;
-            atk_ = other.atk_;
-            def_ = other.def_;
-            magic_ = other.magic_;
-            speed_ = other.speed_;
-            requireLevel_ = other.requireLevel_;
-            avoidRate_ = other.avoidRate_;
-            critRate_ = other.critRate_;
             quantity_ = other.quantity_;
             _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
         }
@@ -3459,176 +3443,8 @@ namespace Google.Protobuf.Protocol
             }
         }
 
-        /// <summary>Field number for the "name" field.</summary>
-        public const int NameFieldNumber = 2;
-        private string name_ = "";
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public string Name
-        {
-            get { return name_; }
-            set
-            {
-                name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-            }
-        }
-
-        /// <summary>Field number for the "description" field.</summary>
-        public const int DescriptionFieldNumber = 3;
-        private string description_ = "";
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public string Description
-        {
-            get { return description_; }
-            set
-            {
-                description_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-            }
-        }
-
-        /// <summary>Field number for the "type" field.</summary>
-        public const int TypeFieldNumber = 4;
-        private string type_ = "";
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public string Type
-        {
-            get { return type_; }
-            set
-            {
-                type_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-            }
-        }
-
-        /// <summary>Field number for the "hp" field.</summary>
-        public const int HpFieldNumber = 5;
-        private float hp_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public float Hp
-        {
-            get { return hp_; }
-            set
-            {
-                hp_ = value;
-            }
-        }
-
-        /// <summary>Field number for the "mp" field.</summary>
-        public const int MpFieldNumber = 6;
-        private float mp_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public float Mp
-        {
-            get { return mp_; }
-            set
-            {
-                mp_ = value;
-            }
-        }
-
-        /// <summary>Field number for the "atk" field.</summary>
-        public const int AtkFieldNumber = 7;
-        private float atk_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public float Atk
-        {
-            get { return atk_; }
-            set
-            {
-                atk_ = value;
-            }
-        }
-
-        /// <summary>Field number for the "def" field.</summary>
-        public const int DefFieldNumber = 8;
-        private float def_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public float Def
-        {
-            get { return def_; }
-            set
-            {
-                def_ = value;
-            }
-        }
-
-        /// <summary>Field number for the "magic" field.</summary>
-        public const int MagicFieldNumber = 9;
-        private float magic_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public float Magic
-        {
-            get { return magic_; }
-            set
-            {
-                magic_ = value;
-            }
-        }
-
-        /// <summary>Field number for the "speed" field.</summary>
-        public const int SpeedFieldNumber = 10;
-        private float speed_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public float Speed
-        {
-            get { return speed_; }
-            set
-            {
-                speed_ = value;
-            }
-        }
-
-        /// <summary>Field number for the "requireLevel" field.</summary>
-        public const int RequireLevelFieldNumber = 11;
-        private int requireLevel_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public int RequireLevel
-        {
-            get { return requireLevel_; }
-            set
-            {
-                requireLevel_ = value;
-            }
-        }
-
-        /// <summary>Field number for the "avoidRate" field.</summary>
-        public const int AvoidRateFieldNumber = 12;
-        private float avoidRate_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public float AvoidRate
-        {
-            get { return avoidRate_; }
-            set
-            {
-                avoidRate_ = value;
-            }
-        }
-
-        /// <summary>Field number for the "critRate" field.</summary>
-        public const int CritRateFieldNumber = 13;
-        private float critRate_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public float CritRate
-        {
-            get { return critRate_; }
-            set
-            {
-                critRate_ = value;
-            }
-        }
-
         /// <summary>Field number for the "quantity" field.</summary>
-        public const int QuantityFieldNumber = 14;
+        public const int QuantityFieldNumber = 2;
         private int quantity_;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -3661,18 +3477,6 @@ namespace Google.Protobuf.Protocol
                 return true;
             }
             if (Id != other.Id) return false;
-            if (Name != other.Name) return false;
-            if (Description != other.Description) return false;
-            if (Type != other.Type) return false;
-            if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Hp, other.Hp)) return false;
-            if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Mp, other.Mp)) return false;
-            if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Atk, other.Atk)) return false;
-            if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Def, other.Def)) return false;
-            if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Magic, other.Magic)) return false;
-            if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Speed, other.Speed)) return false;
-            if (RequireLevel != other.RequireLevel) return false;
-            if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(AvoidRate, other.AvoidRate)) return false;
-            if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(CritRate, other.CritRate)) return false;
             if (Quantity != other.Quantity) return false;
             return Equals(_unknownFields, other._unknownFields);
         }
@@ -3683,18 +3487,6 @@ namespace Google.Protobuf.Protocol
         {
             int hash = 1;
             if (Id != 0) hash ^= Id.GetHashCode();
-            if (Name.Length != 0) hash ^= Name.GetHashCode();
-            if (Description.Length != 0) hash ^= Description.GetHashCode();
-            if (Type.Length != 0) hash ^= Type.GetHashCode();
-            if (Hp != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Hp);
-            if (Mp != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Mp);
-            if (Atk != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Atk);
-            if (Def != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Def);
-            if (Magic != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Magic);
-            if (Speed != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Speed);
-            if (RequireLevel != 0) hash ^= RequireLevel.GetHashCode();
-            if (AvoidRate != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(AvoidRate);
-            if (CritRate != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(CritRate);
             if (Quantity != 0) hash ^= Quantity.GetHashCode();
             if (_unknownFields != null)
             {
@@ -3721,56 +3513,8 @@ namespace Google.Protobuf.Protocol
         output.WriteRawTag(8);
         output.WriteInt32(Id);
       }
-      if (Name.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(Name);
-      }
-      if (Description.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(Description);
-      }
-      if (Type.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(Type);
-      }
-      if (Hp != 0F) {
-        output.WriteRawTag(45);
-        output.WriteFloat(Hp);
-      }
-      if (Mp != 0F) {
-        output.WriteRawTag(53);
-        output.WriteFloat(Mp);
-      }
-      if (Atk != 0F) {
-        output.WriteRawTag(61);
-        output.WriteFloat(Atk);
-      }
-      if (Def != 0F) {
-        output.WriteRawTag(69);
-        output.WriteFloat(Def);
-      }
-      if (Magic != 0F) {
-        output.WriteRawTag(77);
-        output.WriteFloat(Magic);
-      }
-      if (Speed != 0F) {
-        output.WriteRawTag(85);
-        output.WriteFloat(Speed);
-      }
-      if (RequireLevel != 0) {
-        output.WriteRawTag(88);
-        output.WriteInt32(RequireLevel);
-      }
-      if (AvoidRate != 0F) {
-        output.WriteRawTag(101);
-        output.WriteFloat(AvoidRate);
-      }
-      if (CritRate != 0F) {
-        output.WriteRawTag(109);
-        output.WriteFloat(CritRate);
-      }
       if (Quantity != 0) {
-        output.WriteRawTag(112);
+        output.WriteRawTag(16);
         output.WriteInt32(Quantity);
       }
       if (_unknownFields != null) {
@@ -3789,69 +3533,9 @@ namespace Google.Protobuf.Protocol
                 output.WriteRawTag(8);
                 output.WriteInt32(Id);
             }
-            if (Name.Length != 0)
-            {
-                output.WriteRawTag(18);
-                output.WriteString(Name);
-            }
-            if (Description.Length != 0)
-            {
-                output.WriteRawTag(26);
-                output.WriteString(Description);
-            }
-            if (Type.Length != 0)
-            {
-                output.WriteRawTag(34);
-                output.WriteString(Type);
-            }
-            if (Hp != 0F)
-            {
-                output.WriteRawTag(45);
-                output.WriteFloat(Hp);
-            }
-            if (Mp != 0F)
-            {
-                output.WriteRawTag(53);
-                output.WriteFloat(Mp);
-            }
-            if (Atk != 0F)
-            {
-                output.WriteRawTag(61);
-                output.WriteFloat(Atk);
-            }
-            if (Def != 0F)
-            {
-                output.WriteRawTag(69);
-                output.WriteFloat(Def);
-            }
-            if (Magic != 0F)
-            {
-                output.WriteRawTag(77);
-                output.WriteFloat(Magic);
-            }
-            if (Speed != 0F)
-            {
-                output.WriteRawTag(85);
-                output.WriteFloat(Speed);
-            }
-            if (RequireLevel != 0)
-            {
-                output.WriteRawTag(88);
-                output.WriteInt32(RequireLevel);
-            }
-            if (AvoidRate != 0F)
-            {
-                output.WriteRawTag(101);
-                output.WriteFloat(AvoidRate);
-            }
-            if (CritRate != 0F)
-            {
-                output.WriteRawTag(109);
-                output.WriteFloat(CritRate);
-            }
             if (Quantity != 0)
             {
-                output.WriteRawTag(112);
+                output.WriteRawTag(16);
                 output.WriteInt32(Quantity);
             }
             if (_unknownFields != null)
@@ -3869,54 +3553,6 @@ namespace Google.Protobuf.Protocol
             if (Id != 0)
             {
                 size += 1 + pb::CodedOutputStream.ComputeInt32Size(Id);
-            }
-            if (Name.Length != 0)
-            {
-                size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
-            }
-            if (Description.Length != 0)
-            {
-                size += 1 + pb::CodedOutputStream.ComputeStringSize(Description);
-            }
-            if (Type.Length != 0)
-            {
-                size += 1 + pb::CodedOutputStream.ComputeStringSize(Type);
-            }
-            if (Hp != 0F)
-            {
-                size += 1 + 4;
-            }
-            if (Mp != 0F)
-            {
-                size += 1 + 4;
-            }
-            if (Atk != 0F)
-            {
-                size += 1 + 4;
-            }
-            if (Def != 0F)
-            {
-                size += 1 + 4;
-            }
-            if (Magic != 0F)
-            {
-                size += 1 + 4;
-            }
-            if (Speed != 0F)
-            {
-                size += 1 + 4;
-            }
-            if (RequireLevel != 0)
-            {
-                size += 1 + pb::CodedOutputStream.ComputeInt32Size(RequireLevel);
-            }
-            if (AvoidRate != 0F)
-            {
-                size += 1 + 4;
-            }
-            if (CritRate != 0F)
-            {
-                size += 1 + 4;
             }
             if (Quantity != 0)
             {
@@ -3940,54 +3576,6 @@ namespace Google.Protobuf.Protocol
             if (other.Id != 0)
             {
                 Id = other.Id;
-            }
-            if (other.Name.Length != 0)
-            {
-                Name = other.Name;
-            }
-            if (other.Description.Length != 0)
-            {
-                Description = other.Description;
-            }
-            if (other.Type.Length != 0)
-            {
-                Type = other.Type;
-            }
-            if (other.Hp != 0F)
-            {
-                Hp = other.Hp;
-            }
-            if (other.Mp != 0F)
-            {
-                Mp = other.Mp;
-            }
-            if (other.Atk != 0F)
-            {
-                Atk = other.Atk;
-            }
-            if (other.Def != 0F)
-            {
-                Def = other.Def;
-            }
-            if (other.Magic != 0F)
-            {
-                Magic = other.Magic;
-            }
-            if (other.Speed != 0F)
-            {
-                Speed = other.Speed;
-            }
-            if (other.RequireLevel != 0)
-            {
-                RequireLevel = other.RequireLevel;
-            }
-            if (other.AvoidRate != 0F)
-            {
-                AvoidRate = other.AvoidRate;
-            }
-            if (other.CritRate != 0F)
-            {
-                CritRate = other.CritRate;
             }
             if (other.Quantity != 0)
             {
@@ -4017,55 +3605,7 @@ namespace Google.Protobuf.Protocol
             Id = input.ReadInt32();
             break;
           }
-          case 18: {
-            Name = input.ReadString();
-            break;
-          }
-          case 26: {
-            Description = input.ReadString();
-            break;
-          }
-          case 34: {
-            Type = input.ReadString();
-            break;
-          }
-          case 45: {
-            Hp = input.ReadFloat();
-            break;
-          }
-          case 53: {
-            Mp = input.ReadFloat();
-            break;
-          }
-          case 61: {
-            Atk = input.ReadFloat();
-            break;
-          }
-          case 69: {
-            Def = input.ReadFloat();
-            break;
-          }
-          case 77: {
-            Magic = input.ReadFloat();
-            break;
-          }
-          case 85: {
-            Speed = input.ReadFloat();
-            break;
-          }
-          case 88: {
-            RequireLevel = input.ReadInt32();
-            break;
-          }
-          case 101: {
-            AvoidRate = input.ReadFloat();
-            break;
-          }
-          case 109: {
-            CritRate = input.ReadFloat();
-            break;
-          }
-          case 112: {
+          case 16: {
             Quantity = input.ReadInt32();
             break;
           }
@@ -4097,67 +3637,7 @@ namespace Google.Protobuf.Protocol
                             Id = input.ReadInt32();
                             break;
                         }
-                    case 18:
-                        {
-                            Name = input.ReadString();
-                            break;
-                        }
-                    case 26:
-                        {
-                            Description = input.ReadString();
-                            break;
-                        }
-                    case 34:
-                        {
-                            Type = input.ReadString();
-                            break;
-                        }
-                    case 45:
-                        {
-                            Hp = input.ReadFloat();
-                            break;
-                        }
-                    case 53:
-                        {
-                            Mp = input.ReadFloat();
-                            break;
-                        }
-                    case 61:
-                        {
-                            Atk = input.ReadFloat();
-                            break;
-                        }
-                    case 69:
-                        {
-                            Def = input.ReadFloat();
-                            break;
-                        }
-                    case 77:
-                        {
-                            Magic = input.ReadFloat();
-                            break;
-                        }
-                    case 85:
-                        {
-                            Speed = input.ReadFloat();
-                            break;
-                        }
-                    case 88:
-                        {
-                            RequireLevel = input.ReadInt32();
-                            break;
-                        }
-                    case 101:
-                        {
-                            AvoidRate = input.ReadFloat();
-                            break;
-                        }
-                    case 109:
-                        {
-                            CritRate = input.ReadFloat();
-                            break;
-                        }
-                    case 112:
+                    case 16:
                         {
                             Quantity = input.ReadInt32();
                             break;
