@@ -27,7 +27,7 @@ public class HatcheryManager : MonoBehaviour
 	private void Start()
 	{
 		// 테스트 코드
-		TransformInfo transform = new TransformInfo { PosX = 0.0f, PosY = 0.0f, PosZ = 0.0f, Rot = 180.0f };
+		/* TransformInfo transform = new TransformInfo { PosX = 0.0f, PosY = 0.0f, PosZ = 0.0f, Rot = 180.0f };
 		StatInfo statInfo = new StatInfo {Level = 1, Atk = 10, Def = 10, Hp = 10, Magic = 10, MaxHp = 100, MaxMp = 100, Mp = 100, Speed = 10 };
 		PlayerInfo playerInfo = new PlayerInfo { Class = 1001, Nickname = "jaeseok", PlayerId = 1, Transform = transform, StatInfo = statInfo };
 
@@ -37,7 +37,7 @@ public class HatcheryManager : MonoBehaviour
 		PlayerInfo playerInfo2 = new PlayerInfo { Class = 1002, Nickname = "hyeonseol", PlayerId = 2, Transform = transform, StatInfo = statInfo };
 		var spawnPos = spawnArea.position;
 		var player2 = CreatePlayer(playerInfo2, spawnPos);
-		player2.SetIsMine(false);
+		player2.SetIsMine(false); */
 		// ~테스트 코드
 	}
 
@@ -50,6 +50,18 @@ public class HatcheryManager : MonoBehaviour
 		playerDb.Add(1003, "DungeonPlayer/Character3");
 		playerDb.Add(1004, "DungeonPlayer/Character4");
 		playerDb.Add(1005, "DungeonPlayer/Character5");
+
+		Set(GameManager.Instance.HatcheryPkt);
+		GameManager.Instance.HatcheryPkt = null;
+	}
+
+	public void Set(S_EnterHatchery pkt)
+	{
+		if (pkt.Player != null)
+		{
+			Spawn(pkt.Player);
+			uiMonsterInfo.SetMainCamera();
+		}
 	}
 
 	public void Spawn(PlayerInfo playerInfo)

@@ -110,7 +110,6 @@ class PacketHandler
 	public static void S_EnterDungeonHandler(PacketSession session, IMessage packet)
 	{
 		S_EnterDungeon pkt = packet as S_EnterDungeon;
-		Debug.Log($"{pkt}");
 		if (pkt == null)
 			return;
 		
@@ -258,5 +257,38 @@ class PacketHandler
 	}
 
 	#endregion
+
+	public static void S_EnterHatcheryHandler(PacketSession session, IMessage packet)
+	{
+		S_EnterHatchery pkt = packet as S_EnterHatchery;
+		if (pkt == null)
+			return;
+
+		Scene scene = SceneManager.GetActiveScene();
+
+		if (scene.name == GameManager.HatcheryScene)
+		{
+			HatcheryManager.Instance.Set(pkt);
+		}
+		else
+		{
+			GameManager.Instance.HatcheryPkt = pkt;
+			SceneManager.LoadScene(GameManager.HatcheryScene);
+		}
+	}
+
+	public static void S_SpawnPlayerHatcheryHandler(PacketSession session, IMessage packet)
+	{
+		S_SpawnPlayerHatchery pkt = packet as S_SpawnPlayerHatchery;
+		if (pkt == null)
+			return;
+	}
+
+	public static void S_MoveAtHatcheryHandler(PacketSession session, IMessage packet)
+	{
+		S_MoveAtHatchery pkt = packet as S_MoveAtHatchery;
+		if (pkt == null)
+			return;
+	}
 }
 
