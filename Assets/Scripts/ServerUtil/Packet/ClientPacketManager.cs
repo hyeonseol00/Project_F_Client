@@ -69,6 +69,8 @@ class PacketManager
 		_handler.Add((ushort)MsgId.SSpawnPlayerHatchery, PacketHandler.S_SpawnPlayerHatcheryHandler);
 		_onRecv.Add((ushort)MsgId.SMoveAtHatchery, MakePacket<S_MoveAtHatchery>);
 		_handler.Add((ushort)MsgId.SMoveAtHatchery, PacketHandler.S_MoveAtHatcheryHandler);
+		_onRecv.Add((ushort)MsgId.SSetHatcheryBossHp, MakePacket<S_SetHatcheryBossHp>);
+		_handler.Add((ushort)MsgId.SSetHatcheryBossHp, PacketHandler.S_SetHatcheryBossHpHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

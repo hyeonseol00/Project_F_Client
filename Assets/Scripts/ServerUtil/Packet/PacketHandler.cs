@@ -290,5 +290,14 @@ class PacketHandler
 		if (pkt == null)
 			return;
 	}
+
+	public static void S_SetHatcheryBossHpHandler(PacketSession session, IMessage packet)
+	{
+		S_SetHatcheryBossHp pkt = packet as S_SetHatcheryBossHp;
+		if (pkt == null)
+			return;
+
+		HatcheryManager.Instance.SetBossCurHp(pkt.BossCurHp);
+	}
 }
 
