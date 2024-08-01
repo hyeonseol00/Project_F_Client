@@ -34,9 +34,9 @@ class PacketManager
 		_onRecv.Add((ushort)MsgId.SMove, MakePacket<S_Move>);
 		_handler.Add((ushort)MsgId.SMove, PacketHandler.S_MoveHandler);		
 		_onRecv.Add((ushort)MsgId.SAnimation, MakePacket<S_Animation>);
-		// _handler.Add((ushort)MsgId.SAnimation, PacketHandler.S_AnimationHandler);		
+		_handler.Add((ushort)MsgId.SAnimation, PacketHandler.S_AnimationHandler);		
 		// _onRecv.Add((ushort)MsgId.SChangeCostume, MakePacket<S_ChangeCostume>);
-		_handler.Add((ushort)MsgId.SChangeCostume, PacketHandler.S_ChangeCostumeHandler);		
+		// _handler.Add((ushort)MsgId.SChangeCostume, PacketHandler.S_ChangeCostumeHandler);		
 		_onRecv.Add((ushort)MsgId.SChat, MakePacket<S_Chat>);
 		_handler.Add((ushort)MsgId.SChat, PacketHandler.S_ChatHandler);		
 		_onRecv.Add((ushort)MsgId.SEnterDungeon, MakePacket<S_EnterDungeon>);
