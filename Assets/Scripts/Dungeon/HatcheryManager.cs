@@ -62,6 +62,16 @@ public class HatcheryManager : MonoBehaviour
 			Spawn(pkt.Player);
 			uiMonsterInfo.SetMainCamera();
 		}
+		if (pkt.BossMaxHp != null && pkt.BossName != null)
+		{
+			uiMonsterInfo.SetFullHP(pkt.BossMaxHp, false);
+			uiMonsterInfo.SetName(pkt.BossName);
+		}
+	}
+
+	public void SetBossCurHp(int hp)
+	{
+		uiMonsterInfo.SetCurHP(hp);
 	}
 
 	public void Spawn(PlayerInfo playerInfo)
