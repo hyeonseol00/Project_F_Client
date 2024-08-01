@@ -24,13 +24,19 @@ public class UIMonsterInformation : MonoBehaviour
 
     private void Start()
     {
-        camTr = Camera.main.transform;
+        if (Camera.main)
+            camTr = Camera.main.transform;
     }
 
     private void Update()
     {
         transform.rotation = camTr.rotation;
     }
+
+    public void SetMainCamera()
+    {
+		camTr = Camera.main.transform;
+	}
 
     public void SetName(string nickname)
     {
