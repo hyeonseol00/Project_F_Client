@@ -162,7 +162,6 @@ class PacketHandler
 	public static void S_BattleLogHandler(PacketSession session, IMessage packet)
 	{
 		S_BattleLog pkt = packet as S_BattleLog;
-		Debug.Log($"{pkt}");
 		if (pkt == null)
 			return;
 		
@@ -196,7 +195,6 @@ class PacketHandler
 	public static void S_SetMonsterHpHandler(PacketSession session, IMessage packet)
 	{
 		S_SetMonsterHp pkt = packet as S_SetMonsterHp;
-		Debug.Log($"{pkt}");
 		if (pkt == null)
 			return;
 		
@@ -206,7 +204,6 @@ class PacketHandler
 	public static void S_PlayerActionHandler(PacketSession session, IMessage packet)
 	{
 		S_PlayerAction pkt = packet as S_PlayerAction;
-		Debug.Log($"{pkt}");
 		if (pkt == null)
 			return;
 

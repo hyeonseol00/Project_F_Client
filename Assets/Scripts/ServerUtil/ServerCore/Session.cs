@@ -190,8 +190,6 @@ namespace ServerCore
 			ArraySegment<byte> segment = _recvBuffer.WriteSegment;
 			_recvArgs.SetBuffer(segment.Array, segment.Offset, segment.Count);
 
-			Debug.Log($"{segment.Array}, {segment.Array.Length}, {segment.Offset}, {segment.Count}");
-
 			try
 			{
 				bool pending = _socket.ReceiveAsync(_recvArgs);
