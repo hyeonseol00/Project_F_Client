@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
         CheckMove();
     }
 
-    public void SendMessage(string msg)
+    public void SendPlayerMessage(string msg)
     {
         if(!IsMine) return;
 
