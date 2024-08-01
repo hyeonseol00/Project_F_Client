@@ -14,6 +14,8 @@ class PacketHandler
 	public static void S_EnterHandler(PacketSession session, IMessage packet)
 	{
         S_Enter enterPacket = packet as S_Enter;
+
+		Debug.Log($"enterPacket {enterPacket}");
         if (enterPacket == null)
 	        return;
         
