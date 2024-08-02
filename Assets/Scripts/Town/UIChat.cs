@@ -11,11 +11,7 @@ public class UIChat : MonoBehaviour
     [SerializeField] private Scrollbar scroll;
     [SerializeField] private RectTransform rectBg;
 
-    [SerializeField] private Transform chatItemRoot; // ��ü ä�� ������ ��Ʈ
-    [SerializeField] private Transform teamChatItemRoot; // �� ä�� ������ ��Ʈ
-    [SerializeField] private Transform dmChatItemRoot; // DM ä�� ������ ��Ʈ
-    [SerializeField] private Transform sysChatItemRoot; // �ý��� ä�� ������ ��Ʈ
-
+    [SerializeField] private Transform chatItemRoot;
     [SerializeField] private TMP_Text txtChatItemBase;
 
     [SerializeField] private TMP_InputField inputChat;
@@ -25,39 +21,39 @@ public class UIChat : MonoBehaviour
     [SerializeField] private Transform icon;
 
     [SerializeField] private Transform alarm;
-    [SerializeField] private Button tabAll;
-    [SerializeField] private Button tabTeam;
-    [SerializeField] private Button tabDM;
-    [SerializeField] private Button tabSys;
+
+    [SerializeField] private Button btnAllTab;
+    [SerializeField] private Button btnTeamTab;
+    [SerializeField] private Button btnSystemTab;
+    [SerializeField] private Button btnDMTab;
 
     private float _baseChatItemWidth;
 
     private Player player;
 
     private bool isOpen = true;
-    private int currentTab = 0; // 0 all 1 team 2 dm 3 system 
-    private List<Transform> chatRoots;
-    private Transform curChatRoots;
 
-    private List<MessageData> allMessages = new List<MessageData>();
-    private List<MessageData> teamMessages = new List<MessageData>();
-    private List<MessageData> dmMessages = new List<MessageData>();
-    private List<MessageData> sysMessages = new List<MessageData>();
+    private List<GameObject> chatList;
+
+    enum TabType { All, Team, System, DM };
+
+    private const int MAX_MESSAGES = 50;
 
     private void Start()
     {
-        chatRoots = new List<Transform> { chatItemRoot, teamChatItemRoot, dmChatItemRoot, sysChatItemRoot };
-        curChatRoots = chatItemRoot;
         _baseChatItemWidth = txtChatItemBase.rectTransform.sizeDelta.x;
 
         player = TownManager.Instance.myPlayer;
 
         btnSend.onClick.AddListener(SendMessage);
         btnToggle.onClick.AddListener(ToggleChatWindow);
-        tabAll.onClick.AddListener(delegate { SwitchTab(0); }); // ��ü ä��
-        tabTeam.onClick.AddListener(delegate { SwitchTab(1); }); // �� ä��
-        tabDM.onClick.AddListener(delegate { SwitchTab(2); }); // dm ä��
-        tabSys.onClick.AddListener(delegate { SwitchTab(3); }); // system ä��
+
+        chatList = new List<GameObject>();
+
+        btnAllTab.onClick.AddListener(() => filterChat(TabType.All));
+        btnTeamTab.onClick.AddListener(() => filterChat(TabType.Team));
+        btnSystemTab.onClick.AddListener(() => filterChat(TabType.System));
+        btnDMTab.onClick.AddListener(() => filterChat(TabType.DM));
     }
 
     private void Update()
@@ -111,122 +107,110 @@ public class UIChat : MonoBehaviour
             alarm.DOShakePosition(1f, 10);
         }
 
-        Transform parent = null;
-        List<MessageData> messageList = new List<MessageData>(); ;
-        Color messageColor = Color.white;
+        StopAllCoroutines();
+
+        var msgItem = Instantiate(txtChatItemBase, chatItemRoot);
+
+        msgItem.text = $"{msg}";
+
+        //      AdjustTextContainerHeight(msgItem); // 적절한 높이로 msgItem를 조절
 
         if (msg.StartsWith("[All]"))
         {
-            parent = chatItemRoot;
-            messageList = allMessages;
-            messageColor = myChat ? Color.green : Color.white; // ��ü ä���� �⺻ ����
+            msgItem.color = myChat ? Color.green : Color.white;
         }
         else if (msg.StartsWith("[Team]"))
         {
-            parent = teamChatItemRoot;
-            messageList = teamMessages;
-            messageColor = new Color(135 / 255f, 206 / 255f, 235 / 255f);
+            msgItem.color = new Color(135 / 255f, 206 / 255f, 235 / 255f);
         }
         else if (msg.StartsWith("[DM]"))
         {
-            parent = dmChatItemRoot;
-            messageList = dmMessages;
-            messageColor = Color.magenta;
+            msgItem.color = Color.magenta;
         }
         else if (msg.StartsWith("[System]"))
         {
-            parent = sysChatItemRoot;
-            messageList = sysMessages;
-            messageColor = new Color(1f, 0.64f, 0f); // ��Ȳ��
+            msgItem.color = new Color(1f, 0.64f, 0f);
         }
-
-        var msgItem = Instantiate(txtChatItemBase);
-        msgItem.color = messageColor;
-        msgItem.text = $"{msg}";
-
-        // 넣을 탭이랑 현재 보고있는 탭이 같으면 액티브를 true로 한다. 아니면 false.
-        if(curChatRoots == parent) msgItem.gameObject.SetActive(true);
-        else msgItem.gameObject.SetActive(false);
-
-        // 전체 탭에서 시스템같은 다른 탭에 나와야할게 안나옴 해결코드
-        if (curChatRoots == chatRoots[0])
+        else
         {
-            msgItem.transform.SetParent(chatRoots[0], false);
-            msgItem.gameObject.SetActive(true);
+            msgItem.color = Color.red;
         }
-        else msgItem.transform.SetParent(parent, false);
 
-        msgItem.transform.SetAsLastSibling(); // ������ �ڽ����� ����
-
-        var messageData = new MessageData { Message = msgItem, Timestamp = DateTime.Now };
-        messageList.Add(messageData);
-        allMessages.Add(messageData);
+        msgItem.gameObject.SetActive(true);
 
         StartCoroutine(SetTextSize(msgItem));
         StartCoroutine(ScrollToBottom());
+
+        chatList.Add(msgItem.gameObject);
+
+        if(chatList.Count > MAX_MESSAGES)
+        {
+            Destroy(chatList[0]);
+            // Debug.Log($"{chatList[0].GetComponent<TMP_Text>().text}");
+            chatList.RemoveAt(0);
+        }
     }
 
-    public void SwitchTab(int tab)
+    //    private void AdjustTextContainerHeight(TMP_Text tmpText)
+    //    {
+    //        // 텍스트가 업데이트된 후 레이아웃을 강제로 갱신
+    //        Canvas.ForceUpdateCanvases();
+    //        tmpText.ForceMeshUpdate();
+
+    //        // 텍스트 내용에 맞는 이상적인 높이 계산
+    //        float preferredHeight = tmpText.preferredHeight;
+
+    //        // 텍스트 컨테이너(RectTransform)의 높이를 이상적인 높이로 설정
+    //        var sizeDelta = tmpText.rectTransform.sizeDelta;
+    //        sizeDelta.y = preferredHeight;
+    //        tmpText.rectTransform.sizeDelta = sizeDelta;
+    //    }
+
+    private void filterChat(TabType TabNo)
     {
-        currentTab = tab;
-        Debug.Log(tab);
 
-        foreach (var root in chatRoots)
+        switch (TabNo)
         {
-            root.gameObject.SetActive(true);
-        }
-
-        foreach (var root in chatRoots)
-        {
-            foreach (Transform child in root)
-            {
-                child.gameObject.SetActive(false);
-            }
-        }
-
-        switch (tab)
-        {
-            case 0:
-                foreach (var msg in allMessages)
+            case TabType.All:
+                foreach (GameObject txtChat in chatList)
                 {
-                    msg.Message.gameObject.SetActive(true);
-                    msg.Message.transform.SetParent(chatItemRoot, false);
-
-                    curChatRoots = chatRoots[0];
+                    var txtContainer = txtChat.GetComponent<TMP_Text>();
+                    txtContainer.gameObject.SetActive(true);
                 }
                 break;
-            case 1:
-                foreach (var msg in teamMessages)
+            case TabType.Team:
+                foreach (GameObject txtChat in chatList)
                 {
-                    msg.Message.gameObject.SetActive(true);
-                    msg.Message.transform.SetParent(teamChatItemRoot, false);
+                    var txtContainer = txtChat.GetComponent<TMP_Text>();
 
-                    curChatRoots = chatRoots[1];
+                    if (txtContainer.text.StartsWith("[Team]")) txtContainer.gameObject.SetActive(true);
+                    else txtContainer.gameObject.SetActive(false);
+
                 }
                 break;
-            case 2:
-                foreach (var msg in dmMessages)
+            case TabType.System:
+                foreach (GameObject txtChat in chatList)
                 {
-                    msg.Message.gameObject.SetActive(true);
-                    msg.Message.transform.SetParent(dmChatItemRoot, false);
+                    var txtContainer = txtChat.GetComponent<TMP_Text>();
 
-                    curChatRoots = chatRoots[2];
+                    if (txtContainer.text.StartsWith("[System]")) txtContainer.gameObject.SetActive(true);
+                    else txtContainer.gameObject.SetActive(false);
+
                 }
                 break;
-            case 3:
-                foreach (var msg in sysMessages)
+            case TabType.DM:
+                foreach (GameObject txtChat in chatList)
                 {
-                    msg.Message.gameObject.SetActive(true);
-                    msg.Message.transform.SetParent(sysChatItemRoot, false);
+                    var txtContainer = txtChat.GetComponent<TMP_Text>();
 
-                    curChatRoots = chatRoots[3];
+                    if (txtContainer.text.StartsWith("[DM]")) txtContainer.gameObject.SetActive(true);
+                    else txtContainer.gameObject.SetActive(false);
+
                 }
                 break;
         }
 
-        StartCoroutine(ScrollToBottom());
     }
-
     IEnumerator ScrollToBottom()
     {
         yield return new WaitForEndOfFrame();
@@ -237,25 +221,9 @@ public class UIChat : MonoBehaviour
 
     IEnumerator SetTextSize(TMP_Text textComp)
     {
-        if (textComp == null)
-        {
-            Debug.LogError("textComp is null");
-            yield break;
-        }
-
-        while (textComp.textInfo == null)
-        {
-            yield return null;
-        }
+        yield return new WaitForEndOfFrame();
 
         if (textComp.textInfo.lineCount > 1)
             textComp.rectTransform.sizeDelta = new Vector2(_baseChatItemWidth, textComp.preferredHeight + 12);
     }
-}
-
-[Serializable]
-public class MessageData
-{
-    public TMP_Text Message;
-    public DateTime Timestamp;
 }
