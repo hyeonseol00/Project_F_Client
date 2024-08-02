@@ -125,16 +125,6 @@ public class ChatCommandManager : MonoBehaviour
 
             StartCoroutine(AddMessagesWithDelay(messages));
         }
-        else  // 아이템이 존재하지 않는 경우
-        {
-            string message = "No items available.";  // "아이템이 없습니다." 메시지 생성
-            bool myChat = false;  // 본인의 채팅 여부 설정 (여기서는 시스템 메시지이므로 false)
-
-            // 채팅 UI에 메시지 추가
-            uichat.PushMessage("[System]", message, myChat);
-            // 디버그 로그 출력
-            Debug.Log(message);
-        }
     }
     private void ShowStats()
     {
