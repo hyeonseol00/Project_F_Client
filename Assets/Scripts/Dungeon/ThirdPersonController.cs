@@ -1,3 +1,4 @@
+using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -58,6 +59,12 @@ public class ThirdPersonController : MonoBehaviour
 
             characterBody.forward = lookForward;
             transform.position += moveDir * Time.deltaTime * speed;
-        }
+
+            var pos = transform.position;
+            var rot = characterBody.transform.rotation.eulerAngles;
+			TransformInfo tr = new TransformInfo { PosX = pos.x, PosY = pos.y, PosZ = pos.z, Rot = rot.y };
+			C_MoveAtHatchery response = new C_MoveAtHatchery { Transform = tr };
+			GameManager.Network.Send(response);
+		}
 	}
 }
