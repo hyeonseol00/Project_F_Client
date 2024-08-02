@@ -11,22 +11,22 @@ public class Player : MonoBehaviour
 
     public Avatar avatar { get; private set; }
     public MyPlayer mPlayer { get; private set; }
-    
+
     private string nickname;
 
     private UIChat uiChat;
-    
+
     private Vector3 goalPos;
     private Quaternion goalRot;
 
     private Animator animator;
 
     public int PlayerId { get; private set; }
-    public bool IsMine  { get; private set; }
+    public bool IsMine { get; private set; }
     private bool isInit = false;
 
     public int gold { get; private set; }
-    public StatInfo statInfo  { get; private set; }
+    public StatInfo statInfo { get; private set; }
     public Inventory inven { get; private set; }
 
     private Vector3 lastPos;
@@ -80,9 +80,9 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if(isInit == false)
+        if (isInit == false)
             return;
-        
+
         if (IsMine)
             return;
 
@@ -102,21 +102,48 @@ public class Player : MonoBehaviour
 
     public void SendPlayerMessage(string msg)
     {
-        if(!IsMine) return;
+        if (!IsMine) return;
+
+        // if message is client cmd, access this
+        if (msg[0] == '/')
+        {
+            int firstSpaceIdx = msg.IndexOf(' ');
+
+            string commandType = firstSpaceIdx != -1 ? msg.Substring(0, firstSpaceIdx) : msg;
+            string data = firstSpaceIdx != -1 ? msg.Substring(firstSpaceIdx + 1) : "";
+
+            Debug.Log($"words: {commandType} {data}");
+
+            if (ChatCommandManager.chatCommandMap == null)
+            {
+                Debug.Log("chatCommandMap is null...");
+                return;
+            }
+
+            if (ChatCommandManager.chatCommandMap.TryGetValue(commandType, out System.Action<object> action))
+            {
+                action.Invoke(data);
+                return;
+            }
+            else
+            {
+                Debug.Log($"this is not clientCmd");
+            }
+        }
 
         C_Chat chatPacket = new C_Chat
         {
             PlayerId = PlayerId,
-            SenderName = nickname, 
+            SenderName = nickname,
             ChatMsg = msg
         };
-        
+
         GameManager.Network.Send(chatPacket);
     }
-    
+
     public void RecvMessage(string msg)
     {
-        uiNameChat.PushText(msg);
+        if(msg.StartsWith("[All]")) uiNameChat.PushText(msg);
         uiChat.PushMessage(nickname, msg, IsMine);
     }
 
@@ -125,13 +152,13 @@ public class Player : MonoBehaviour
         goalPos = move;
         goalRot = rot;
     }
-    
+
     public void Animation(int animCode)
     {
-        if(animator)
+        if (animator)
             animator.SetTrigger(animCode);
     }
-    
+
     void CheckMove()
     {
         float dist = Vector3.Distance(lastPos, transform.position);
