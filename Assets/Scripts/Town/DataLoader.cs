@@ -25,13 +25,13 @@ public class DataLoader : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("DataLoader Start method called.");
+        //Debug.Log("DataLoader Start method called.");
         LoadData();
     }
 
     void LoadData()
     {
-        Debug.Log("Loading data...");
+        //Debug.Log("Loading data...");
         Items = ReadCSV<Item>("Assets/Scripts/CSV/Items.csv");
 
         // 데이터 출력 (ID가 1부터 시작)
@@ -40,7 +40,7 @@ public class DataLoader : MonoBehaviour
             for (int i = 0; i < Items.Count; i++)
             {
                 var item = Items[i];
-                Debug.Log($"Item: ID = {item.item_id}, Name = {item.item_name}, Description = {item.item_description}");
+                //Debug.Log($"Item: ID = {item.item_id}, Name = {item.item_name}, Description = {item.item_description}");
             }
         }
         else
@@ -65,7 +65,7 @@ public class DataLoader : MonoBehaviour
                 while ((line = reader.ReadLine()) != null)
                 {
                     lineNumber++;
-                    Debug.Log($"Reading line {lineNumber}: {line}");
+                    //Debug.Log($"Reading line {lineNumber}: {line}");
                     string[] fields = line.Split(',');
                     T data = new T();
                     bool skip = false;
@@ -75,7 +75,7 @@ public class DataLoader : MonoBehaviour
                         var field = typeof(T).GetField(headers[i]);
                         if (field == null)
                         {
-                            Debug.LogWarning($"Field {headers[i]} not found in {typeof(T)}");
+                            //Debug.LogWarning($"Field {headers[i]} not found in {typeof(T)}");
                             continue;
                         }
 
@@ -89,7 +89,7 @@ public class DataLoader : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Debug.LogWarning($"Defaulting field {headers[i]} with value {fields[i]} to 0 on line {lineNumber}");
+                                    //Debug.LogWarning($"Defaulting field {headers[i]} with value {fields[i]} to 0 on line {lineNumber}");
                                     field.SetValue(data, 0);
                                 }
                             }
@@ -101,7 +101,7 @@ public class DataLoader : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Debug.LogWarning($"Defaulting field {headers[i]} with value {fields[i]} to 0.0 on line {lineNumber}");
+                                    //Debug.LogWarning($"Defaulting field {headers[i]} with value {fields[i]} to 0.0 on line {lineNumber}");
                                     field.SetValue(data, 0.0f);
                                 }
                             }
