@@ -299,5 +299,21 @@ class PacketHandler
 
 		HatcheryManager.Instance.SetBossCurHp(pkt.BossCurHp);
 	}
+
+	public static void S_HatcherySpawnHandler(PacketSession session, IMessage packet)
+	{
+		S_HatcherySpawn spawnPacket = packet as S_HatcherySpawn;
+		if (spawnPacket == null)
+			return;
+
+		var playerList = spawnPacket.Players;
+		foreach (var playerInfo in playerList)
+		{
+			var tr = playerInfo.Transform;
+
+			var player = HatcheryManager.Instance.CreatePlayer(playerInfo, new Vector3(tr.PosX, tr.PosY, tr.PosZ));
+			player.SetIsMine(false);
+		}
+	}
 }
 
