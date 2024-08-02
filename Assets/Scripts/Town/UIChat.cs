@@ -37,7 +37,7 @@ public class UIChat : MonoBehaviour
 
     enum TabType { All, Team, System, DM };
 
-    private const int MAX_MESSAGES = 20;
+    private const int MAX_MESSAGES = 50;
 
     private void Start()
     {
@@ -211,7 +211,6 @@ public class UIChat : MonoBehaviour
         }
 
     }
-
     IEnumerator ScrollToBottom()
     {
         yield return new WaitForEndOfFrame();

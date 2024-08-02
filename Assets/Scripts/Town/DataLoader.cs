@@ -7,7 +7,21 @@ using System;
 
 public class DataLoader : MonoBehaviour
 {
-    private List<Item> items;
+    public static DataLoader Instance { get; private set; }
+    public List<Item> Items { get; private set; }
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Scene 전환 시에도 유지
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -18,14 +32,14 @@ public class DataLoader : MonoBehaviour
     void LoadData()
     {
         Debug.Log("Loading data...");
-        items = ReadCSV<Item>("Assets/Scripts/CSV/Items.csv");
+        Items = ReadCSV<Item>("Assets/Scripts/CSV/Items.csv");
 
         // 데이터 출력 (ID가 1부터 시작)
-        if (items != null)
+        if (Items != null)
         {
-            for (int i = 0; i < items.Count; i++)
+            for (int i = 0; i < Items.Count; i++)
             {
-                var item = items[i];
+                var item = Items[i];
                 Debug.Log($"Item: ID = {item.item_id}, Name = {item.item_name}, Description = {item.item_description}");
             }
         }
