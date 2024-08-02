@@ -31,9 +31,7 @@ class PacketHandler
 		var playerList = spawnPacket.Players;
 		foreach (var playerInfo in playerList)
 		{
-			var tr = playerInfo.Transform;
-        
-			var player = TownManager.Instance.CreatePlayer(playerInfo, new Vector3(tr.PosX, tr.PosY, tr.PosZ));
+			var player = TownManager.Instance.CreatePlayer(playerInfo);
 			player.SetIsMine(false);
 		}
 	}
