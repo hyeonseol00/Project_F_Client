@@ -272,7 +272,7 @@ class PacketHandler
 		}
 		else
 		{
-			GameManager.Instance.HatcheryPkt = pkt;
+			GameManager.Instance.HatcheryEnterPkt = pkt;
 			SceneManager.LoadScene(GameManager.HatcheryScene);
 		}
 	}
@@ -282,6 +282,16 @@ class PacketHandler
 		S_SpawnPlayerHatchery pkt = packet as S_SpawnPlayerHatchery;
 		if (pkt == null)
 			return;
+
+		Scene scene = SceneManager.GetActiveScene();
+		if (scene.name == GameManager.HatcheryScene)
+		{
+			HatcheryManager.Instance.OtherPlayerSpawn(pkt);
+	}
+		else
+		{
+			GameManager.Instance.HatcherySpawnPkt = pkt;
+		}
 	}
 
 	public static void S_MoveAtHatcheryHandler(PacketSession session, IMessage packet)
@@ -297,22 +307,14 @@ class PacketHandler
 		if (pkt == null)
 			return;
 
+		Scene scene = SceneManager.GetActiveScene();
+		if (scene.name == GameManager.HatcheryScene)
+		{
 		HatcheryManager.Instance.SetBossCurHp(pkt.BossCurHp);
 	}
-
-	public static void S_HatcherySpawnHandler(PacketSession session, IMessage packet)
-	{
-		S_HatcherySpawn spawnPacket = packet as S_HatcherySpawn;
-		if (spawnPacket == null)
-			return;
-
-		var playerList = spawnPacket.Players;
-		foreach (var playerInfo in playerList)
+		else
 		{
-			var tr = playerInfo.Transform;
-
-			var player = HatcheryManager.Instance.CreatePlayer(playerInfo, new Vector3(tr.PosX, tr.PosY, tr.PosZ));
-			player.SetIsMine(false);
+			GameManager.Instance.SetBossHpPkt = pkt;
 		}
 	}
 }

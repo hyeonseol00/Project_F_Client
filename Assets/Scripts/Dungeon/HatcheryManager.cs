@@ -51,8 +51,27 @@ public class HatcheryManager : MonoBehaviour
 		playerDb.Add(1004, "DungeonPlayer/Character4");
 		playerDb.Add(1005, "DungeonPlayer/Character5");
 
-		Set(GameManager.Instance.HatcheryPkt);
-		GameManager.Instance.HatcheryPkt = null;
+		if (GameManager.Instance.HatcheryEnterPkt != null)
+			Set(GameManager.Instance.HatcheryEnterPkt);
+		GameManager.Instance.HatcheryEnterPkt = null;
+
+		if (GameManager.Instance.SetBossHpPkt != null)
+			SetBossCurHp(GameManager.Instance.SetBossHpPkt.BossCurHp);
+		GameManager.Instance.SetBossHpPkt = null;
+
+		if (GameManager.Instance.HatcherySpawnPkt != null)
+			OtherPlayerSpawn(GameManager.Instance.HatcherySpawnPkt);
+		GameManager.Instance.HatcherySpawnPkt = null;
+	}
+
+	public void OtherPlayerSpawn(S_SpawnPlayerHatchery spawnPacket)
+	{
+		var playerList = spawnPacket.Players;
+		foreach (var playerInfo in playerList)
+		{
+			var player = CreatePlayer(playerInfo);
+			player.SetIsMine(false);
+		}
 	}
 
 	public void Set(S_EnterHatchery pkt)
@@ -76,21 +95,19 @@ public class HatcheryManager : MonoBehaviour
 
 	public void Spawn(PlayerInfo playerInfo)
 	{
-		var tr = playerInfo.Transform;
-
-		var spawnPos = spawnArea.position;
-		spawnPos.x += tr.PosX;
-		spawnPos.z += tr.PosZ;
-
-		myPlayer = CreatePlayer(playerInfo, spawnPos);
+		myPlayer = CreatePlayer(playerInfo);
 		myPlayer.SetIsMine(true);
 	}
 
-	public Character CreatePlayer(PlayerInfo playerInfo, Vector3 spawnPos)
+	public Character CreatePlayer(PlayerInfo playerInfo)
 	{
 		var tr = playerInfo.Transform;
 		Vector3 eRot = new Vector3(0, tr.Rot, 0);
 		var spawnRot = Quaternion.Euler(eRot);
+
+		var spawnPos = spawnArea.position;
+		spawnPos.x += tr.PosX;
+		spawnPos.z += tr.PosZ;
 
 		var playerId = playerInfo.PlayerId;
 		var playerResPath = playerDb.GetValueOrDefault(playerInfo.Class, basePlayerPath);
