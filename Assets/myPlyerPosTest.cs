@@ -32,7 +32,7 @@ public class myPlyerPosTest : MonoBehaviour
                 msr.enabled = false;
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    EnterDungeon(1);
+                    EnterDungeon();
                 }
             }
             else
@@ -43,10 +43,9 @@ public class myPlyerPosTest : MonoBehaviour
         
     }
 
-    private void EnterDungeon(int idx)
+    private void EnterDungeon()
     {
-        Debug.Log($"Access Complete");
-        C_EnterDungeon enterPacket = new C_EnterDungeon { DungeonCode = idx };
+        C_EnterHatchery enterPacket = new C_EnterHatchery { };
         GameManager.Network.Send(enterPacket);
     }
 }

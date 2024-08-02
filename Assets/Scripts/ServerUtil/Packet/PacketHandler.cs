@@ -33,9 +33,7 @@ class PacketHandler
 		var playerList = spawnPacket.Players;
 		foreach (var playerInfo in playerList)
 		{
-			var tr = playerInfo.Transform;
-        
-			var player = TownManager.Instance.CreatePlayer(playerInfo, new Vector3(tr.PosX, tr.PosY, tr.PosZ));
+			var player = TownManager.Instance.CreatePlayer(playerInfo);
 			player.SetIsMine(false);
 		}
 	}
@@ -112,7 +110,6 @@ class PacketHandler
 	public static void S_EnterDungeonHandler(PacketSession session, IMessage packet)
 	{
 		S_EnterDungeon pkt = packet as S_EnterDungeon;
-		Debug.Log($"{pkt}");
 		if (pkt == null)
 			return;
 		
@@ -164,7 +161,6 @@ class PacketHandler
 	public static void S_BattleLogHandler(PacketSession session, IMessage packet)
 	{
 		S_BattleLog pkt = packet as S_BattleLog;
-		Debug.Log($"{pkt}");
 		if (pkt == null)
 			return;
 		
@@ -198,7 +194,6 @@ class PacketHandler
 	public static void S_SetMonsterHpHandler(PacketSession session, IMessage packet)
 	{
 		S_SetMonsterHp pkt = packet as S_SetMonsterHp;
-		Debug.Log($"{pkt}");
 		if (pkt == null)
 			return;
 		
@@ -208,7 +203,6 @@ class PacketHandler
 	public static void S_PlayerActionHandler(PacketSession session, IMessage packet)
 	{
 		S_PlayerAction pkt = packet as S_PlayerAction;
-		Debug.Log($"{pkt}");
 		if (pkt == null)
 			return;
 
@@ -265,5 +259,74 @@ class PacketHandler
 	}
 
 	#endregion
+
+	public static void S_EnterHatcheryHandler(PacketSession session, IMessage packet)
+	{
+		S_EnterHatchery pkt = packet as S_EnterHatchery;
+		if (pkt == null)
+			return;
+
+		Scene scene = SceneManager.GetActiveScene();
+		if (scene.name == GameManager.HatcheryScene)
+		{
+			HatcheryManager.Instance.Set(pkt);
+		}
+		else
+		{
+			GameManager.Instance.HatcheryEnterPkt = pkt;
+			SceneManager.LoadScene(GameManager.HatcheryScene);
+		}
+	}
+
+	public static void S_SpawnPlayerHatcheryHandler(PacketSession session, IMessage packet)
+	{
+		S_SpawnPlayerHatchery pkt = packet as S_SpawnPlayerHatchery;
+		if (pkt == null)
+			return;
+
+		Scene scene = SceneManager.GetActiveScene();
+		if (scene.name == GameManager.HatcheryScene)
+		{
+			HatcheryManager.Instance.OtherPlayerSpawn(pkt);
+		}
+		else
+		{
+			GameManager.Instance.HatcherySpawnPkt = pkt;
+		}
+	}
+
+	public static void S_MoveAtHatcheryHandler(PacketSession session, IMessage packet)
+	{
+		S_MoveAtHatchery pkt = packet as S_MoveAtHatchery;
+		if (pkt == null)
+			return;
+
+		var tr = pkt.Transform;
+		Vector3 move = new Vector3(tr.PosX, tr.PosY, tr.PosZ);
+		Vector3 eRot = new Vector3(0, tr.Rot, 0);
+
+		var player = HatcheryManager.Instance.GetPlayerAvatarById(pkt.PlayerId);
+		if (player)
+		{
+			player.Move(move, Quaternion.Euler(eRot));
+		}
+	}
+
+	public static void S_SetHatcheryBossHpHandler(PacketSession session, IMessage packet)
+	{
+		S_SetHatcheryBossHp pkt = packet as S_SetHatcheryBossHp;
+		if (pkt == null)
+			return;
+
+		Scene scene = SceneManager.GetActiveScene();
+		if (scene.name == GameManager.HatcheryScene)
+		{
+			HatcheryManager.Instance.SetBossCurHp(pkt.BossCurHp);
+		}
+		else
+		{
+			GameManager.Instance.SetBossHpPkt = pkt;
+		}
+	}
 }
 

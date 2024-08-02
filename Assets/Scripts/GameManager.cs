@@ -16,8 +16,12 @@ public class GameManager : MonoBehaviour
 
     public const string BattleScene = "Battle";
     public const string TownScene = "Town";
+	public const string HatcheryScene = "Dungeon.BugHatchery";
 
-    public S_EnterDungeon Pkt;
+	public S_EnterDungeon Pkt;
+    public S_EnterHatchery HatcheryEnterPkt;
+    public S_SetHatcheryBossHp SetBossHpPkt;
+    public S_SpawnPlayerHatchery HatcherySpawnPkt;
     
     public string UserName;
     public int ClassIdx;
