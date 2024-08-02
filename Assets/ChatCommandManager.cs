@@ -16,6 +16,7 @@ public class ChatCommandManager : MonoBehaviour
             { "/FunctionA", args => FunctionA((string)args) },
             { "/FunctionD", args => FunctionD((string)args) },
             { "/shop", args => ShowItems() },
+            { "/stat", args => ShowStats() },
             //{ "FunctionB", args => FunctionB((int)args, (float)args) },
             //{ "FunctionC", args => FunctionC((bool)args, (string)args) }
         };
@@ -51,7 +52,7 @@ public class ChatCommandManager : MonoBehaviour
         foreach (var message in messages)
         {
             uichat.PushMessage("[System]", message, true);
-            yield return new WaitForSeconds(0.1f); // 0.1초 딜레이
+            yield return new WaitForSeconds(0.05f); // 0.05초 딜레이
         }
     }
 
@@ -131,6 +132,20 @@ public class ChatCommandManager : MonoBehaviour
 
             // 채팅 UI에 메시지 추가
             uichat.PushMessage("[System]", message, myChat);
+            // 디버그 로그 출력
+            Debug.Log(message);
+        }
+    }
+    private void ShowStats()
+    {
+        var player = TownManager.Instance.myPlayer;  // TownManager에서 현재 플레이어 가져오기
+
+        if (player != null)  // 플레이어가 존재하는 경우
+        {
+            string message = $"[System] StatInfo: {player.statInfo}";
+
+            // 채팅 UI에 메시지 추가
+            uichat.PushMessage("[System]", message, false);
             // 디버그 로그 출력
             Debug.Log(message);
         }
