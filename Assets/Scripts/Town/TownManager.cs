@@ -112,6 +112,15 @@ public class TownManager : MonoBehaviour
         player.SetPlayerId(playerId);
         player.SetNickname(playerInfo.Nickname);
 
+        // gold, statInfo, inven
+        player.SetGold(playerInfo.Gold);
+        player.SetStatInfo(playerInfo.StatInfo);
+        player.SetInventory(playerInfo.Inven);
+
+        Debug.Log($"Gold: {player.gold}");
+        Debug.Log($"StatInfo: {player.statInfo}");
+        Debug.Log($"Inven: {player.inven}");
+
         if (playerList.ContainsKey(playerId))
         {
             var prevPlayer = playerList[playerId]; 
