@@ -9,13 +9,11 @@ public class Character : MonoBehaviour
 {
 	[SerializeField] private UINameChat uiNameChat;
 
-	public Avatar avatar { get; private set; }
 	public MyPlayer mPlayer { get; private set; }
 
 	private string nickname;
 
-	private UIChat uiChat;
-
+	private GameObject character;
 	private Animator animator;
 
 	public int PlayerId { get; private set; }
@@ -23,11 +21,27 @@ public class Character : MonoBehaviour
 	private bool isInit = false;
 
 	private Vector3 lastPos;
+	private float elapsedFromMovePacket;
 
 	void Start()
 	{
-		avatar = GetComponent<Avatar>();
-		animator = GetComponent<Animator>();
+		character = transform.Find("Player1").gameObject;
+		animator = character.GetComponent<Animator>();
+	}
+
+	private void FixedUpdate()
+	{
+		if (isInit == false)
+			return;
+
+		if (IsMine)
+			return;
+
+		elapsedFromMovePacket += Time.deltaTime;
+		if (elapsedFromMovePacket <= 0.05f)
+			animator.SetFloat("Move", 1.0f);
+		else
+			animator.SetFloat("Move", 0.0f);
 	}
 
 	public void SetPlayerId(int playerId)
@@ -62,13 +76,10 @@ public class Character : MonoBehaviour
 		isInit = true;
 	}
 
-
-	private void Update()
+	public void Move(Vector3 move, Quaternion rot)
 	{
-		if (isInit == false)
-			return;
-
-		if (IsMine)
-			return;
+		transform.position = move;
+		character.transform.rotation = rot;
+		elapsedFromMovePacket = 0.0f;
 	}
 }

@@ -102,7 +102,7 @@ public class HatcheryManager : MonoBehaviour
 	public Character CreatePlayer(PlayerInfo playerInfo)
 	{
 		var tr = playerInfo.Transform;
-		Vector3 eRot = new Vector3(0, tr.Rot, 0);
+		Vector3 eRot = new Vector3(0, 0, 0);
 		var spawnRot = Quaternion.Euler(eRot);
 
 		var spawnPos = spawnArea.position;
