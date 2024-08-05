@@ -9,23 +9,12 @@ public class UIAnimation : MonoBehaviour
 {
     [SerializeField] private Button btnBattle;
     [SerializeField] private Button[] btnList;
-    [SerializeField] private TMP_Text goldTxt;
 
     private MyPlayer mPlayer;
-    Player currentPlayer;
-
-
+ 
     void Start()
     {
-        currentPlayer = TownManager.Instance.myPlayer;
-
-        // TownManager의 싱글톤 인스턴스를 통해 myPlayer에 접근
-       
-
-        Debug.Log(currentPlayer.gold);
-
-        goldTxt.text =  currentPlayer.gold.ToString();
-
+    
         for (int i = 0; i < btnList.Length; i++)
         {
             int idx = i;

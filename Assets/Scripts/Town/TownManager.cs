@@ -25,12 +25,12 @@ public class TownManager : MonoBehaviour
     [SerializeField] private UIStart uiStart;
     [SerializeField] private UIAnimation uiAnimation;
     [SerializeField] private UIChat uiChat;
+    [SerializeField] private UIPlayerInformationInTown uiPlayerInformation;
 
     public UIStart UiStart => uiStart;
     public UIChat UiChat => uiChat;
     
     [SerializeField] private TMP_Text txtServer;
-
 
     private Dictionary<int, Player> playerList = new Dictionary<int, Player>();
     private Dictionary<int, string> playerDb = new Dictionary<int, string>();
@@ -116,7 +116,7 @@ public class TownManager : MonoBehaviour
         player.SetGold(playerInfo.Gold);
         player.SetStatInfo(playerInfo.StatInfo);
         player.SetInventory(playerInfo.Inven);
-
+   
         Debug.Log($"Gold: {player.gold}");
         Debug.Log($"StatInfo: {player.statInfo}");
         Debug.Log($"Inven: {player.inven}");
@@ -154,6 +154,7 @@ public class TownManager : MonoBehaviour
         
         uiChat.gameObject.SetActive(true);
         uiAnimation.gameObject.SetActive(true);
+        uiPlayerInformation.gameObject.SetActive(true);
     }
     
     public Player GetPlayerAvatarById(int playerId)
@@ -162,5 +163,19 @@ public class TownManager : MonoBehaviour
             return playerList[playerId];
         
         return null;
+    }
+    public void Set(S_Enter pkt)
+    {
+
+        if (pkt.Player != null)
+        {
+            Debug.Log($"Player data found");
+            uiPlayerInformation.Set(pkt.Player);
+        }
+        else
+        {
+            Debug.Log($"Player data is not found");
+        }
+
     }
 }
