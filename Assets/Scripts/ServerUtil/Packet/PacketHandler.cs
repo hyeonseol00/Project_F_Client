@@ -15,7 +15,6 @@ class PacketHandler
 	{
         S_Enter enterPacket = packet as S_Enter;
 
-		Debug.Log($"enterPacket {enterPacket}");
         if (enterPacket == null)
 	        return;
         
