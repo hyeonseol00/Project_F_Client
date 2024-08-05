@@ -20,6 +20,7 @@ class PacketHandler
 	        return;
         
 		TownManager.Instance.Spawn(enterPacket.Player);
+		TownManager.Instance.Set(enterPacket);
 	}
 	
 	public static void S_LeaveHandler(PacketSession session, IMessage packet) { }
@@ -100,13 +101,45 @@ class PacketHandler
 			player.RecvMessage(msg);
 		}
 	}
+	public static void S_BuyItemHandler(PacketSession session, IMessage packet)
+	{
+		Debug.Log($"S_BuyItem Access!");
+
+		//S_BuyItem pkt = packet as S_BuyItem;
+		//if (pkt == null)
+		//	return;
+
+		//Debug.Log($"S_BuyItem {pkt}");
+
+		//TownManager.Instance.myPlayer.SetGold(pkt.Gold);
+		//Debug.Log($"myPlayer Gold is  {TownManager.Instance.myPlayer.gold}");
+
+		//TownManager.Instance.myPlayer.AddItemToInven(pkt.Item);
+		//Debug.Log($"myPlayer Inven is  {TownManager.Instance.myPlayer.inven}");
+	}
+
+	public static void S_SellItemHandler(PacketSession session, IMessage packet)
+	{
+		Debug.Log($"S_SellItem Access!");
+		//S_SellItem pkt = packet as S_SellItem;
+		//if (pkt == null)
+		//	return;
+
+		//Debug.Log($"S_SellItem {pkt}");
+
+		//TownManager.Instance.myPlayer.SetGold(pkt.Gold);
+		//Debug.Log($"myPlayer Gold is  {TownManager.Instance.myPlayer.gold}");
+
+		//TownManager.Instance.myPlayer.SubItemToInven(pkt.Item);
+		//Debug.Log($"myPlayer Inven is  {TownManager.Instance.myPlayer.inven}");
+	}
 
 	#endregion
 
 
 	#region Battle
 
-	
+
 	public static void S_EnterDungeonHandler(PacketSession session, IMessage packet)
 	{
 		S_EnterDungeon pkt = packet as S_EnterDungeon;
