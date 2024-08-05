@@ -5,6 +5,7 @@ using Google.Protobuf.Protocol;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class Player : MonoBehaviour
 {
     [SerializeField] private UINameChat uiNameChat;
@@ -27,7 +28,7 @@ public class Player : MonoBehaviour
 
     public int gold { get; private set; }
     public StatInfo statInfo { get; private set; }
-    public Inventory inven { get; private set; }
+    public List<InventoryItem> InventoryItems { get; private set; } = new List<InventoryItem>();
 
     private Vector3 lastPos;
 
@@ -73,11 +74,15 @@ public class Player : MonoBehaviour
         this.statInfo = statInfo;
     }
 
-    public void SetInventory(Inventory inven)
+    public void SetInventory(List<InventoryItem> inventoryItems)
     {
-        this.inven = inven;
-    }
+        InventoryItems = inventoryItems;
 
+        foreach (var item in InventoryItems)
+        {
+            item.ItemData = DataLoader.Instance.GetItemById(item.Id);
+        }
+    }
     private void Update()
     {
         if (isInit == false)

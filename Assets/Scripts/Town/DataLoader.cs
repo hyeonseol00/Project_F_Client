@@ -4,11 +4,12 @@ using System.Globalization;
 using UnityEngine;
 using Assets.Scripts.Town.Data;
 using System;
+using static UnityEditor.Progress;
 
 public class DataLoader : MonoBehaviour
 {
     public static DataLoader Instance { get; private set; }
-    public List<Item> Items { get; private set; }
+    public List<Assets.Scripts.Town.Data.Item> Items { get; private set; }
 
     void Awake()
     {
@@ -32,7 +33,7 @@ public class DataLoader : MonoBehaviour
     void LoadData()
     {
         //Debug.Log("Loading data...");
-        Items = ReadCSV<Item>("Assets/Scripts/CSV/Items.csv");
+        Items = Items = ReadCSV<Assets.Scripts.Town.Data.Item>("Assets/Scripts/CSV/Items.csv");
 
         // 데이터 출력 (ID가 1부터 시작)
         if (Items != null)
@@ -47,6 +48,10 @@ public class DataLoader : MonoBehaviour
         {
             Debug.Log("No items loaded.");
         }
+    }
+    public Assets.Scripts.Town.Data.Item GetItemById(int id)
+    {
+        return Items.Find(item => item.item_id == id);
     }
 
     private List<T> ReadCSV<T>(string filePath) where T : class, new()

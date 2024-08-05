@@ -17,6 +17,7 @@ public class ChatCommandManager : MonoBehaviour
             { "/FunctionD", args => FunctionD((string)args) },
             { "/shop", args => ShowItems() },
             { "/stat", args => ShowStats() },
+            { "/inven", args => ShowInventory() }
             //{ "FunctionB", args => FunctionB((int)args, (float)args) },
             //{ "FunctionC", args => FunctionC((bool)args, (string)args) }
         };
@@ -140,13 +141,44 @@ public class ChatCommandManager : MonoBehaviour
             Debug.Log(message);
         }
     }
-    //    private void FunctionB(int number, float value)
-    //    {
-    //        Debug.Log($"FunctionB executed with number: {number} and value: {value}");
-    //    }
 
-    //    private void FunctionC(bool flag, string text)
-    //    {
-    //        Debug.Log($"FunctionC executed with flag: {flag} and text: {text}");
-    //    }
-}
+    private void ShowInventory()
+    {
+        Player currentPlayer = TownManager.Instance.myPlayer;
+
+        if (currentPlayer != null)
+        {
+            List<string> messages = new List<string>();
+
+            foreach (var inventoryItem in currentPlayer.InventoryItems)
+            {
+                if (inventoryItem.Quantity > 0 && inventoryItem.ItemData != null)
+                {
+                    string message = $"Item ID: {inventoryItem.ItemData.item_id}, Name: {inventoryItem.ItemData.item_name}, Quantity: {inventoryItem.Quantity}";
+                    messages.Add(message);
+                    Debug.Log(message);
+                }
+            }
+
+            if (messages.Count > 0)
+            {
+                StartCoroutine(AddMessagesWithDelay(messages));
+            }
+            else
+            {
+                string message = "No items in inventory.";
+                uichat.PushMessage("[System]", message, false);
+                Debug.Log(message);
+            }
+        }
+    }
+        //    private void FunctionB(int number, float value)
+        //    {
+        //        Debug.Log($"FunctionB executed with number: {number} and value: {value}");
+        //    }
+
+        //    private void FunctionC(bool flag, string text)
+        //    {
+        //        Debug.Log($"FunctionC executed with flag: {flag} and text: {text}");
+        //    }
+    }
