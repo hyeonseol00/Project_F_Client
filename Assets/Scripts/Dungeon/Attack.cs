@@ -1,3 +1,4 @@
+using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,11 @@ public class Attack : MonoBehaviour
     {
         animator.SetBool("Anim1", true);
 
-        yield return new WaitForSeconds(0.41f);
+		C_TryAttack tryAttackPacket = new C_TryAttack { };
+
+		GameManager.Network.Send(tryAttackPacket);
+
+		yield return new WaitForSeconds(0.41f);
         meleeArea.enabled = true;
 
         yield return new WaitForSeconds(0.1f);
