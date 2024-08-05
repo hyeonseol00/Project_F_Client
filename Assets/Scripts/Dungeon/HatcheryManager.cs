@@ -17,6 +17,7 @@ public class HatcheryManager : MonoBehaviour
 	[SerializeField] private Transform spawnArea;
 	public Character myPlayer { get; private set; }
 
+	[SerializeField] private Enemy monster;
 	[SerializeField] private UIMonsterInformation uiMonsterInfo;
 
 	private Dictionary<int, Character> playerList = new Dictionary<int, Character>();
@@ -90,6 +91,10 @@ public class HatcheryManager : MonoBehaviour
 
 	public void SetBossCurHp(int hp)
 	{
+		if (uiMonsterInfo.GetCurHP() > hp)
+		{
+			monster.HitAnimation();
+		}
 		uiMonsterInfo.SetCurHP(hp);
 	}
 

@@ -23,7 +23,12 @@ public class Enemy : MonoBehaviour
 
 			GameManager.Network.Send(attackBossPacket);
 
-			animator.SetBool("Hit", true);
+			// animator.SetBool("Hit", true);
 		}
+	}
+
+	public void HitAnimation()
+	{
+		animator.SetBool("Hit", true);
 	}
 }
