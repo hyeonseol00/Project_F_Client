@@ -16,7 +16,8 @@ public class ChatCommandManager : MonoBehaviour
             { "/FunctionD", args => FunctionD((string)args) },
             { "/shop", args => ShowItems() },
             { "/stat", args => ShowStats() },
-            { "/help", args => PrintCommands() },
+            { "/help", args => ShowCommands() },
+            { "/equipment", args => ShowEquipment() },
             //{ "FunctionB", args => FunctionB((int)args, (float)args) },
             //{ "FunctionC", args => FunctionC((bool)args, (string)args) }
             { "/inven", args => ShowInventory() }
@@ -142,7 +143,7 @@ public class ChatCommandManager : MonoBehaviour
             Debug.Log(message);
         }
     }
-    private void PrintCommands()
+    private void ShowCommands()
     {
         string nickname = "not use param";
         string commandsList =
@@ -249,13 +250,31 @@ public class ChatCommandManager : MonoBehaviour
             }
         }
     }
-        //    private void FunctionB(int number, float value)
-        //    {
-        //        Debug.Log($"FunctionB executed with number: {number} and value: {value}");
-        //    }
 
-        //    private void FunctionC(bool flag, string text)
-        //    {
-        //        Debug.Log($"FunctionC executed with flag: {flag} and text: {text}");
-        //    }
+    private void ShowEquipment()
+    {
+        Player currentPlayer = TownManager.Instance.myPlayer;
+        EquippedItems equippedItems = currentPlayer.equippedItems;
+
+        string message = "[System]: 장착 아이템 목록은 다음과 같습니다\n";
+
+        message += equippedItems.Weapon != null ? $"무기: {equippedItems.Weapon.item_name}\n": $"무기: 없음\n";
+        message += equippedItems.Armor != null ? $"갑옷: {equippedItems.Armor.item_name}\n" : $"갑옷: 없음\n";
+        message += equippedItems.Gloves != null ? $"장갑: {equippedItems.Gloves.item_name}\n" : $"장갑: 없음\n";
+        message += equippedItems.Shoes != null ? $"신발: {equippedItems.Shoes.item_name}\n" : $"신발: 없음\n";
+        message += equippedItems.Accessory != null ? $"액세서리: {equippedItems.Accessory.item_name}\n" : $"액세서리: 없음\n";
+
+        uichat.PushMessage("[System]", message, false);
+
+    }
+
+    //    private void FunctionB(int number, float value)
+    //    {
+    //        Debug.Log($"FunctionB executed with number: {number} and value: {value}");
+    //    }
+
+    //    private void FunctionC(bool flag, string text)
+    //    {
+    //        Debug.Log($"FunctionC executed with flag: {flag} and text: {text}");
+    //    }
 }

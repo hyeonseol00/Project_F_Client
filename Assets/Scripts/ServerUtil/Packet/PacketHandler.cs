@@ -105,44 +105,41 @@ class PacketHandler
 	{
 		Debug.Log($"S_BuyItem Access!");
 
-		//S_BuyItem pkt = packet as S_BuyItem;
-		//if (pkt == null)
-		//	return;
+        S_BuyItem pkt = packet as S_BuyItem;
+        if (pkt == null)
+            return;
 
-		//Debug.Log($"S_BuyItem {pkt}");
+        Debug.Log($"S_BuyItem {pkt}");
 
-		//TownManager.Instance.myPlayer.SetGold(pkt.Gold);
-		//Debug.Log($"myPlayer Gold is  {TownManager.Instance.myPlayer.gold}");
-
-		//TownManager.Instance.myPlayer.AddItemToInven(pkt.Item);
-		//Debug.Log($"myPlayer Inven is  {TownManager.Instance.myPlayer.inven}");
-	}
+        TownManager.Instance.myPlayer.ProcessBuyItemEvent(pkt.Item);
+        
+    }
 
 	public static void S_SellItemHandler(PacketSession session, IMessage packet)
 	{
 		Debug.Log($"S_SellItem Access!");
-		//S_SellItem pkt = packet as S_SellItem;
-		//if (pkt == null)
-		//	return;
+        S_SellItem pkt = packet as S_SellItem;
+        if (pkt == null)
+            return;
 
-		//Debug.Log($"S_SellItem {pkt}");
+        Debug.Log($"S_SellItem {pkt}");
 
-		//TownManager.Instance.myPlayer.SetGold(pkt.Gold);
-		//Debug.Log($"myPlayer Gold is  {TownManager.Instance.myPlayer.gold}");
+        //TownManager.Instance.myPlayer.SetGold(pkt.Gold);
+        //Debug.Log($"myPlayer Gold is  {TownManager.Instance.myPlayer.gold}");
 
-		//TownManager.Instance.myPlayer.SubItemToInven(pkt.Item);
-		//Debug.Log($"myPlayer Inven is  {TownManager.Instance.myPlayer.inven}");
-	}
+        //TownManager.Instance.myPlayer.SubItemToInven(pkt.Item);
+        //Debug.Log($"myPlayer Inven is  {TownManager.Instance.myPlayer.inven}");
+    }
 
 	public static void S_UseItemHandler(PacketSession session, IMessage packet)
 	{
 		Debug.Log($"S_UseItemHandler Access!");
 
-		//S_BuyItem pkt = packet as S_BuyItem;
-		//if (pkt == null)
-		//	return;
+        S_UseItem pkt = packet as S_UseItem;
+        if (pkt == null)
+            return;
 
-		//Debug.Log($"S_BuyItem {pkt}");
+		Debug.Log($"S_UseItem {pkt}");
 
 		//TownManager.Instance.myPlayer.SetGold(pkt.Gold);
 		//Debug.Log($"myPlayer Gold is  {TownManager.Instance.myPlayer.gold}");
@@ -155,28 +152,28 @@ class PacketHandler
 	{
 		Debug.Log($"S_EquipWeaponHandle Access!");
 
-		//S_BuyItem pkt = packet as S_BuyItem;
-		//if (pkt == null)
-		//	return;
+        S_EquipWeapon pkt = packet as S_EquipWeapon;
+        if (pkt == null)
+            return;
 
-		//Debug.Log($"S_BuyItem {pkt}");
+        Debug.Log($"S_EquipWeapon {pkt}");
 
-		//TownManager.Instance.myPlayer.SetGold(pkt.Gold);
-		//Debug.Log($"myPlayer Gold is  {TownManager.Instance.myPlayer.gold}");
+        //TownManager.Instance.myPlayer.SetGold(pkt.Gold);
+        //Debug.Log($"myPlayer Gold is  {TownManager.Instance.myPlayer.gold}");
 
-		//TownManager.Instance.myPlayer.AddItemToInven(pkt.Item);
-		//Debug.Log($"myPlayer Inven is  {TownManager.Instance.myPlayer.inven}");
-	}
+        //TownManager.Instance.myPlayer.AddItemToInven(pkt.Item);
+        //Debug.Log($"myPlayer Inven is  {TownManager.Instance.myPlayer.inven}");
+    }
 
 	public static void S_UnequipWeaponHandler(PacketSession session, IMessage packet)
 	{
 		Debug.Log($"S_UnequipWeaponHandle Access!");
 
-		//S_BuyItem pkt = packet as S_BuyItem;
-		//if (pkt == null)
-		//	return;
+        S_UnequipWeapon pkt = packet as S_UnequipWeapon;
+        if (pkt == null)
+            return;
 
-		//Debug.Log($"S_BuyItem {pkt}");
+		Debug.Log($"S_UnequipWeapon {pkt}");
 
 		//TownManager.Instance.myPlayer.SetGold(pkt.Gold);
 		//Debug.Log($"myPlayer Gold is  {TownManager.Instance.myPlayer.gold}");

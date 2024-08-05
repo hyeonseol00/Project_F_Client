@@ -111,6 +111,7 @@ public class TownManager : MonoBehaviour
         player.Move(spawnPos, spawnRot);
         player.SetPlayerId(playerId);
         player.SetNickname(playerInfo.Nickname);
+        player.SetEquipment(playerInfo.Equipment);
 
         // gold, statInfo, inven
         player.SetGold(playerInfo.Gold);

@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
     public StatInfo statInfo { get; private set; }
     public List<InventoryItem> InventoryItems { get; private set; } = new List<InventoryItem>();
 
+    public EquippedItems equippedItems;
+
     private Vector3 lastPos;
 
     void Start()
@@ -46,6 +48,17 @@ public class Player : MonoBehaviour
     {
         this.nickname = nickname;
         uiNameChat.SetName(nickname);
+    }
+
+    public void SetEquipment(Equipment equipment)
+    {
+        Item _weapon = DataLoader.Instance?.GetItemById(equipment.Weapon);
+        Item _armor = DataLoader.Instance?.GetItemById(equipment.Armor);
+        Item _gloves = DataLoader.Instance?.GetItemById(equipment.Gloves);
+        Item _shoes = DataLoader.Instance?.GetItemById(equipment.Shoes);
+        Item _accessory = DataLoader.Instance?.GetItemById(equipment.Accessory);
+        this.equippedItems = new EquippedItems(_weapon, _armor, _gloves, _shoes, _accessory);
+
     }
 
     public void SetIsMine(bool isMine)
@@ -190,39 +203,62 @@ public class Player : MonoBehaviour
 
 
         lastPos = transform.position;
-        //}
-
-        //public void AddItemToInven(ItemInfo item)
-        //{
-        //    for (int i = 0; i < inven.Items.Count; i++)
-        //    {
-        //        if (inven.Items[i].Id == item.Id)
-        //        {
-        //            inven.Items[i].Quantity += item.Quantity;
-        //            return;
-        //        }
-        //    }
-
-        //    inven.Items.Add(item);
-        //    return;
-        //}
-
-        //public void SubItemToInven(ItemInfo item)
-        //{
-        //    for (int i = 0; i < inven.Items.Count; i++)
-        //    {
-        //        if (inven.Items[i].Id == item.Id)
-        //        {
-        //            inven.Items[i].Quantity -= item.Quantity;
-        //            if (inven.Items[i].Quantity == 0)
-        //            {
-        //                inven.Items.RemoveAt(i);
-        //            }
-        //            return;
-        //        }
-        //    }
-
-        //    return;
-        //}
+        
     }
+
+    public void ProcessBuyItemEvent(ItemInfo item)
+    {
+        // 아이템이 이미 존재하는지 확인
+        InventoryItem existingItem = InventoryItems.Find(item => item.ItemData.item_id == item.Id);
+
+        if (existingItem != null)
+        {
+            // 아이템이 존재하면 수량 증가
+            existingItem.Quantity += item.Quantity;
+        }
+        else
+        {
+            // 아이템이 존재하지 않으면 새로운 아이템 추가
+            var itemData = DataLoader.Instance?.GetItemById(item.Id);
+            //Debug.Log(itemData);
+
+            InventoryItem inventoryItem = new InventoryItem
+            {
+                Id = item.Id,
+                Quantity = item.Quantity,
+                ItemData = itemData
+            };
+
+            InventoryItems.Add(inventoryItem);
+        }
+
+        Debug.Log($"myPlayer Inven is  {InventoryItems}");
+        Debug.Log($"gold is  {gold}");
+    }
+
+    public void ProcessSellItemEvent(ItemInfo item)
+    {
+        // 아이템이 이미 존재하는지 확인
+        InventoryItem existingItem = InventoryItems.Find(invItem => invItem.ItemData.item_id == item.Id);
+
+        if (existingItem != null)
+        {
+            // 아이템의 수량 감소
+            existingItem.Quantity -= item.Quantity;
+
+            // 아이템의 수량이 0 이하이면 인벤토리에서 제거
+            if (existingItem.Quantity <= 0)
+            {
+                InventoryItems.Remove(existingItem);
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Item with ID {item.Id} does not exist in the inventory.");
+        }
+
+        Debug.Log($"myPlayer Inven is  {InventoryItems}");
+        Debug.Log($"gold is  {gold}");
+    }
+
 }
