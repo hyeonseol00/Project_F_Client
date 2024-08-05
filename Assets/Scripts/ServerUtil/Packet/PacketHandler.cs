@@ -362,17 +362,17 @@ class PacketHandler
 		}
 	}
 
-	public static void S_TryAttackHandler(PacketSession session, IMessage packet)
-	{
-		S_TryAttack pkt = packet as S_TryAttack;
-		if (pkt == null)
-			return;
+	//public static void S_TryAttackHandler(PacketSession session, IMessage packet)
+	//{
+	//	S_TryAttack pkt = packet as S_TryAttack;
+	//	if (pkt == null)
+	//		return;
 
-		var player = HatcheryManager.Instance.GetPlayerAvatarById(pkt.PlayerId);
-		if (player)
-		{
-			player.AttackMotion();
-		}
-	}
+	//	var player = HatcheryManager.Instance.GetPlayerAvatarById(pkt.PlayerId);
+	//	if (player)
+	//	{
+	//		player.AttackMotion();
+	//	}
+	//}
 }
 

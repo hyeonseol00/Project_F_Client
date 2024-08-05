@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Assets.Scripts.Town.Data
+﻿namespace Assets.Scripts.Town.Data
 {
     public class Item
     {
@@ -19,7 +17,7 @@ namespace Assets.Scripts.Town.Data
         public int require_level { get; set; }
         public float item_avoidance { get; set; }
         public float item_critical { get; set; }
-        public DateTime created_at { get; set; }
-        public DateTime updated_at { get; set; }
+        public string created_at { get; set; }
+        public string updated_at { get; set; }
     }
 }

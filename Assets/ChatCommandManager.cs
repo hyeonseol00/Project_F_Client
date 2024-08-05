@@ -8,7 +8,6 @@ public class ChatCommandManager : MonoBehaviour
 
     [SerializeField] private UIChat uichat;
 
-    // Start is called before the first frame update
     void Awake()
     {
         chatCommandMap = new Dictionary<string, System.Action<object>>
@@ -18,8 +17,6 @@ public class ChatCommandManager : MonoBehaviour
             { "/shop", args => ShowItems() },
             { "/stat", args => ShowStats() },
             { "/inven", args => ShowInventory() }
-            //{ "FunctionB", args => FunctionB((int)args, (float)args) },
-            //{ "FunctionC", args => FunctionC((bool)args, (string)args) }
         };
     }
 
@@ -127,6 +124,7 @@ public class ChatCommandManager : MonoBehaviour
             StartCoroutine(AddMessagesWithDelay(messages));
         }
     }
+
     private void ShowStats()
     {
         var player = TownManager.Instance.myPlayer;  // TownManager에서 현재 플레이어 가져오기
@@ -154,9 +152,56 @@ public class ChatCommandManager : MonoBehaviour
             {
                 if (inventoryItem.Quantity > 0 && inventoryItem.ItemData != null)
                 {
-                    string message = $"Item ID: {inventoryItem.ItemData.item_id}, Name: {inventoryItem.ItemData.item_name}, Quantity: {inventoryItem.Quantity}";
+                    string message = $"[System] Item ID: {inventoryItem.ItemData.item_id}, Name: {inventoryItem.ItemData.item_name}, Quantity: {inventoryItem.Quantity}";
+
+                    // 각 필드에 대해 0이 아닌 경우에만 메시지에 추가
+                    if (!string.IsNullOrEmpty(inventoryItem.ItemData.item_description) && inventoryItem.ItemData.item_description != "0")
+                    {
+                        message += $", Description: {inventoryItem.ItemData.item_description}";
+                    }
+                    if (inventoryItem.ItemData.item_hp != 0)
+                    {
+                        message += $", HP: {inventoryItem.ItemData.item_hp}";
+                    }
+                    if (inventoryItem.ItemData.item_mp != 0)
+                    {
+                        message += $", MP: {inventoryItem.ItemData.item_mp}";
+                    }
+                    if (inventoryItem.ItemData.item_attack != 0)
+                    {
+                        message += $", Attack: {inventoryItem.ItemData.item_attack}";
+                    }
+                    if (inventoryItem.ItemData.item_defense != 0)
+                    {
+                        message += $", Defense: {inventoryItem.ItemData.item_defense}";
+                    }
+                    if (inventoryItem.ItemData.item_magic != 0)
+                    {
+                        message += $", Magic: {inventoryItem.ItemData.item_magic}";
+                    }
+                    if (inventoryItem.ItemData.item_speed != 0)
+                    {
+                        message += $", Speed: {inventoryItem.ItemData.item_speed}";
+                    }
+                    //if (inventoryItem.ItemData.item_cost != 0)
+                    //{
+                    //    message += $", Cost: {inventoryItem.ItemData.item_cost}";
+                    //}
+                    if (inventoryItem.ItemData.require_level != 0)
+                    {
+                        message += $", Require Level: {inventoryItem.ItemData.require_level}";
+                    }
+                    if (inventoryItem.ItemData.item_avoidance != 0)
+                    {
+                        message += $", Avoidance: {inventoryItem.ItemData.item_avoidance}";
+                    }
+                    if (inventoryItem.ItemData.item_critical != 0)
+                    {
+                        message += $", Critical: {inventoryItem.ItemData.item_critical}";
+                    }
+
                     messages.Add(message);
-                    Debug.Log(message);
+                    //Debug.Log(message);
                 }
             }
 
@@ -181,4 +226,4 @@ public class ChatCommandManager : MonoBehaviour
         //    {
         //        Debug.Log($"FunctionC executed with flag: {flag} and text: {text}");
         //    }
-    }
+}

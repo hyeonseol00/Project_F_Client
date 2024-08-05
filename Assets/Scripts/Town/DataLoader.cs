@@ -4,12 +4,11 @@ using System.Globalization;
 using UnityEngine;
 using Assets.Scripts.Town.Data;
 using System;
-using static UnityEditor.Progress;
 
 public class DataLoader : MonoBehaviour
 {
     public static DataLoader Instance { get; private set; }
-    public List<Assets.Scripts.Town.Data.Item> Items { get; private set; }
+    public List<Item> Items { get; private set; }
 
     void Awake()
     {
@@ -26,18 +25,17 @@ public class DataLoader : MonoBehaviour
 
     void Start()
     {
-        //Debug.Log("DataLoader Start method called.");
         LoadData();
     }
 
     void LoadData()
     {
-        //Debug.Log("Loading data...");
-        Items = Items = ReadCSV<Assets.Scripts.Town.Data.Item>("Assets/Scripts/CSV/Items.csv");
+        Items = ReadCSV<Item>("Assets/Scripts/CSV/Items.csv");
 
         // 데이터 출력 (ID가 1부터 시작)
         if (Items != null)
         {
+            //Debug.Log($"Loaded {Items.Count} items.");
             for (int i = 0; i < Items.Count; i++)
             {
                 var item = Items[i];
@@ -49,7 +47,8 @@ public class DataLoader : MonoBehaviour
             Debug.Log("No items loaded.");
         }
     }
-    public Assets.Scripts.Town.Data.Item GetItemById(int id)
+
+    public Item GetItemById(int id)
     {
         return Items.Find(item => item.item_id == id);
     }
@@ -70,60 +69,59 @@ public class DataLoader : MonoBehaviour
                 while ((line = reader.ReadLine()) != null)
                 {
                     lineNumber++;
-                    //Debug.Log($"Reading line {lineNumber}: {line}");
                     string[] fields = line.Split(',');
                     T data = new T();
                     bool skip = false;
 
                     for (int i = 0; i < headers.Length; i++)
                     {
-                        var field = typeof(T).GetField(headers[i]);
-                        if (field == null)
+                        var property = typeof(T).GetProperty(headers[i]);
+                        if (property == null)
                         {
-                            //Debug.LogWarning($"Field {headers[i]} not found in {typeof(T)}");
+                            Debug.LogWarning($"Property {headers[i]} not found in {typeof(T)}");
                             continue;
                         }
 
                         try
                         {
-                            if (field.FieldType == typeof(int))
+                            if (property.PropertyType == typeof(int))
                             {
                                 if (int.TryParse(fields[i], NumberStyles.Integer, CultureInfo.InvariantCulture, out int intValue))
                                 {
-                                    field.SetValue(data, intValue);
+                                    property.SetValue(data, intValue);
                                 }
                                 else
                                 {
-                                    //Debug.LogWarning($"Defaulting field {headers[i]} with value {fields[i]} to 0 on line {lineNumber}");
-                                    field.SetValue(data, 0);
+                                    Debug.LogWarning($"Defaulting field {headers[i]} with value {fields[i]} to 0 on line {lineNumber}");
+                                    property.SetValue(data, 0);
                                 }
                             }
-                            else if (field.FieldType == typeof(float))
+                            else if (property.PropertyType == typeof(float))
                             {
                                 if (float.TryParse(fields[i], NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out float floatValue))
                                 {
-                                    field.SetValue(data, floatValue);
+                                    property.SetValue(data, floatValue);
                                 }
                                 else
                                 {
-                                    //Debug.LogWarning($"Defaulting field {headers[i]} with value {fields[i]} to 0.0 on line {lineNumber}");
-                                    field.SetValue(data, 0.0f);
+                                    Debug.LogWarning($"Defaulting field {headers[i]} with value {fields[i]} to 0.0 on line {lineNumber}");
+                                    property.SetValue(data, 0.0f);
                                 }
                             }
-                            else if (field.FieldType == typeof(bool))
+                            else if (property.PropertyType == typeof(bool))
                             {
                                 if (bool.TryParse(fields[i], out bool boolValue))
                                 {
-                                    field.SetValue(data, boolValue);
+                                    property.SetValue(data, boolValue);
                                 }
                                 else
                                 {
-                                    field.SetValue(data, fields[i] == "1" || fields[i].ToLower() == "true");
+                                    property.SetValue(data, fields[i] == "1" || fields[i].ToLower() == "true");
                                 }
                             }
                             else
                             {
-                                field.SetValue(data, fields[i]);
+                                property.SetValue(data, fields[i]);
                             }
                         }
                         catch (Exception ex)
@@ -133,6 +131,7 @@ public class DataLoader : MonoBehaviour
                             break;
                         }
                     }
+
                     if (!skip)
                     {
                         dataList.Add(data);
