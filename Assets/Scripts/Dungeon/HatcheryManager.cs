@@ -17,7 +17,7 @@ public class HatcheryManager : MonoBehaviour
 	[SerializeField] private Transform spawnArea;
 	public Character myPlayer { get; private set; }
 
-	[SerializeField] private Enemy monster;
+	[SerializeField] public Enemy monster;
 	[SerializeField] private UIMonsterInformation uiMonsterInfo;
 
 	private Dictionary<int, Character> playerList = new Dictionary<int, Character>();
@@ -82,10 +82,11 @@ public class HatcheryManager : MonoBehaviour
 			Spawn(pkt.Player);
 			uiMonsterInfo.SetMainCamera();
 		}
-		if (pkt.BossMaxHp != null && pkt.BossName != null)
+		if (pkt.BossMaxHp != null && pkt.BossName != null && pkt.BossSpeed != null)
 		{
 			uiMonsterInfo.SetFullHP(pkt.BossMaxHp, false);
 			uiMonsterInfo.SetName(pkt.BossName);
+			monster.speed = pkt.BossSpeed;
 		}
 		if (pkt.BossTransformInfo != null)
 		{

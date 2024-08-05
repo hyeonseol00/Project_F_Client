@@ -7,9 +7,17 @@ public class Enemy : MonoBehaviour
 {
 	int maxHealth;
 	int curHealth;
+	public float speed;
 
 	[SerializeField] Animator animator;
 	[SerializeField] UIMonsterInformation monsterUI;
+
+	Vector3 unitVector;
+
+	private void Update()
+	{
+		Move();
+	}
 
 	private void OnTriggerEnter(Collider other)
 	{
@@ -30,5 +38,23 @@ public class Enemy : MonoBehaviour
 	public void HitAnimation()
 	{
 		animator.SetBool("Hit", true);
+	}
+
+	public void SetCoordinates(Vector3 move, Vector3 eRot)
+	{
+		var pos = move;
+		pos.y = transform.position.y;
+		transform.position = pos;
+		transform.rotation = Quaternion.Euler(eRot);
+	}
+
+	public void SetUnitVector(Vector3 vec)
+	{
+		unitVector = vec;
+	}
+
+	private void Move()
+	{
+		transform.position += unitVector * Time.deltaTime * speed;
 	}
 }
