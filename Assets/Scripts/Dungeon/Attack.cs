@@ -1,3 +1,4 @@
+using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,16 +14,20 @@ public class Attack : MonoBehaviour
 
 	float attackDelay;
 
-	IEnumerator TryAttack()
-    {
-        animator.SetBool("Anim1", true);
+	//IEnumerator TryAttack()
+ //   {
+ //       animator.SetBool("Anim1", true);
 
-        yield return new WaitForSeconds(0.41f);
-        meleeArea.enabled = true;
+	//	C_TryAttack tryAttackPacket = new C_TryAttack { };
 
-        yield return new WaitForSeconds(0.1f);
-		meleeArea.enabled = false;
-	}
+	//	GameManager.Network.Send(tryAttackPacket);
+
+	//	yield return new WaitForSeconds(0.41f);
+ //       meleeArea.enabled = true;
+
+ //       yield return new WaitForSeconds(0.1f);
+	//	meleeArea.enabled = false;
+	//}
 
     void Update()
     {

@@ -8,7 +8,6 @@ public class ChatCommandManager : MonoBehaviour
 
     [SerializeField] private UIChat uichat;
 
-    // Start is called before the first frame update
     void Awake()
     {
         chatCommandMap = new Dictionary<string, System.Action<object>>
@@ -20,6 +19,7 @@ public class ChatCommandManager : MonoBehaviour
             { "/help", args => PrintCommands() },
             //{ "FunctionB", args => FunctionB((int)args, (float)args) },
             //{ "FunctionC", args => FunctionC((bool)args, (string)args) }
+            { "/inven", args => ShowInventory() }
         };
     }
 
@@ -127,6 +127,7 @@ public class ChatCommandManager : MonoBehaviour
             StartCoroutine(AddMessagesWithDelay(messages));
         }
     }
+
     private void ShowStats()
     {
         var player = TownManager.Instance.myPlayer;  // TownManager���� ���� �÷��̾� ��������
@@ -171,8 +172,90 @@ public class ChatCommandManager : MonoBehaviour
     //        Debug.Log($"FunctionB executed with number: {number} and value: {value}");
     //    }
 
-    //    private void FunctionC(bool flag, string text)
-    //    {
-    //        Debug.Log($"FunctionC executed with flag: {flag} and text: {text}");
-    //    }
+    private void ShowInventory()
+    {
+        Player currentPlayer = TownManager.Instance.myPlayer;
+
+        if (currentPlayer != null)
+        {
+            List<string> messages = new List<string>();
+
+            foreach (var inventoryItem in currentPlayer.InventoryItems)
+            {
+                if (inventoryItem.Quantity > 0 && inventoryItem.ItemData != null)
+                {
+                    string message = $"[System] Item ID: {inventoryItem.ItemData.item_id}, Name: {inventoryItem.ItemData.item_name}, Quantity: {inventoryItem.Quantity}";
+
+                    // �� �ʵ忡 ���� 0�� �ƴ� ��쿡�� �޽����� �߰�
+                    if (!string.IsNullOrEmpty(inventoryItem.ItemData.item_description) && inventoryItem.ItemData.item_description != "0")
+                    {
+                        message += $", Description: {inventoryItem.ItemData.item_description}";
+                    }
+                    if (inventoryItem.ItemData.item_hp != 0)
+                    {
+                        message += $", HP: {inventoryItem.ItemData.item_hp}";
+                    }
+                    if (inventoryItem.ItemData.item_mp != 0)
+                    {
+                        message += $", MP: {inventoryItem.ItemData.item_mp}";
+                    }
+                    if (inventoryItem.ItemData.item_attack != 0)
+                    {
+                        message += $", Attack: {inventoryItem.ItemData.item_attack}";
+                    }
+                    if (inventoryItem.ItemData.item_defense != 0)
+                    {
+                        message += $", Defense: {inventoryItem.ItemData.item_defense}";
+                    }
+                    if (inventoryItem.ItemData.item_magic != 0)
+                    {
+                        message += $", Magic: {inventoryItem.ItemData.item_magic}";
+                    }
+                    if (inventoryItem.ItemData.item_speed != 0)
+                    {
+                        message += $", Speed: {inventoryItem.ItemData.item_speed}";
+                    }
+                    //if (inventoryItem.ItemData.item_cost != 0)
+                    //{
+                    //    message += $", Cost: {inventoryItem.ItemData.item_cost}";
+                    //}
+                    if (inventoryItem.ItemData.require_level != 0)
+                    {
+                        message += $", Require Level: {inventoryItem.ItemData.require_level}";
+                    }
+                    if (inventoryItem.ItemData.item_avoidance != 0)
+                    {
+                        message += $", Avoidance: {inventoryItem.ItemData.item_avoidance}";
+                    }
+                    if (inventoryItem.ItemData.item_critical != 0)
+                    {
+                        message += $", Critical: {inventoryItem.ItemData.item_critical}";
+                    }
+
+                    messages.Add(message);
+                    //Debug.Log(message);
+                }
+            }
+
+            if (messages.Count > 0)
+            {
+                StartCoroutine(AddMessagesWithDelay(messages));
+            }
+            else
+            {
+                string message = "No items in inventory.";
+                uichat.PushMessage("[System]", message, false);
+                Debug.Log(message);
+            }
+        }
+    }
+        //    private void FunctionB(int number, float value)
+        //    {
+        //        Debug.Log($"FunctionB executed with number: {number} and value: {value}");
+        //    }
+
+        //    private void FunctionC(bool flag, string text)
+        //    {
+        //        Debug.Log($"FunctionC executed with flag: {flag} and text: {text}");
+        //    }
 }

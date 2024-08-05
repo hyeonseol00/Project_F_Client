@@ -38,7 +38,7 @@ public class Character : MonoBehaviour
 			return;
 
 		elapsedFromMovePacket += Time.deltaTime;
-		if (elapsedFromMovePacket <= 0.05f)
+		if (elapsedFromMovePacket <= 0.25f)
 			animator.SetFloat("Move", 1.0f);
 		else
 			animator.SetFloat("Move", 0.0f);
@@ -81,5 +81,10 @@ public class Character : MonoBehaviour
 		transform.position = move;
 		character.transform.rotation = rot;
 		elapsedFromMovePacket = 0.0f;
+	}
+
+	public void AttackMotion()
+	{
+		animator.SetBool("Anim1", true);
 	}
 }

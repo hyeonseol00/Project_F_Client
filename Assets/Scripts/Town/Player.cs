@@ -1,9 +1,9 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Google.Protobuf.Protocol;
 using UnityEngine;
 using UnityEngine.AI;
+using Assets.Scripts.Town.Data;
+
 
 public class Player : MonoBehaviour
 {
@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
 
     public int gold { get; private set; }
     public StatInfo statInfo { get; private set; }
-    public Inventory inven { get; private set; }
+    public List<InventoryItem> InventoryItems { get; private set; } = new List<InventoryItem>();
 
     private Vector3 lastPos;
 
@@ -75,8 +75,31 @@ public class Player : MonoBehaviour
 
     public void SetInventory(Inventory inven)
     {
-  
-        this.inven = inven;
+        InventoryItems.Clear();
+
+        if (inven.Items != null)
+        {
+            foreach (var item in inven.Items)
+            {
+                var itemData = DataLoader.Instance?.GetItemById(item.Id);
+                //Debug.Log(itemData);
+
+                InventoryItem inventoryItem = new InventoryItem
+                {
+                    Id = item.Id,
+                    Quantity = item.Quantity,
+                    ItemData = itemData
+                };
+
+                InventoryItems.Add(inventoryItem);
+            }
+        }
+
+        //Debug.Log("Inventory set with items:");
+        foreach (var item in InventoryItems)
+        {
+            //Debug.Log($"ID: {item.Id}, Quantity: {item.Quantity}, ItemData: {item.ItemData?.item_name}");
+        }
     }
 
     private void Update()
@@ -113,7 +136,7 @@ public class Player : MonoBehaviour
             string commandType = firstSpaceIdx != -1 ? msg.Substring(0, firstSpaceIdx) : msg;
             string data = firstSpaceIdx != -1 ? msg.Substring(firstSpaceIdx + 1) : "";
 
-            Debug.Log($"words: {commandType} {data}");
+            //Debug.Log($"words: {commandType} {data}");
 
             if (ChatCommandManager.chatCommandMap == null)
             {
@@ -144,7 +167,7 @@ public class Player : MonoBehaviour
 
     public void RecvMessage(string msg)
     {
-        if(msg.StartsWith("[All]")) uiNameChat.PushText(msg);
+        if (msg.StartsWith("[All]")) uiNameChat.PushText(msg);
         uiChat.PushMessage(nickname, msg, IsMine);
     }
 
@@ -167,38 +190,39 @@ public class Player : MonoBehaviour
 
 
         lastPos = transform.position;
-    }
+        //}
 
-    public void AddItemToInven(ItemInfo item)
-    {
-        for (int i = 0; i < inven.Items.Count; i++)
-        {
-            if (inven.Items[i].Id == item.Id)
-            {
-                inven.Items[i].Quantity += item.Quantity;
-                return;
-            }
-        }
+        //public void AddItemToInven(ItemInfo item)
+        //{
+        //    for (int i = 0; i < inven.Items.Count; i++)
+        //    {
+        //        if (inven.Items[i].Id == item.Id)
+        //        {
+        //            inven.Items[i].Quantity += item.Quantity;
+        //            return;
+        //        }
+        //    }
 
-        inven.Items.Add(item);
-        return;
-    }
+        //    inven.Items.Add(item);
+        //    return;
+        //}
 
-    public void SubItemToInven(ItemInfo item)
-    {
-        for (int i = 0; i < inven.Items.Count; i++)
-        {
-            if (inven.Items[i].Id == item.Id)
-            {
-                inven.Items[i].Quantity -= item.Quantity;
-                if (inven.Items[i].Quantity == 0)
-                {
-                    inven.Items.RemoveAt(i);
-                }
-                return;
-            }
-        }
+        //public void SubItemToInven(ItemInfo item)
+        //{
+        //    for (int i = 0; i < inven.Items.Count; i++)
+        //    {
+        //        if (inven.Items[i].Id == item.Id)
+        //        {
+        //            inven.Items[i].Quantity -= item.Quantity;
+        //            if (inven.Items[i].Quantity == 0)
+        //            {
+        //                inven.Items.RemoveAt(i);
+        //            }
+        //            return;
+        //        }
+        //    }
 
-        return;
+        //    return;
+        //}
     }
 }
