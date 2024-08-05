@@ -75,6 +75,7 @@ public class Player : MonoBehaviour
 
     public void SetInventory(Inventory inven)
     {
+  
         this.inven = inven;
     }
 
@@ -166,5 +167,38 @@ public class Player : MonoBehaviour
 
 
         lastPos = transform.position;
+    }
+
+    public void AddItemToInven(ItemInfo item)
+    {
+        for (int i = 0; i < inven.Items.Count; i++)
+        {
+            if (inven.Items[i].Id == item.Id)
+            {
+                inven.Items[i].Quantity += item.Quantity;
+                return;
+            }
+        }
+
+        inven.Items.Add(item);
+        return;
+    }
+
+    public void SubItemToInven(ItemInfo item)
+    {
+        for (int i = 0; i < inven.Items.Count; i++)
+        {
+            if (inven.Items[i].Id == item.Id)
+            {
+                inven.Items[i].Quantity -= item.Quantity;
+                if (inven.Items[i].Quantity == 0)
+                {
+                    inven.Items.RemoveAt(i);
+                }
+                return;
+            }
+        }
+
+        return;
     }
 }
