@@ -87,6 +87,15 @@ public class HatcheryManager : MonoBehaviour
 			uiMonsterInfo.SetFullHP(pkt.BossMaxHp, false);
 			uiMonsterInfo.SetName(pkt.BossName);
 		}
+		if (pkt.BossTransformInfo != null)
+		{
+			var bossTr = pkt.BossTransformInfo;
+			Vector3 pos = new Vector3(bossTr.PosX, bossTr.PosY, bossTr.PosZ);
+			Quaternion rot = Quaternion.Euler(0, bossTr.Rot, 0);
+
+			monster.transform.position = pos;
+			monster.transform.rotation = rot;
+		}
 	}
 
 	public void SetBossCurHp(int hp)
