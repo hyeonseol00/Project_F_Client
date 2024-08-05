@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Battle.unity
     guid: e4770b53cb08a4d529b51841ba2e679b
+  - enabled: 1
+    path: Assets/Scenes/Dungeon.BugHatchery.unity
+    guid: eb73f89dcb1a7a842b5ccba249287efe
   m_configObjects: {}
