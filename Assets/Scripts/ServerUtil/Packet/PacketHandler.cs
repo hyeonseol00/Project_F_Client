@@ -134,6 +134,57 @@ class PacketHandler
 		//Debug.Log($"myPlayer Inven is  {TownManager.Instance.myPlayer.inven}");
 	}
 
+	public static void S_UseItemHandler(PacketSession session, IMessage packet)
+	{
+		Debug.Log($"S_UseItemHandler Access!");
+
+		//S_BuyItem pkt = packet as S_BuyItem;
+		//if (pkt == null)
+		//	return;
+
+		//Debug.Log($"S_BuyItem {pkt}");
+
+		//TownManager.Instance.myPlayer.SetGold(pkt.Gold);
+		//Debug.Log($"myPlayer Gold is  {TownManager.Instance.myPlayer.gold}");
+
+		//TownManager.Instance.myPlayer.AddItemToInven(pkt.Item);
+		//Debug.Log($"myPlayer Inven is  {TownManager.Instance.myPlayer.inven}");
+	}
+
+	public static void S_EquipWeaponHandler(PacketSession session, IMessage packet)
+	{
+		Debug.Log($"S_EquipWeaponHandle Access!");
+
+		//S_BuyItem pkt = packet as S_BuyItem;
+		//if (pkt == null)
+		//	return;
+
+		//Debug.Log($"S_BuyItem {pkt}");
+
+		//TownManager.Instance.myPlayer.SetGold(pkt.Gold);
+		//Debug.Log($"myPlayer Gold is  {TownManager.Instance.myPlayer.gold}");
+
+		//TownManager.Instance.myPlayer.AddItemToInven(pkt.Item);
+		//Debug.Log($"myPlayer Inven is  {TownManager.Instance.myPlayer.inven}");
+	}
+
+	public static void S_UnequipWeaponHandler(PacketSession session, IMessage packet)
+	{
+		Debug.Log($"S_UnequipWeaponHandle Access!");
+
+		//S_BuyItem pkt = packet as S_BuyItem;
+		//if (pkt == null)
+		//	return;
+
+		//Debug.Log($"S_BuyItem {pkt}");
+
+		//TownManager.Instance.myPlayer.SetGold(pkt.Gold);
+		//Debug.Log($"myPlayer Gold is  {TownManager.Instance.myPlayer.gold}");
+
+		//TownManager.Instance.myPlayer.AddItemToInven(pkt.Item);
+		//Debug.Log($"myPlayer Inven is  {TownManager.Instance.myPlayer.inven}");
+	}
+
 	#endregion
 
 

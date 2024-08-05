@@ -17,6 +17,7 @@ public class ChatCommandManager : MonoBehaviour
             { "/FunctionD", args => FunctionD((string)args) },
             { "/shop", args => ShowItems() },
             { "/stat", args => ShowStats() },
+            { "/help", args => PrintCommands() },
             //{ "FunctionB", args => FunctionB((int)args, (float)args) },
             //{ "FunctionC", args => FunctionC((bool)args, (string)args) }
         };
@@ -52,29 +53,29 @@ public class ChatCommandManager : MonoBehaviour
         foreach (var message in messages)
         {
             uichat.PushMessage("[System]", message, true);
-            yield return new WaitForSeconds(0.05f); // 0.05ÃÊ µô·¹ÀÌ
+            yield return new WaitForSeconds(0.05f); // 0.05ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
         }
     }
 
     private void ShowItems()
     {
-        var items = DataLoader.Instance.Items;  // DataLoader¿¡¼­ ·ÎµåµÈ ¾ÆÀÌÅÛ ¸®½ºÆ® °¡Á®¿À±â
+        var items = DataLoader.Instance.Items;  // DataLoaderï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-        if (items != null && items.Count > 0)  // ¾ÆÀÌÅÛ ¸®½ºÆ®°¡ nullÀÌ ¾Æ´Ï°í, ¾ÆÀÌÅÛÀÌ Á¸ÀçÇÏ´Â °æ¿ì
+        if (items != null && items.Count > 0)  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ nullï¿½ï¿½ ï¿½Æ´Ï°ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½
         {
             List<string> messages = new List<string>();
 
-            foreach (var item in items)  // °¢ ¾ÆÀÌÅÛ¿¡ ´ëÇØ
+            foreach (var item in items)  // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½
             {
-                if (!item.can_sell)  // can_sellÀÌ falseÀÎ ¾ÆÀÌÅÛÀº °Ç³Ê¶Ù±â
+                if (!item.can_sell)  // can_sellï¿½ï¿½ falseï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç³Ê¶Ù±ï¿½
                 {
                     continue;
                 }
 
-                // ±âº» ¸Ş½ÃÁö »ı¼º (ID¿Í ÀÌ¸§)
+                // ï¿½âº» ï¿½Ş½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (IDï¿½ï¿½ ï¿½Ì¸ï¿½)
                 string message = $"[System] Name: {item.item_name}";
 
-                // °¢ ÇÊµå¿¡ ´ëÇØ 0ÀÌ ¾Æ´Ñ °æ¿ì¿¡¸¸ ¸Ş½ÃÁö¿¡ Ãß°¡
+                // ï¿½ï¿½ ï¿½Êµå¿¡ ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ ï¿½Ş½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
                 if (!string.IsNullOrEmpty(item.item_description) && item.item_description != "0")
                 {
                     message += $", Description: {item.item_description}";
@@ -128,18 +129,43 @@ public class ChatCommandManager : MonoBehaviour
     }
     private void ShowStats()
     {
-        var player = TownManager.Instance.myPlayer;  // TownManager¿¡¼­ ÇöÀç ÇÃ·¹ÀÌ¾î °¡Á®¿À±â
+        var player = TownManager.Instance.myPlayer;  // TownManagerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-        if (player != null)  // ÇÃ·¹ÀÌ¾î°¡ Á¸ÀçÇÏ´Â °æ¿ì
+        if (player != null)  // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½
         {
             string message = $"[System] StatInfo: {player.statInfo}";
 
-            // Ã¤ÆÃ UI¿¡ ¸Ş½ÃÁö Ãß°¡
+            // Ã¤ï¿½ï¿½ UIï¿½ï¿½ ï¿½Ş½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
             uichat.PushMessage("[System]", message, false);
-            // µğ¹ö±× ·Î±× Ãâ·Â
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ ï¿½ï¿½ï¿½
             Debug.Log(message);
         }
     }
+    private void PrintCommands()
+    {
+        string nickname = "not use param";
+        string commandsList =
+                $"[System]: ëª…ë ¹ì–´ ëª©ë¡ì€ ë‹¤ìŒê³¼ ê°™ìŠµë‹ˆë‹¤\n" +
+                $"/shop : ìƒí’ˆ ëª©ë¡ì„ ë³´ì—¬ì¤ë‹ˆë‹¤\n" +
+                $"/stat: ìºë¦­í„° ìŠ¤í…Ÿì„ ë³´ì—¬ì¤ë‹ˆë‹¤\n" +
+                $"/w ë‹‰ë„¤ì„ ë©”ì„¸ì§€: ê·“ì†ë§ì„ ë³´ëƒ…ë‹ˆë‹¤.\n" +
+                $"/t: íŒ€ì—ê²Œ ì±„íŒ…ì„ ë³´ëƒ…ë‹ˆë‹¤.\n" +
+                $"/createTeam: íŒ€ì„ ìƒì„±í•©ë‹ˆë‹¤.\n" +
+                $"/joinTeam nickname: íŒ€ì— ê°€ì…í•©ë‹ˆë‹¤.\n" +
+                $"/inviteTeam nickname: íŒ€ì—ê²Œ ì´ˆëŒ€í•©ë‹ˆë‹¤.\n" +
+                $"/acceptTeam nickname: ì´ˆëŒ€ë¥¼ ìˆ˜ë½í•©ë‹ˆë‹¤.\n" +
+                $"/kickMember nickname: íŒ€ì›ì„ ì¶”ë°©í•©ë‹ˆë‹¤.\n" +
+                $"/memlist: íŒ€ ë©¤ë²„ë¥¼ ì¡°íšŒí•©ë‹ˆë‹¤.\n" +
+                $"/buyItem itemName quantity: ì•„ì´í…œì„ ìˆ˜ëŸ‰ë§Œí¼ êµ¬ë§¤í•©ë‹ˆë‹¤.\n" +
+                $"/sellItem itemName quantity: ì•„ì´í…œì„ ìˆ˜ëŸ‰ë§Œí¼ íŒë§¤í•©ë‹ˆë‹¤.\n" +
+                $"/equip itemIdë˜ëŠ” /eq itemId: ì¥ë¹„ë¥¼ ì¥ì°©í•©ë‹ˆë‹¤.\n" +
+                $"/unequip itemType, /ueq itemType: ì¥ë¹„ë¥¼ íƒˆì°©í•©ë‹ˆë‹¤.\n";
+             
+        bool myChat = false;
+
+        uichat.PushMessage(nickname, commandsList, myChat);
+    }
+
     //    private void FunctionB(int number, float value)
     //    {
     //        Debug.Log($"FunctionB executed with number: {number} and value: {value}");
