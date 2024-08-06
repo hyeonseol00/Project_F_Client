@@ -3,6 +3,7 @@ using Google.Protobuf.Protocol;
 using ServerCore;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 class PacketManager
 {
@@ -84,8 +85,10 @@ class PacketManager
 		_handler.Add((ushort)MsgId.SMoveAtHatchery, PacketHandler.S_MoveAtHatcheryHandler);
 		_onRecv.Add((ushort)MsgId.SSetHatcheryBossHp, MakePacket<S_SetHatcheryBossHp>);
 		_handler.Add((ushort)MsgId.SSetHatcheryBossHp, PacketHandler.S_SetHatcheryBossHpHandler);
-		//_onRecv.Add((ushort)MsgId.STryAttack, MakePacket<S_TryAttack>);
-		//_handler.Add((ushort)MsgId.STryAttack, PacketHandler.S_TryAttackHandler);
+		_onRecv.Add((ushort)MsgId.STryAttack, MakePacket<S_TryAttack>);
+		_handler.Add((ushort)MsgId.STryAttack, PacketHandler.S_TryAttackHandler);
+		_onRecv.Add((ushort)MsgId.SBossMove, MakePacket<S_BossMove>);
+		_handler.Add((ushort)MsgId.SBossMove, PacketHandler.S_BossMoveHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

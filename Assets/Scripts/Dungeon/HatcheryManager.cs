@@ -17,6 +17,7 @@ public class HatcheryManager : MonoBehaviour
 	[SerializeField] private Transform spawnArea;
 	public Character myPlayer { get; private set; }
 
+	[SerializeField] public Enemy monster;
 	[SerializeField] private UIMonsterInformation uiMonsterInfo;
 
 	private Dictionary<int, Character> playerList = new Dictionary<int, Character>();
@@ -81,15 +82,29 @@ public class HatcheryManager : MonoBehaviour
 			Spawn(pkt.Player);
 			uiMonsterInfo.SetMainCamera();
 		}
-		if (pkt.BossMaxHp != null && pkt.BossName != null)
+		if (pkt.BossMaxHp != null && pkt.BossName != null && pkt.BossSpeed != null)
 		{
 			uiMonsterInfo.SetFullHP(pkt.BossMaxHp, false);
 			uiMonsterInfo.SetName(pkt.BossName);
+			monster.speed = pkt.BossSpeed;
+		}
+		if (pkt.BossTransformInfo != null)
+		{
+			var bossTr = pkt.BossTransformInfo;
+			Vector3 pos = new Vector3(bossTr.PosX, bossTr.PosY, bossTr.PosZ);
+			Quaternion rot = Quaternion.Euler(0, bossTr.Rot, 0);
+
+			monster.transform.position = pos;
+			monster.transform.rotation = rot;
 		}
 	}
 
 	public void SetBossCurHp(int hp)
 	{
+		if (uiMonsterInfo.GetCurHP() > hp)
+		{
+			monster.HitAnimation();
+		}
 		uiMonsterInfo.SetCurHP(hp);
 	}
 
@@ -102,7 +117,7 @@ public class HatcheryManager : MonoBehaviour
 	public Character CreatePlayer(PlayerInfo playerInfo)
 	{
 		var tr = playerInfo.Transform;
-		Vector3 eRot = new Vector3(0, 0, 0);
+		Vector3 eRot = new Vector3(0, tr.Rot, 0);
 		var spawnRot = Quaternion.Euler(eRot);
 
 		var spawnPos = spawnArea.position;
@@ -150,5 +165,12 @@ public class HatcheryManager : MonoBehaviour
 			return playerList[playerId];
 
 		return null;
+	}
+
+	public void LeaveHatchery()
+	{
+		C_LeaveHatchery leavePacket = new C_LeaveHatchery { };
+
+		GameManager.Network.Send(leavePacket);
 	}
 }
