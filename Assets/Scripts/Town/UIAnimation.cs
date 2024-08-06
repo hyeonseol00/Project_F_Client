@@ -19,11 +19,7 @@ public class UIAnimation : MonoBehaviour
     {
         currentPlayer = TownManager.Instance.myPlayer;
 
-        // TownManager의 싱글톤 인스턴스를 통해 myPlayer에 접근
-       
-
-        Debug.Log(currentPlayer.gold);
-
+        // TownManager의 싱글톤 인스턴스를 통해 myPlayer에 접근       
         goldTxt.text =  currentPlayer.gold.ToString();
 
         for (int i = 0; i < btnList.Length; i++)

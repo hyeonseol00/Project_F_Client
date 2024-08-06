@@ -61,4 +61,9 @@ public class UIMonsterInformation : MonoBehaviour
         float per = curHP/fullHP;
         imgHpFill.rectTransform.sizeDelta = new Vector2(fillWidth * per, fillHeight);
     }
+
+    public float GetCurHP()
+    {
+        return curHP;
+    }
 }

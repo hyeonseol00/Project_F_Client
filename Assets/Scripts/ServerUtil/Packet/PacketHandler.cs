@@ -15,7 +15,6 @@ class PacketHandler
 	{
         S_Enter enterPacket = packet as S_Enter;
 
-		Debug.Log($"enterPacket {enterPacket}");
         if (enterPacket == null)
 	        return;
         
@@ -341,5 +340,26 @@ class PacketHandler
 			player.AttackMotion();
 		}
 	}
+
+	public static void S_BossMoveHandler(PacketSession session, IMessage packet)
+	{
+		S_BossMove pkt = packet as S_BossMove;
+		if (pkt == null)
+			return;
+
+		// 1. 패킷을 받는 순간에는 받은 위치데이터 강제 적용
+		var monster = HatcheryManager.Instance.monster;
+
+		var tr = pkt.BossTransform;
+		Vector3 move = new Vector3(tr.PosX, tr.PosY, tr.PosZ);
+		Vector3 eRot = new Vector3(0, tr.Rot, 0);
+
+		monster.SetCoordinates(move, eRot);
+
+		// 2. 단위 벡터 보스한테 박아두고 지속적으로 움직이게 Update()
+		Vector3 unitVec = new Vector3(pkt.BossUnitVector.UnitX, 0, pkt.BossUnitVector.UnitZ);
+
+		monster.SetUnitVector(unitVec);
+	}	
 }
 
