@@ -67,6 +67,13 @@ public class Enemy : MonoBehaviour
 		transform.position += unitVector * Time.deltaTime * speed;
 
 		animator.SetFloat("Move", Vector3.Distance(lastPos, transform.position));
+
+		if (transform.position.y <= -30.0f)
+		{
+			var pos = new Vector3(transform.position.x, -19.5f, transform.position.z);
+			transform.position = pos;
+		}
+
 	}
 
 	public void Dead()
