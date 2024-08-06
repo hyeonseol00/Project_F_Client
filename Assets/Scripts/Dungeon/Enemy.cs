@@ -55,6 +55,9 @@ public class Enemy : MonoBehaviour
 
 	private void Move()
 	{
+		var lastPos = transform.position;
 		transform.position += unitVector * Time.deltaTime * speed;
+
+		animator.SetFloat("Move", Vector3.Distance(lastPos, transform.position));
 	}
 }
