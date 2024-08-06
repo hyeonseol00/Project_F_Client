@@ -58,20 +58,19 @@ public class UIPlayerInformationInTown : MonoBehaviour
         txtName.text = nickname;
     }
 
-    public void SetFullHP(float hp, bool recover = true)
+    public void SetFullHP(float hp)
     {
         fullHP = hp;
-        //txtHp.text = hp.ToString("0");
 
-        if (recover) SetCurHP(hp);
-        else SetCurHP(-1);
+        SetCurHP(curHP);
 
         txtHp.rectTransform.sizeDelta = new Vector2(txtHp.preferredWidth + 50, 40);
     }
 
     public void SetCurHP(float hp)
     {
-        if (hp > 0) curHP = Mathf.Min(hp, fullHP);
+        curHP = Mathf.Min(hp, fullHP);
+        
         txtHp.text = $"{curHP} / {fullHP}";
 
         float per = curHP / fullHP;
@@ -84,17 +83,16 @@ public class UIPlayerInformationInTown : MonoBehaviour
     public void SetFullMP(float mp, bool recover = true)
     {
         fullMP = mp;
-        //txtMp.text = mp.ToString("0");
 
-        if (recover) SetCurMP(mp);
-        else SetCurMP(-1);
-
+        SetCurMP(curMP);
+      
         txtMp.rectTransform.sizeDelta = new Vector2(txtMp.preferredWidth + 50, 40);
     }
 
     public void SetCurMP(float mp)
     {
-        if(mp > 0 ) curMP = Mathf.Min(mp, fullHP);
+        curMP = Mathf.Min(mp, fullMP);  
+
         txtMp.text = $"{curMP} / {fullMP}";
 
         float per = curMP / fullMP;

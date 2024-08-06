@@ -130,7 +130,7 @@ class PacketHandler
 
 	public static void S_UseItemHandler(PacketSession session, IMessage packet)
 	{
-		//Debug.Log($"S_UseItemHandler Access!");
+		Debug.Log($"S_UseItemHandler Access!");
 
         S_UseItem pkt = packet as S_UseItem;
         if (pkt == null)
@@ -138,7 +138,7 @@ class PacketHandler
 
 		//Debug.Log($"S_UseItem {pkt}");
 
-		//TownManager.Instance.myPlayer.ProcessUseItemEvent(pkt.Item, pkt.Gold);
+		TownManager.Instance.myPlayer.ProcessUseItemEvent(pkt.Item);
 	}
 
     public static void S_EquipWeaponHandler(PacketSession session, IMessage packet)

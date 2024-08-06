@@ -81,6 +81,10 @@ public class ChatCommandManager : MonoBehaviour
                 {
                     message += $", Description: {item.item_description}";
                 }
+                if (item.item_id != 0)
+                {
+                    message += $", ItemId: {item.item_id}";
+                }
                 if (item.item_hp != 0)
                 {
                     message += $", HP: {item.item_hp}";

@@ -277,6 +277,28 @@ public class Player : MonoBehaviour
         Debug.Log($"gold is {gold}");
     }
 
+    public void ProcessUseItemEvent(ItemInfo item)
+    {
+        // 가져와야되는것: 인벤, 체력 또는 마나 회복
+
+        Item itemData = DataLoader.Instance?.GetItemById(item.Id);
+
+        // 인벤에서 사용한 아이템 
+        InventoryItem existingItem = InventoryItems.Find(invItem => invItem.ItemData.item_id == itemData.item_id);
+
+        if (item.Quantity > 0) existingItem.Quantity = item.Quantity;
+        else InventoryItems.Remove(existingItem);
+
+        // 플레이어의 Hp/Mp를 재조정한다.
+        statInfo.Hp += itemData.item_hp;
+        statInfo.Mp += itemData.item_mp;
+
+        Debug.Log($"{statInfo.Hp} {statInfo.Mp}");
+
+        // 갱신된 HP/MP를 UI에 적용한다(HP/MP 바)
+        TownManager.Instance.UiPlayerInformation.SetCurHP(statInfo.Hp);
+        TownManager.Instance.UiPlayerInformation.SetCurMP(statInfo.Mp);
+    }
 
     public void ProcessEquipEvent(int itemId)
     {
@@ -308,15 +330,15 @@ public class Player : MonoBehaviour
         // 장착한 아이템을 인벤에서 뺀다
         InventoryItem existingItem = InventoryItems.Find(invItem => invItem.ItemData.item_id == itemData.item_id);
 
-        if (existingItem.Quantity > 0) existingItem.Quantity -= 1;
+        if (existingItem.Quantity > 1) existingItem.Quantity -= 1;
         else InventoryItems.Remove(existingItem);
 
         // 플레이어의 스텟을 재조정한다.
         updatePlayerStat(itemData, true);
 
         // UI에 적용한다(HP/MP 바)
-        TownManager.Instance.UiPlayerInformation.SetFullHP(statInfo.MaxHp, false);
-        TownManager.Instance.UiPlayerInformation.SetFullMP(statInfo.MaxMp, false);
+        TownManager.Instance.UiPlayerInformation.SetFullHP(statInfo.MaxHp);
+        TownManager.Instance.UiPlayerInformation.SetFullMP(statInfo.MaxMp);
     }
 
     public void ProcessUnequipEvent(string itemType)
@@ -367,8 +389,8 @@ public class Player : MonoBehaviour
         updatePlayerStat(unequippedItem, false);
 
         // UI에 적용한다(HP/MP 바)
-        TownManager.Instance.UiPlayerInformation.SetFullHP(statInfo.MaxHp, false);
-        TownManager.Instance.UiPlayerInformation.SetFullMP(statInfo.MaxMp, false);
+        TownManager.Instance.UiPlayerInformation.SetFullHP(statInfo.MaxHp);
+        TownManager.Instance.UiPlayerInformation.SetFullMP(statInfo.MaxMp);
     }
 
     public void updatePlayerStat(Item itemData, bool isEquip)
