@@ -189,7 +189,7 @@ public class ChatCommandManager : MonoBehaviour
             {
                 if (inventoryItem.Quantity > 0 && inventoryItem.ItemData != null)
                 {
-                    string message = $"[System] Item ID: {inventoryItem.ItemData.item_id}, Name: {inventoryItem.ItemData.item_name}, Quantity: {inventoryItem.Quantity}";
+                    string message = $"[System] Item ID: {inventoryItem.ItemData.item_id}, Name: {inventoryItem.ItemData.item_name}, Type: {inventoryItem.ItemData.item_type}, Quantity: {inventoryItem.Quantity}";
 
                     // �� �ʵ忡 ���� 0�� �ƴ� ��쿡�� �޽����� �߰�
                     if (!string.IsNullOrEmpty(inventoryItem.ItemData.item_description) && inventoryItem.ItemData.item_description != "0")
