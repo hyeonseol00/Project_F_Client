@@ -166,4 +166,11 @@ public class HatcheryManager : MonoBehaviour
 
 		return null;
 	}
+
+	public void LeaveHatchery()
+	{
+		C_LeaveHatchery leavePacket = new C_LeaveHatchery { };
+
+		GameManager.Network.Send(leavePacket);
+	}
 }
