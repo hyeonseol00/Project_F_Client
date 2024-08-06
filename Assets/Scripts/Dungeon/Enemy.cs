@@ -11,8 +11,10 @@ public class Enemy : MonoBehaviour
 
 	[SerializeField] Animator animator;
 	[SerializeField] UIMonsterInformation monsterUI;
+	[SerializeField] RectTransform winPopup;
 
 	Vector3 unitVector;
+	bool isDead = false;
 
 	private void Update()
 	{
@@ -42,6 +44,9 @@ public class Enemy : MonoBehaviour
 
 	public void SetCoordinates(Vector3 move, Vector3 eRot)
 	{
+		if (isDead)
+			return;
+
 		var pos = move;
 		pos.y = transform.position.y;
 		transform.position = pos;
@@ -55,9 +60,19 @@ public class Enemy : MonoBehaviour
 
 	private void Move()
 	{
+		if (isDead)
+			return;
+
 		var lastPos = transform.position;
 		transform.position += unitVector * Time.deltaTime * speed;
 
 		animator.SetFloat("Move", Vector3.Distance(lastPos, transform.position));
+	}
+
+	public void Dead()
+	{
+		isDead = true;
+		animator.SetBool("Die", true);
+		winPopup.gameObject.SetActive(true);
 	}
 }
