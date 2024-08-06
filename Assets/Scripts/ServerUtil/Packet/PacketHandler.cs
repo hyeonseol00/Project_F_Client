@@ -326,6 +326,11 @@ class PacketHandler
 		{
 			GameManager.Instance.SetBossHpPkt = pkt;
 		}
+
+		if (pkt.BossCurHp <= 0)
+		{
+			HatcheryManager.Instance.monster.Dead();
+		}
 	}
 
 	public static void S_TryAttackHandler(PacketSession session, IMessage packet)
