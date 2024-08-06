@@ -61,18 +61,18 @@ public class UIPlayerInformationInTown : MonoBehaviour
     public void SetFullHP(float hp, bool recover = true)
     {
         fullHP = hp;
-        txtHp.text = hp.ToString("0");
+        //txtHp.text = hp.ToString("0");
 
-        if (recover)
-            SetCurHP(hp);
+        if (recover) SetCurHP(hp);
+        else SetCurHP(-1);
 
         txtHp.rectTransform.sizeDelta = new Vector2(txtHp.preferredWidth + 50, 40);
     }
 
     public void SetCurHP(float hp)
     {
-        curHP = Mathf.Min(hp, fullHP);
-        txtHp.text = hp.ToString("0");
+        if (hp > 0) curHP = Mathf.Min(hp, fullHP);
+        txtHp.text = $"{curHP} / {fullHP}";
 
         float per = curHP / fullHP;
         imgHpFill.rectTransform.sizeDelta = new Vector2(fillWidth * per, fillHeight);
@@ -84,18 +84,18 @@ public class UIPlayerInformationInTown : MonoBehaviour
     public void SetFullMP(float mp, bool recover = true)
     {
         fullMP = mp;
-        txtMp.text = mp.ToString("0");
+        //txtMp.text = mp.ToString("0");
 
-        if (recover)
-            SetCurMP(mp);
+        if (recover) SetCurMP(mp);
+        else SetCurMP(-1);
 
         txtMp.rectTransform.sizeDelta = new Vector2(txtMp.preferredWidth + 50, 40);
     }
 
     public void SetCurMP(float mp)
     {
-        curMP = Mathf.Min(mp, fullHP);
-        txtMp.text = mp.ToString("0");
+        if(mp > 0 ) curMP = Mathf.Min(mp, fullHP);
+        txtMp.text = $"{curMP} / {fullMP}";
 
         float per = curMP / fullMP;
         imgMpFill.rectTransform.sizeDelta = new Vector2(fillWidth * per, fillHeight);

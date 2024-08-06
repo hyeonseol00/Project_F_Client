@@ -29,7 +29,8 @@ public class TownManager : MonoBehaviour
 
     public UIStart UiStart => uiStart;
     public UIChat UiChat => uiChat;
-    
+    public UIPlayerInformationInTown UiPlayerInformation => uiPlayerInformation;
+
     [SerializeField] private TMP_Text txtServer;
 
     private Dictionary<int, Player> playerList = new Dictionary<int, Player>();
@@ -60,7 +61,7 @@ public class TownManager : MonoBehaviour
         }
     }
 
-	public void ConnectServer(string gameServer, string port)
+    public void ConnectServer(string gameServer, string port)
 	{
 		GameManager.Network.Init(gameServer, port);
 

@@ -69,7 +69,6 @@ class PacketHandler
 	}
 
 
-
 	public static void S_AnimationHandler(PacketSession session, IMessage packet)
 	{
 		S_Animation animationPacket = packet as S_Animation;
@@ -101,92 +100,78 @@ class PacketHandler
 			player.RecvMessage(msg);
 		}
 	}
+
+	// ================100 Packet Type Handler=================== 
 	public static void S_BuyItemHandler(PacketSession session, IMessage packet)
 	{
-		Debug.Log($"S_BuyItem Access!");
+		//Debug.Log($"S_BuyItem Access!");
 
         S_BuyItem pkt = packet as S_BuyItem;
         if (pkt == null)
             return;
 
-        Debug.Log($"S_BuyItem {pkt}");
+        //Debug.Log($"S_BuyItem {pkt}");
 
-        TownManager.Instance.myPlayer.ProcessBuyItemEvent(pkt.Item);
+        TownManager.Instance.myPlayer.ProcessBuyItemEvent(pkt.Item, pkt.Gold);
         
     }
 
 	public static void S_SellItemHandler(PacketSession session, IMessage packet)
 	{
-		Debug.Log($"S_SellItem Access!");
+		//Debug.Log($"S_SellItem Access!");
         S_SellItem pkt = packet as S_SellItem;
         if (pkt == null)
             return;
 
-        Debug.Log($"S_SellItem {pkt}");
+        //Debug.Log($"S_SellItem {pkt}");
 
-        //TownManager.Instance.myPlayer.SetGold(pkt.Gold);
-        //Debug.Log($"myPlayer Gold is  {TownManager.Instance.myPlayer.gold}");
-
-        //TownManager.Instance.myPlayer.SubItemToInven(pkt.Item);
-        //Debug.Log($"myPlayer Inven is  {TownManager.Instance.myPlayer.inven}");
-    }
+		TownManager.Instance.myPlayer.ProcessSellItemEvent(pkt.Item, pkt.Gold);
+	}
 
 	public static void S_UseItemHandler(PacketSession session, IMessage packet)
 	{
-		Debug.Log($"S_UseItemHandler Access!");
+		//Debug.Log($"S_UseItemHandler Access!");
 
         S_UseItem pkt = packet as S_UseItem;
         if (pkt == null)
             return;
 
-		Debug.Log($"S_UseItem {pkt}");
+		//Debug.Log($"S_UseItem {pkt}");
 
-		//TownManager.Instance.myPlayer.SetGold(pkt.Gold);
-		//Debug.Log($"myPlayer Gold is  {TownManager.Instance.myPlayer.gold}");
-
-		//TownManager.Instance.myPlayer.AddItemToInven(pkt.Item);
-		//Debug.Log($"myPlayer Inven is  {TownManager.Instance.myPlayer.inven}");
+		//TownManager.Instance.myPlayer.ProcessUseItemEvent(pkt.Item, pkt.Gold);
 	}
 
-	public static void S_EquipWeaponHandler(PacketSession session, IMessage packet)
-	{
-		Debug.Log($"S_EquipWeaponHandle Access!");
+    public static void S_EquipWeaponHandler(PacketSession session, IMessage packet)
+    {
+        //Debug.Log($"S_EquipWeaponHandle Access!");
 
         S_EquipWeapon pkt = packet as S_EquipWeapon;
         if (pkt == null)
             return;
 
-        Debug.Log($"S_EquipWeapon {pkt}");
+        //Debug.Log($"S_EquipWeapon {pkt}");
 
-        //TownManager.Instance.myPlayer.SetGold(pkt.Gold);
-        //Debug.Log($"myPlayer Gold is  {TownManager.Instance.myPlayer.gold}");
-
-        //TownManager.Instance.myPlayer.AddItemToInven(pkt.Item);
-        //Debug.Log($"myPlayer Inven is  {TownManager.Instance.myPlayer.inven}");
+        TownManager.Instance.myPlayer.ProcessEquipEvent(pkt.ItemId);
     }
 
-	public static void S_UnequipWeaponHandler(PacketSession session, IMessage packet)
-	{
-		Debug.Log($"S_UnequipWeaponHandle Access!");
+    public static void S_UnequipWeaponHandler(PacketSession session, IMessage packet)
+    {
+        //Debug.Log($"S_UnequipWeaponHandle Access!");
 
         S_UnequipWeapon pkt = packet as S_UnequipWeapon;
         if (pkt == null)
             return;
 
-		Debug.Log($"S_UnequipWeapon {pkt}");
+        //Debug.Log($"S_UnequipWeapon {pkt}");
 
-		//TownManager.Instance.myPlayer.SetGold(pkt.Gold);
-		//Debug.Log($"myPlayer Gold is  {TownManager.Instance.myPlayer.gold}");
+        TownManager.Instance.myPlayer.ProcessUnequipEvent(pkt.ItemType);
+    }
 
-		//TownManager.Instance.myPlayer.AddItemToInven(pkt.Item);
-		//Debug.Log($"myPlayer Inven is  {TownManager.Instance.myPlayer.inven}");
-	}
-
+	// ============== 100 Packet Type Handler End==================== 
 	#endregion
 
 
 	#region Battle
-
 
 	public static void S_EnterDungeonHandler(PacketSession session, IMessage packet)
 	{
