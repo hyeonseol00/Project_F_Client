@@ -33,22 +33,10 @@ public class Player : MonoBehaviour
 
     private Vector3 lastPos;
 
-    //private Dictionary<string, Func<Item>> equipMapping;
-   
-
     void Start()
     {
         avatar = GetComponent<Avatar>();
         animator = GetComponent<Animator>();
-
-        //equipMapping = new Dictionary<string, Func<Item>>
-        //{
-        //    { "weapon", () => equippedItems.Weapon },
-        //    { "armor", () => equippedItems.Armor },
-        //    { "gloves", () => equippedItems.Gloves },
-        //    { "shoes", () => equippedItems.Shoes },
-        //    { "accessory", () => equippedItems.Accessory }
-        //};
     }
 
     public void SetPlayerId(int playerId)
@@ -60,17 +48,6 @@ public class Player : MonoBehaviour
     {
         this.nickname = nickname;
         uiNameChat.SetName(nickname);
-    }
-
-    public void SetEquipment(Equipment equipment)
-    {
-        Item _weapon = DataLoader.Instance?.GetItemById(equipment.Weapon);
-        Item _armor = DataLoader.Instance?.GetItemById(equipment.Armor);
-        Item _gloves = DataLoader.Instance?.GetItemById(equipment.Gloves);
-        Item _shoes = DataLoader.Instance?.GetItemById(equipment.Shoes);
-        Item _accessory = DataLoader.Instance?.GetItemById(equipment.Accessory);
-        this.equippedItems = new EquippedItems(_weapon, _armor, _gloves, _shoes, _accessory);
-
     }
 
     public void SetIsMine(bool isMine)
@@ -86,6 +63,15 @@ public class Player : MonoBehaviour
 
         uiChat = TownManager.Instance.UiChat;
         isInit = true;
+    }
+
+    public void Set(PlayerInfo playerInfo)
+    {
+        SetNickname(playerInfo.Nickname);
+        SetGold(playerInfo.Gold);
+        SetStatInfo(playerInfo.StatInfo);
+        SetInventory(playerInfo.Inven);
+        SetEquipment(playerInfo.Equipment);
     }
 
     public void SetGold(int gold)
@@ -121,10 +107,21 @@ public class Player : MonoBehaviour
         }
 
         //Debug.Log("Inventory set with items:");
-        foreach (var item in InventoryItems)
-        {
-            //Debug.Log($"ID: {item.Id}, Quantity: {item.Quantity}, ItemData: {item.ItemData?.item_name}");
-        }
+        //foreach (var item in InventoryItems)
+        //{
+        //    Debug.Log($"ID: {item.Id}, Quantity: {item.Quantity}, ItemData: {item.ItemData?.item_name}");
+        //}
+    }
+
+    public void SetEquipment(Equipment equipment)
+    {
+        Item _weapon = DataLoader.Instance?.GetItemById(equipment.Weapon);
+        Item _armor = DataLoader.Instance?.GetItemById(equipment.Armor);
+        Item _gloves = DataLoader.Instance?.GetItemById(equipment.Gloves);
+        Item _shoes = DataLoader.Instance?.GetItemById(equipment.Shoes);
+        Item _accessory = DataLoader.Instance?.GetItemById(equipment.Accessory);
+        this.equippedItems = new EquippedItems(_weapon, _armor, _gloves, _shoes, _accessory);
+
     }
 
     private void Update()
@@ -161,11 +158,9 @@ public class Player : MonoBehaviour
             string commandType = firstSpaceIdx != -1 ? msg.Substring(0, firstSpaceIdx) : msg;
             string data = firstSpaceIdx != -1 ? msg.Substring(firstSpaceIdx + 1) : "";
 
-            //Debug.Log($"words: {commandType} {data}");
-
             if (ChatCommandManager.chatCommandMap == null)
             {
-                Debug.Log("chatCommandMap is null...");
+                Debug.LogWarning("chatCommandMap is null...");
                 return;
             }
 
@@ -174,10 +169,7 @@ public class Player : MonoBehaviour
                 action.Invoke(data);
                 return;
             }
-            else
-            {
-                Debug.Log($"this is not clientCmd");
-            }
+
         }
 
         C_Chat chatPacket = new C_Chat
@@ -212,10 +204,7 @@ public class Player : MonoBehaviour
     {
         float dist = Vector3.Distance(lastPos, transform.position);
         animator.SetFloat(Constants.TownPlayerMove, dist * 100);
-
-
-        lastPos = transform.position;
-        
+        lastPos = transform.position;     
     }
 
     public void ProcessBuyItemEvent(ItemInfo item, int gold)
@@ -232,7 +221,6 @@ public class Player : MonoBehaviour
         {
             // 아이템이 존재하지 않으면 새로운 아이템 추가
             var itemData = DataLoader.Instance?.GetItemById(item.Id);
-            //Debug.Log(itemData);
 
             InventoryItem inventoryItem = new InventoryItem
             {
@@ -246,8 +234,6 @@ public class Player : MonoBehaviour
 
         SetGold(gold);
         TownManager.Instance.UiPlayerInformation.SetGold(gold);
-
-        Debug.Log($"gold is {gold}");
     }
 
     public void ProcessSellItemEvent(ItemInfo item, int gold)
@@ -273,14 +259,11 @@ public class Player : MonoBehaviour
 
         SetGold(gold);
         TownManager.Instance.UiPlayerInformation.SetGold(gold);
-
-        Debug.Log($"gold is {gold}");
     }
 
     public void ProcessUseItemEvent(ItemInfo item)
     {
-        // 가져와야되는것: 인벤, 체력 또는 마나 회복
-
+        // 장착할 아이템 데이터를 가져온다.
         Item itemData = DataLoader.Instance?.GetItemById(item.Id);
 
         // 인벤에서 사용한 아이템 
@@ -290,10 +273,8 @@ public class Player : MonoBehaviour
         else InventoryItems.Remove(existingItem);
 
         // 플레이어의 Hp/Mp를 재조정한다.
-        statInfo.Hp += itemData.item_hp;
-        statInfo.Mp += itemData.item_mp;
-
-        Debug.Log($"{statInfo.Hp} {statInfo.Mp}");
+        statInfo.Hp = Math.Min(statInfo.Hp + itemData.item_hp, statInfo.MaxHp);
+        statInfo.Mp = Math.Min(statInfo.Mp + itemData.item_mp, statInfo.MaxMp);
 
         // 갱신된 HP/MP를 UI에 적용한다(HP/MP 바)
         TownManager.Instance.UiPlayerInformation.SetCurHP(statInfo.Hp);
@@ -323,7 +304,7 @@ public class Player : MonoBehaviour
                 equippedItems.Accessory = itemData;
                 break;
             default:
-                Console.WriteLine("Invalid item type");
+                Debug.LogWarning("Invalid item type");
                 break;
         }
 
@@ -344,8 +325,6 @@ public class Player : MonoBehaviour
     public void ProcessUnequipEvent(string itemType)
     {       
         Item unequippedItem = null;
-
-        Debug.Log($"itemType: {itemType}" );
 
         switch (itemType)
         {
@@ -370,7 +349,7 @@ public class Player : MonoBehaviour
                 equippedItems.Accessory = null;
                 break;
             default:
-                Console.WriteLine("Invalid item type");
+                Debug.LogWarning("Invalid item type");
                 break;
         }
 
@@ -404,6 +383,5 @@ public class Player : MonoBehaviour
         statInfo.Speed += itemData.item_speed * num;
         statInfo.CritRate += itemData.item_critical * num;
         statInfo.AvoidRate += itemData.item_avoidance * num;
-
     }
 }

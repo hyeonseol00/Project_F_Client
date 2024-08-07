@@ -12,18 +12,16 @@ public class ChatCommandManager : MonoBehaviour
     {
         chatCommandMap = new Dictionary<string, System.Action<object>>
         {
-            { "/FunctionA", args => FunctionA((string)args) },
-            { "/FunctionD", args => FunctionD((string)args) },
+            //{ "/FunctionA", args => FunctionA((string)args) },
+            { "/help", args => ShowCommands() },
             { "/shop", args => ShowItems() },
             { "/stat", args => ShowStats() },
-            { "/help", args => ShowCommands() },
             { "/equipment", args => ShowEquipment() },
-            //{ "FunctionB", args => FunctionB((int)args, (float)args) },
-            //{ "FunctionC", args => FunctionC((bool)args, (string)args) }
             { "/inven", args => ShowInventory() }
         };
     }
 
+    // This is sample command function
     private void FunctionA(string message)
     {
         string nickname = "not use param";
@@ -35,18 +33,6 @@ public class ChatCommandManager : MonoBehaviour
         uichat.PushMessage(nickname, message, myChat);
 
         Debug.Log($"FunctionA executed with message: {message}");
-    }
-
-    private void FunctionD(string message)
-    {
-        string nickname = "not use param";
-        if (message.Length > 0) message = $"[ClientCmd]: {message}";
-        else message = $"[System]: Invalid cmd: message is needed";
-        bool myChat = false;
-
-        uichat.PushMessage(nickname, message, myChat);
-
-        Debug.Log($"FunctionD executed with message: {message}");
     }
 
     private IEnumerator AddMessagesWithDelay(List<string> messages)
@@ -152,8 +138,11 @@ public class ChatCommandManager : MonoBehaviour
         string nickname = "not use param";
         string commandsList =
                 $"[System]: 명령어 목록은 다음과 같습니다\n" +
+                $"/help : 명령어 목록을 보여줍니다\n" +
                 $"/shop : 상품 목록을 보여줍니다\n" +
                 $"/stat: 캐릭터 스텟을 보여줍니다\n" +
+                $"/equipment: 장착한 아이템을 보여줍니다\n" +
+                $"/inven: 캐릭터 인벤토리를 보여줍니다\n" +
                 $"/w 닉네임 메세지: 귓속말을 보냅니다.\n" +
                 $"/t: 팀에게 채팅을 보냅니다.\n" +
                 $"/createTeam: 팀을 생성합니다.\n" +
@@ -165,17 +154,13 @@ public class ChatCommandManager : MonoBehaviour
                 $"/buyItem itemName quantity: 아이템을 수량만큼 구매합니다.\n" +
                 $"/sellItem itemName quantity: 아이템을 수량만큼 판매합니다.\n" +
                 $"/equip itemId또는 /eq itemId: 장비를 장착합니다.\n" +
-                $"/unequip itemType, /ueq itemType: 장비를 탈착합니다.\n";
-             
+                $"/unequip itemType, /ueq itemType: 장비를 탈착합니다.\n" +
+                $"/use itemId: 소비 아이템을 사용합니다\n";
+
         bool myChat = false;
 
         uichat.PushMessage(nickname, commandsList, myChat);
     }
-
-    //    private void FunctionB(int number, float value)
-    //    {
-    //        Debug.Log($"FunctionB executed with number: {number} and value: {value}");
-    //    }
 
     private void ShowInventory()
     {
@@ -262,7 +247,7 @@ public class ChatCommandManager : MonoBehaviour
 
         string message = "[System]: 장착 아이템 목록은 다음과 같습니다\n";
 
-        message += equippedItems.Weapon != null ? $"무기: {equippedItems.Weapon.item_name}\n": $"무기: 없음\n";
+        message += equippedItems.Weapon != null ? $"무기: {equippedItems.Weapon.item_name}\n" : $"무기: 없음\n";
         message += equippedItems.Armor != null ? $"갑옷: {equippedItems.Armor.item_name}\n" : $"갑옷: 없음\n";
         message += equippedItems.Gloves != null ? $"장갑: {equippedItems.Gloves.item_name}\n" : $"장갑: 없음\n";
         message += equippedItems.Shoes != null ? $"신발: {equippedItems.Shoes.item_name}\n" : $"신발: 없음\n";
@@ -272,13 +257,4 @@ public class ChatCommandManager : MonoBehaviour
 
     }
 
-    //    private void FunctionB(int number, float value)
-    //    {
-    //        Debug.Log($"FunctionB executed with number: {number} and value: {value}");
-    //    }
-
-    //    private void FunctionC(bool flag, string text)
-    //    {
-    //        Debug.Log($"FunctionC executed with flag: {flag} and text: {text}");
-    //    }
 }

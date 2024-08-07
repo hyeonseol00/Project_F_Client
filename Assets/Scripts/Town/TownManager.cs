@@ -111,17 +111,7 @@ public class TownManager : MonoBehaviour
         var player = Instantiate(playerRes, spawnPos, spawnRot);
         player.Move(spawnPos, spawnRot);
         player.SetPlayerId(playerId);
-        player.SetNickname(playerInfo.Nickname);
-        player.SetEquipment(playerInfo.Equipment);
-
-        // gold, statInfo, inven
-        player.SetGold(playerInfo.Gold);
-        player.SetStatInfo(playerInfo.StatInfo);
-        player.SetInventory(playerInfo.Inven);
-   
-        //Debug.Log($"Gold: {player.gold}");
-        //Debug.Log($"StatInfo: {player.statInfo}");
-        //Debug.Log($"Inven: {player.inven}");
+        player.Set(playerInfo);
 
         if (playerList.ContainsKey(playerId))
         {
@@ -171,7 +161,6 @@ public class TownManager : MonoBehaviour
 
         if (pkt.Player != null)
         {
-            //Debug.Log($"Player data found");
             uiPlayerInformation.Set(pkt.Player);
         }
         else
