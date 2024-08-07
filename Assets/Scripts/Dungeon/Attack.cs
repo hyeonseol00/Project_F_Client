@@ -14,20 +14,20 @@ public class Attack : MonoBehaviour
 
 	float attackDelay;
 
-	IEnumerator TryAttack()
+    IEnumerator TryAttack()
     {
         animator.SetBool("Anim1", true);
 
-		C_TryAttack tryAttackPacket = new C_TryAttack { };
+        C_TryAttack tryAttackPacket = new C_TryAttack { };
 
-		GameManager.Network.Send(tryAttackPacket);
+        GameManager.Network.Send(tryAttackPacket);
 
-		yield return new WaitForSeconds(0.41f);
+        yield return new WaitForSeconds(0.41f);
         meleeArea.enabled = true;
 
         yield return new WaitForSeconds(0.1f);
-		meleeArea.enabled = false;
-	}
+        meleeArea.enabled = false;
+    }
 
     void Update()
     {

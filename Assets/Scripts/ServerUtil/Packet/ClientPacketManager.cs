@@ -60,6 +60,19 @@ class PacketManager
 		_handler.Add((ushort)MsgId.SPlayerAction, PacketHandler.S_PlayerActionHandler);		
 		_onRecv.Add((ushort)MsgId.SMonsterAction, MakePacket<S_MonsterAction>);
 		_handler.Add((ushort)MsgId.SMonsterAction, PacketHandler.S_MonsterActionHandler);
+
+		_onRecv.Add((ushort)MsgId.SBuyItem, MakePacket<S_BuyItem>);
+		_handler.Add((ushort)MsgId.SBuyItem, PacketHandler.S_BuyItemHandler);
+		_onRecv.Add((ushort)MsgId.SSellItem, MakePacket<S_SellItem>);
+		_handler.Add((ushort)MsgId.SSellItem, PacketHandler.S_SellItemHandler);
+
+		_onRecv.Add((ushort)MsgId.SUseItem, MakePacket<S_UseItem>);
+		_handler.Add((ushort)MsgId.SUseItem, PacketHandler.S_UseItemHandler);
+		_onRecv.Add((ushort)MsgId.SEquipWeapon, MakePacket<S_EquipWeapon>);
+		_handler.Add((ushort)MsgId.SEquipWeapon, PacketHandler.S_EquipWeaponHandler);
+		_onRecv.Add((ushort)MsgId.SUnequipWeapon, MakePacket<S_UnequipWeapon>);
+		_handler.Add((ushort)MsgId.SUnequipWeapon, PacketHandler.S_UnequipWeaponHandler);
+
 		_onRecv.Add((ushort)MsgId.SRegister, MakePacket<S_Register>);
 		_handler.Add((ushort)MsgId.SRegister, PacketHandler.S_RegisterHandler);
 		_onRecv.Add((ushort)MsgId.SLogIn, MakePacket<S_LogIn>);

@@ -25,12 +25,13 @@ public class TownManager : MonoBehaviour
     [SerializeField] private UIStart uiStart;
     [SerializeField] private UIAnimation uiAnimation;
     [SerializeField] private UIChat uiChat;
+    [SerializeField] private UIPlayerInformationInTown uiPlayerInformation;
 
     public UIStart UiStart => uiStart;
     public UIChat UiChat => uiChat;
-    
-    [SerializeField] private TMP_Text txtServer;
+    public UIPlayerInformationInTown UiPlayerInformation => uiPlayerInformation;
 
+    [SerializeField] private TMP_Text txtServer;
 
     private Dictionary<int, Player> playerList = new Dictionary<int, Player>();
     private Dictionary<int, string> playerDb = new Dictionary<int, string>();
@@ -60,7 +61,7 @@ public class TownManager : MonoBehaviour
         }
     }
 
-	public void ConnectServer(string gameServer, string port)
+    public void ConnectServer(string gameServer, string port)
 	{
 		GameManager.Network.Init(gameServer, port);
 
@@ -110,12 +111,7 @@ public class TownManager : MonoBehaviour
         var player = Instantiate(playerRes, spawnPos, spawnRot);
         player.Move(spawnPos, spawnRot);
         player.SetPlayerId(playerId);
-        player.SetNickname(playerInfo.Nickname);
-
-        // gold, statInfo, inven
-        player.SetGold(playerInfo.Gold);
-        player.SetStatInfo(playerInfo.StatInfo);
-        player.SetInventory(playerInfo.Inven);
+        player.Set(playerInfo);
 
         if (playerList.ContainsKey(playerId))
         {
@@ -150,6 +146,7 @@ public class TownManager : MonoBehaviour
         
         uiChat.gameObject.SetActive(true);
         uiAnimation.gameObject.SetActive(true);
+        uiPlayerInformation.gameObject.SetActive(true);
     }
     
     public Player GetPlayerAvatarById(int playerId)
@@ -158,5 +155,18 @@ public class TownManager : MonoBehaviour
             return playerList[playerId];
         
         return null;
+    }
+    public void Set(S_Enter pkt)
+    {
+
+        if (pkt.Player != null)
+        {
+            uiPlayerInformation.Set(pkt.Player);
+        }
+        else
+        {
+            Debug.Log($"Player data is not found");
+        }
+
     }
 }

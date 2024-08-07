@@ -1,9 +1,9 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Google.Protobuf.Protocol;
 using UnityEngine;
 using UnityEngine.AI;
+using Assets.Scripts.Town.Data;
+using System;
 
 public class Player : MonoBehaviour
 {
@@ -27,7 +27,9 @@ public class Player : MonoBehaviour
 
     public int gold { get; private set; }
     public StatInfo statInfo { get; private set; }
-    public Inventory inven { get; private set; }
+    public List<InventoryItem> InventoryItems { get; private set; } = new List<InventoryItem>();
+
+    public EquippedItems equippedItems;
 
     private Vector3 lastPos;
 
@@ -63,6 +65,15 @@ public class Player : MonoBehaviour
         isInit = true;
     }
 
+    public void Set(PlayerInfo playerInfo)
+    {
+        SetNickname(playerInfo.Nickname);
+        SetGold(playerInfo.Gold);
+        SetStatInfo(playerInfo.StatInfo);
+        SetInventory(playerInfo.Inven);
+        SetEquipment(playerInfo.Equipment);
+    }
+
     public void SetGold(int gold)
     {
         this.gold = gold;
@@ -75,7 +86,42 @@ public class Player : MonoBehaviour
 
     public void SetInventory(Inventory inven)
     {
-        this.inven = inven;
+        InventoryItems.Clear();
+
+        if (inven.Items != null)
+        {
+            foreach (var item in inven.Items)
+            {
+                var itemData = DataLoader.Instance?.GetItemById(item.Id);
+                //Debug.Log(itemData);
+
+                InventoryItem inventoryItem = new InventoryItem
+                {
+                    Id = item.Id,
+                    Quantity = item.Quantity,
+                    ItemData = itemData
+                };
+
+                InventoryItems.Add(inventoryItem);
+            }
+        }
+
+        //Debug.Log("Inventory set with items:");
+        //foreach (var item in InventoryItems)
+        //{
+        //    Debug.Log($"ID: {item.Id}, Quantity: {item.Quantity}, ItemData: {item.ItemData?.item_name}");
+        //}
+    }
+
+    public void SetEquipment(Equipment equipment)
+    {
+        Item _weapon = DataLoader.Instance?.GetItemById(equipment.Weapon);
+        Item _armor = DataLoader.Instance?.GetItemById(equipment.Armor);
+        Item _gloves = DataLoader.Instance?.GetItemById(equipment.Gloves);
+        Item _shoes = DataLoader.Instance?.GetItemById(equipment.Shoes);
+        Item _accessory = DataLoader.Instance?.GetItemById(equipment.Accessory);
+        this.equippedItems = new EquippedItems(_weapon, _armor, _gloves, _shoes, _accessory);
+
     }
 
     private void Update()
@@ -112,11 +158,9 @@ public class Player : MonoBehaviour
             string commandType = firstSpaceIdx != -1 ? msg.Substring(0, firstSpaceIdx) : msg;
             string data = firstSpaceIdx != -1 ? msg.Substring(firstSpaceIdx + 1) : "";
 
-            Debug.Log($"words: {commandType} {data}");
-
             if (ChatCommandManager.chatCommandMap == null)
             {
-                Debug.Log("chatCommandMap is null...");
+                Debug.LogWarning("chatCommandMap is null...");
                 return;
             }
 
@@ -125,10 +169,7 @@ public class Player : MonoBehaviour
                 action.Invoke(data);
                 return;
             }
-            else
-            {
-                Debug.Log($"this is not clientCmd");
-            }
+
         }
 
         C_Chat chatPacket = new C_Chat
@@ -143,7 +184,7 @@ public class Player : MonoBehaviour
 
     public void RecvMessage(string msg)
     {
-        if(msg.StartsWith("[All]")) uiNameChat.PushText(msg);
+        if (msg.StartsWith("[All]")) uiNameChat.PushText(msg);
         uiChat.PushMessage(nickname, msg, IsMine);
     }
 
@@ -163,8 +204,184 @@ public class Player : MonoBehaviour
     {
         float dist = Vector3.Distance(lastPos, transform.position);
         animator.SetFloat(Constants.TownPlayerMove, dist * 100);
+        lastPos = transform.position;     
+    }
 
+    public void ProcessBuyItemEvent(ItemInfo item, int gold)
+    {
+        // 아이템이 이미 존재하는지 확인
+        InventoryItem existingItem = InventoryItems.Find(invItem => invItem.ItemData.item_id == item.Id);
 
-        lastPos = transform.position;
+        if (existingItem != null)
+        {
+            // 아이템이 존재하면 수량 설정
+            existingItem.Quantity = item.Quantity;
+        }
+        else
+        {
+            // 아이템이 존재하지 않으면 새로운 아이템 추가
+            var itemData = DataLoader.Instance?.GetItemById(item.Id);
+
+            InventoryItem inventoryItem = new InventoryItem
+            {
+                Id = item.Id,
+                Quantity = item.Quantity,
+                ItemData = itemData
+            };
+
+            InventoryItems.Add(inventoryItem);
+        }
+
+        SetGold(gold);
+        TownManager.Instance.UiPlayerInformation.SetGold(gold);
+    }
+
+    public void ProcessSellItemEvent(ItemInfo item, int gold)
+    {
+        // 아이템이 이미 존재하는지 확인
+        InventoryItem existingItem = InventoryItems.Find(invItem => invItem.ItemData.item_id == item.Id);
+
+        if (existingItem != null)
+        {
+            // 아이템의 수량 
+            existingItem.Quantity = item.Quantity;
+
+            // 아이템의 수량이 0 이하이면 인벤토리에서 제거
+            if (existingItem.Quantity <= 0)
+            {
+                InventoryItems.Remove(existingItem);
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Item with ID {item.Id} does not exist in the inventory.");
+        }
+
+        SetGold(gold);
+        TownManager.Instance.UiPlayerInformation.SetGold(gold);
+    }
+
+    public void ProcessUseItemEvent(ItemInfo item)
+    {
+        // 장착할 아이템 데이터를 가져온다.
+        Item itemData = DataLoader.Instance?.GetItemById(item.Id);
+
+        // 인벤에서 사용한 아이템 
+        InventoryItem existingItem = InventoryItems.Find(invItem => invItem.ItemData.item_id == itemData.item_id);
+
+        if (item.Quantity > 0) existingItem.Quantity = item.Quantity;
+        else InventoryItems.Remove(existingItem);
+
+        // 플레이어의 Hp/Mp를 재조정한다.
+        statInfo.Hp = Math.Min(statInfo.Hp + itemData.item_hp, statInfo.MaxHp);
+        statInfo.Mp = Math.Min(statInfo.Mp + itemData.item_mp, statInfo.MaxMp);
+
+        // 갱신된 HP/MP를 UI에 적용한다(HP/MP 바)
+        TownManager.Instance.UiPlayerInformation.SetCurHP(statInfo.Hp);
+        TownManager.Instance.UiPlayerInformation.SetCurMP(statInfo.Mp);
+    }
+
+    public void ProcessEquipEvent(int itemId)
+    {
+        // 장착할 아이템 데이터를 가져온다.
+        Item itemData = DataLoader.Instance?.GetItemById(itemId);
+
+        switch (itemData.item_type)
+        {
+            case "weapon":
+                equippedItems.Weapon = itemData;
+                break;
+            case "armor":
+                equippedItems.Armor = itemData;
+                break;
+            case "gloves":
+                equippedItems.Gloves = itemData;
+                break;
+            case "shoes":
+                equippedItems.Shoes = itemData;
+                break;
+            case "accessory":
+                equippedItems.Accessory = itemData;
+                break;
+            default:
+                Debug.LogWarning("Invalid item type");
+                break;
+        }
+
+        // 장착한 아이템을 인벤에서 뺀다
+        InventoryItem existingItem = InventoryItems.Find(invItem => invItem.ItemData.item_id == itemData.item_id);
+
+        if (existingItem.Quantity > 1) existingItem.Quantity -= 1;
+        else InventoryItems.Remove(existingItem);
+
+        // 플레이어의 스텟을 재조정한다.
+        updatePlayerStat(itemData, true);
+
+        // UI에 적용한다(HP/MP 바)
+        TownManager.Instance.UiPlayerInformation.SetFullHP(statInfo.MaxHp);
+        TownManager.Instance.UiPlayerInformation.SetFullMP(statInfo.MaxMp);
+    }
+
+    public void ProcessUnequipEvent(string itemType)
+    {       
+        Item unequippedItem = null;
+
+        switch (itemType)
+        {
+            case "weapon":
+                unequippedItem = equippedItems.Weapon;
+                equippedItems.Weapon = null;
+                break;
+            case "armor":
+                unequippedItem = equippedItems.Armor;
+                equippedItems.Armor = null;
+                break;
+            case "gloves":
+                unequippedItem = equippedItems.Gloves;
+                equippedItems.Gloves = null;
+                break;
+            case "shoes":
+                unequippedItem = equippedItems.Shoes;
+                equippedItems.Shoes = null;
+                break;
+            case "accessory":
+                unequippedItem = equippedItems.Accessory;
+                equippedItems.Accessory = null;
+                break;
+            default:
+                Debug.LogWarning("Invalid item type");
+                break;
+        }
+
+        // 탈착한 아이템을 인벤에 넣는다.
+        InventoryItem existingItem = InventoryItems.Find(invItem => invItem.ItemData.item_id == unequippedItem.item_id);
+
+        if (existingItem != null) existingItem.Quantity += 1;
+        else InventoryItems.Add(new InventoryItem
+        {
+            Id = unequippedItem.item_id,
+            Quantity = 1,
+            ItemData = unequippedItem
+        });
+
+        // 플레이어의 스텟을 재조정한다.
+        updatePlayerStat(unequippedItem, false);
+
+        // UI에 적용한다(HP/MP 바)
+        TownManager.Instance.UiPlayerInformation.SetFullHP(statInfo.MaxHp);
+        TownManager.Instance.UiPlayerInformation.SetFullMP(statInfo.MaxMp);
+    }
+
+    public void updatePlayerStat(Item itemData, bool isEquip)
+    {
+        int num = isEquip ? 1 : -1;
+        statInfo.MaxHp += itemData.item_hp * num;
+        statInfo.MaxMp += itemData.item_mp * num;
+        statInfo.Atk += itemData.item_attack * num;
+        statInfo.Def += itemData.item_defense * num;
+        statInfo.Magic += itemData.item_magic * num; 
+        statInfo.Speed += itemData.item_speed * num;
+        statInfo.CritRate += itemData.item_critical * num;
+        statInfo.AvoidRate += itemData.item_avoidance * num;
     }
 }
