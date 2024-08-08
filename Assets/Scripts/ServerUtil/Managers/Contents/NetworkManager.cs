@@ -34,15 +34,19 @@ public class NetworkManager
 	public void Init(string ipString, string portString)
 	{
 		IPAddress ipAddr = null;
-		if (IPAddress.TryParse(ipString, out ipAddr) == false)
-		{
-			// DNS (Domain Name System)
-			// string host = Dns.GetHostName();
-			// IPHostEntry ipHost = Dns.GetHostEntry(host);
-			// ipAddr = ipHost.AddressList[0];
 
-			ipAddr = IPAddress.Parse("127.0.0.1");
-		}
+		IPHostEntry ipHost = Dns.GetHostEntry(ipString);
+		ipAddr = ipHost.AddressList[0];
+
+		//if (IPAddress.TryParse(ipString, out ipAddr) == false)
+		//{
+		//	// DNS (Domain Name System)
+		//	//string host = Dns.GetHostName();
+		//	//IPHostEntry ipHost = Dns.GetHostEntry(host);
+		//	//ipAddr = ipHost.AddressList[0];
+
+		//	ipAddr = IPAddress.Parse("127.0.0.1");
+		//}
 		
 		int port; 
 		if(int.TryParse(portString, out port) == false)
