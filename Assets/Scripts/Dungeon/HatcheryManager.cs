@@ -25,9 +25,16 @@ public class HatcheryManager : MonoBehaviour
 
 	private string basePlayerPath = "DungeonPlayer/Character1";
 
+	[SerializeField] private UIPlayerInformationInHatchery uiMyPlayerInformation;
+	[SerializeField] private UIPlayerInformationInHatchery[] uiOtherPlayersInformation;
+
+	private Dictionary<int, int> UIPlayerMappings = new Dictionary<int, int>();
+	private static int membersN = 0;
+	private const int MAXPEOPLE = 4;
+
 	private void Start()
 	{
-		// �׽�Ʈ �ڵ�
+		// �׽�Ʈ �ڵ�
 		/* TransformInfo transform = new TransformInfo { PosX = 0.0f, PosY = 0.0f, PosZ = 0.0f, Rot = 180.0f };
 		StatInfo statInfo = new StatInfo {Level = 1, Atk = 10, Def = 10, Hp = 10, Magic = 10, MaxHp = 100, MaxMp = 100, Mp = 100, Speed = 10 };
 		PlayerInfo playerInfo = new PlayerInfo { Class = 1001, Nickname = "jaeseok", PlayerId = 1, Transform = transform, StatInfo = statInfo };
@@ -39,7 +46,7 @@ public class HatcheryManager : MonoBehaviour
 		var spawnPos = spawnArea.position;
 		var player2 = CreatePlayer(playerInfo2, spawnPos);
 		player2.SetIsMine(false); */
-		// ~�׽�Ʈ �ڵ�
+		// ~�׽�Ʈ �ڵ�
 	}
 
 	private void Awake()
@@ -67,12 +74,32 @@ public class HatcheryManager : MonoBehaviour
 
 	public void OtherPlayerSpawn(S_SpawnPlayerHatchery spawnPacket)
 	{
-		var playerList = spawnPacket.Players;
-		foreach (var playerInfo in playerList)
+		var players = spawnPacket.Players;
+	
+		foreach (var playerInfo in players)
 		{
+			// 새로운 멤버가 들어왔다면 UI추가
+            if (!playerList.ContainsKey(playerInfo.PlayerId)){
+
+				if (membersN + 1 >= MAXPEOPLE)
+				{
+					Debug.LogWarning("This dungeon is full");
+					break;
+				}
+
+				// UI 매핑에 해당 유저 추가
+				UIPlayerMappings.Add(playerInfo.PlayerId, membersN);
+
+				// UI 세팅
+				uiOtherPlayersInformation[membersN].gameObject.SetActive(true);
+				uiOtherPlayersInformation[membersN].Set(playerInfo);
+				membersN++;
+			}
+
 			var player = CreatePlayer(playerInfo);
 			player.SetIsMine(false);
 		}
+
 	}
 
 	public void Set(S_EnterHatchery pkt)
@@ -82,7 +109,7 @@ public class HatcheryManager : MonoBehaviour
 			Spawn(pkt.Player);
 			uiMonsterInfo.SetMainCamera();
 		}
-		if (pkt.BossMaxHp != null && pkt.BossName != null && pkt.BossSpeed != null)
+		if (pkt.BossMaxHp > 0 && pkt.BossName != null && pkt.BossSpeed > 0)
 		{
 			uiMonsterInfo.SetFullHP(pkt.BossMaxHp, false);
 			uiMonsterInfo.SetName(pkt.BossName);
@@ -97,6 +124,8 @@ public class HatcheryManager : MonoBehaviour
 			monster.transform.position = pos;
 			monster.transform.rotation = rot;
 		}
+
+		SetPlayerInfo(pkt);
 	}
 
 	public void SetBossCurHp(int hp)
@@ -172,5 +201,19 @@ public class HatcheryManager : MonoBehaviour
 		C_LeaveHatchery leavePacket = new C_LeaveHatchery { };
 
 		GameManager.Network.Send(leavePacket);
+	}
+
+	public void SetPlayerInfo(S_EnterHatchery pkt)
+	{
+
+		if (pkt.Player != null)
+		{
+			uiMyPlayerInformation.Set(pkt.Player);
+		}
+		else
+		{
+			Debug.Log($"Player data is not found");
+		}
+
 	}
 }
