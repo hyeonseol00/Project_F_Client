@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
-    public int damage = 10;
     float rate = 1.0f;
 	[SerializeField] BoxCollider meleeArea;
     [SerializeField] Animator animator;

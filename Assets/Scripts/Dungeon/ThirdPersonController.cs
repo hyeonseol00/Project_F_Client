@@ -30,7 +30,7 @@ public class ThirdPersonController : MonoBehaviour
         Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         Vector3 camAngle = cameraArm.rotation.eulerAngles;
 
-        float x = camAngle.x + mouseDelta.y;
+        float x = camAngle.x - mouseDelta.y;
 
         if (x < 180.0f)
         {

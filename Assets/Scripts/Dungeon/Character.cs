@@ -44,6 +44,16 @@ public class Character : MonoBehaviour
 			animator.SetFloat("Move", 0.0f);
 	}
 
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "MonsterWeapon" && IsMine)
+		{
+			C_PlayerHit playerHitPacket = new C_PlayerHit { };
+
+			GameManager.Network.Send(playerHitPacket);
+		}
+	}
+
 	public void SetPlayerId(int playerId)
 	{
 		PlayerId = playerId;
@@ -86,5 +96,10 @@ public class Character : MonoBehaviour
 	public void AttackMotion()
 	{
 		animator.SetBool("Anim1", true);
+	}
+
+	public void HitMotion()
+	{
+		animator.SetBool("Hit", true);
 	}
 }

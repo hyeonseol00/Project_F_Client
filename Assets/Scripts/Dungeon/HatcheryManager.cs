@@ -20,6 +20,8 @@ public class HatcheryManager : MonoBehaviour
 	[SerializeField] public Enemy monster;
 	[SerializeField] private UIMonsterInformation uiMonsterInfo;
 
+	[SerializeField] public BossAttack bossWeapon;
+
 	private Dictionary<int, Character> playerList = new Dictionary<int, Character>();
 	private Dictionary<int, string> playerDb = new Dictionary<int, string>();
 
