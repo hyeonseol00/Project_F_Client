@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-	int maxHealth;
-	int curHealth;
 	public float speed;
 
 	[SerializeField] Animator animator;
