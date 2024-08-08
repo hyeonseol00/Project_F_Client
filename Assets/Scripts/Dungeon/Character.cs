@@ -23,6 +23,8 @@ public class Character : MonoBehaviour
 	private Vector3 lastPos;
 	private float elapsedFromMovePacket;
 
+	private bool isDead = false;
+
 	void Start()
 	{
 		character = transform.Find("Player1").gameObject;
@@ -101,5 +103,16 @@ public class Character : MonoBehaviour
 	public void HitMotion()
 	{
 		animator.SetBool("Hit", true);
+	}
+
+	public void DeadMotion()
+	{
+		animator.SetBool("Die", true);
+		isDead = true;
+	}
+
+	public bool getIsDead()
+    {
+		return isDead;
 	}
 }
