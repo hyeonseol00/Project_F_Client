@@ -412,6 +412,32 @@ class PacketHandler
         Vector3 unitVec = new Vector3(pkt.BossUnitVector.UnitX, 0, pkt.BossUnitVector.UnitZ);
 
         monster.SetUnitVector(unitVec);
+	}
+
+    public static void S_BossTryAttackHandler(PacketSession session, IMessage packet)
+    {
+		S_BossTryAttack pkt = packet as S_BossTryAttack;
+        if (pkt == null)
+            return;
+
+        HatcheryManager.Instance.bossWeapon.TryBossAttack();
     }
+
+	public static void S_SetPlayerHpHatcheryHandler(PacketSession session, IMessage packet)
+	{
+		S_SetPlayerHpHatchery pkt = packet as S_SetPlayerHpHatchery;
+		if (pkt == null)
+			return;
+
+        var hittedPlayer = HatcheryManager.Instance.GetPlayerAvatarById(pkt.PlayerId);
+        hittedPlayer.HitMotion();
+	}
+
+	public static void S_DespawnHatcheryHandler(PacketSession session, IMessage packet)
+	{
+		S_DespawnHatchery pkt = packet as S_DespawnHatchery;
+		if (pkt == null)
+			return;
+	}
 }
 
