@@ -151,11 +151,11 @@ public class ChatCommandManager : MonoBehaviour
                 $"/acceptTeam [nickname]: 초대를 수락합니다.\n" +
                 $"/kickMember [nickname]: 팀원을 추방합니다.\n" +
                 $"/memlist: 팀 멤버를 조회합니다.\n" +
-                $"/buyItem [itemName] [quantity]: 아이템을 수량만큼 구매합니다.\n" +
-                $"/sellItem [itemName] [quantity]: 아이템을 수량만큼 판매합니다.\n" +
+                $"/buyItem [itemName] [quantity] 또는 /buy [itemName] [quantity]: 아이템을 수량만큼 구매합니다.\n" +
+                $"/sellItem [itemName] [quantity] 또는 /sell [itemName] [quantity]: 아이템을 수량만큼 판매합니다.\n" +
                 $"/equip [itemId] 또는 /eq [itemId]: 장비를 장착합니다.\n" +
                 $"/unequip [itemType] 또는 /ueq [itemType]: 장비를 탈착합니다.\n" +
-                $"/use [itemId]: 소비 아이템을 사용합니다\n";
+                $"/useItem [itemId] 또는 /use [itemId]: 소비 아이템을 사용합니다\n";
 
         bool myChat = false;
 
