@@ -229,6 +229,7 @@ public class HatcheryManager : MonoBehaviour
 			uiMyPlayerInformation.SetCurHP(pkt.PlayerCurHp);
 			if (pkt.PlayerCurHp <= 0)
 			{
+				hittedPlayer.gameObject.layer = 11; // CharaterDead
 				hittedPlayer.DeadMotion();
 				GameObject.Find("UIResult").transform.Find("LosePopup").gameObject.SetActive(true);
 			}
