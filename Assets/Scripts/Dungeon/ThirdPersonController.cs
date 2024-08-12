@@ -22,7 +22,9 @@ public class ThirdPersonController : MonoBehaviour
     void Update()
     {
         LookAround();
-        Move();
+
+        if (!HatcheryManager.Instance.myPlayer.isDead)
+            Move();
     }
 
     private void LookAround()
