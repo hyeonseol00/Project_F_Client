@@ -284,38 +284,46 @@ public class Player : MonoBehaviour
     public void ProcessEquipEvent(int itemId)
     {
         // 장착할 아이템 데이터를 가져온다.
-        Item itemData = DataLoader.Instance?.GetItemById(itemId);
+        Item equippingItem = DataLoader.Instance?.GetItemById(itemId);
+        Item prevEquippedItem = null;
 
-        switch (itemData.item_type)
+        switch (equippingItem.item_type)
         {
             case "weapon":
-                equippedItems.Weapon = itemData;
+                prevEquippedItem = equippedItems.Weapon;
+                equippedItems.Weapon = equippingItem;
                 break;
             case "armor":
-                equippedItems.Armor = itemData;
+                prevEquippedItem = equippedItems.Armor;
+                equippedItems.Armor = equippingItem;
                 break;
             case "gloves":
-                equippedItems.Gloves = itemData;
+                prevEquippedItem = equippedItems.Gloves;
+                equippedItems.Gloves = equippingItem;
                 break;
             case "shoes":
-                equippedItems.Shoes = itemData;
+                prevEquippedItem = equippedItems.Shoes;
+                equippedItems.Shoes = equippingItem;
                 break;
             case "accessory":
-                equippedItems.Accessory = itemData;
+                prevEquippedItem = equippedItems.Accessory;
+                equippedItems.Accessory = equippingItem;
                 break;
             default:
                 Debug.LogWarning("Invalid item type");
-                break;
+                return;
         }
 
-        // 장착한 아이템을 인벤에서 뺀다
-        InventoryItem existingItem = InventoryItems.Find(invItem => invItem.ItemData.item_id == itemData.item_id);
+        // 이미 장착 중인 아이템을 탈착한다면, 탈착하는 아이템에 대한 플레이어의 스텟/인벤토리 정보를 갱신한다.
+        if (prevEquippedItem != null)
+        {
+            updateInven(prevEquippedItem, false);
+            updatePlayerStat(prevEquippedItem, false);
+        }
 
-        if (existingItem.Quantity > 1) existingItem.Quantity -= 1;
-        else InventoryItems.Remove(existingItem);
-
-        // 플레이어의 스텟을 재조정한다.
-        updatePlayerStat(itemData, true);
+        // 장착한 아이템에 대한 플레이어의 스텟/인벤토리 정보를 갱신한다.
+        updateInven(equippingItem, true);
+        updatePlayerStat(equippingItem, true);
 
         // UI에 적용한다(HP/MP 바)
         TownManager.Instance.UiPlayerInformation.SetFullHP(statInfo.MaxHp);
@@ -353,18 +361,8 @@ public class Player : MonoBehaviour
                 break;
         }
 
-        // 탈착한 아이템을 인벤에 넣는다.
-        InventoryItem existingItem = InventoryItems.Find(invItem => invItem.ItemData.item_id == unequippedItem.item_id);
-
-        if (existingItem != null) existingItem.Quantity += 1;
-        else InventoryItems.Add(new InventoryItem
-        {
-            Id = unequippedItem.item_id,
-            Quantity = 1,
-            ItemData = unequippedItem
-        });
-
-        // 플레이어의 스텟을 재조정한다.
+        // 탈착한 아이템에 대한 플레이어의 스텟/인벤토리 정보를 갱신한다.
+        updateInven(unequippedItem, false);
         updatePlayerStat(unequippedItem, false);
 
         // UI에 적용한다(HP/MP 바)
@@ -383,5 +381,33 @@ public class Player : MonoBehaviour
         statInfo.Speed += itemData.item_speed * num;
         statInfo.CritRate += itemData.item_critical * num;
         statInfo.AvoidRate += itemData.item_avoidance * num;
+    }
+
+    private void updateInven(Item item, bool AddItem)
+    {
+        // 해당 아이템이 인벤에 있는지 찾는다.
+        InventoryItem existingItem = InventoryItems.Find(invItem => invItem.ItemData.item_id == item.item_id);
+
+        if (AddItem)
+        {
+            if (existingItem != null) existingItem.Quantity += 1;
+            else InventoryItems.Add(new InventoryItem
+            {
+                Id = item.item_id,
+                Quantity = 1,
+                ItemData = item
+            });
+        }
+        else
+        {
+            if (existingItem == null)
+            {
+                Debug.LogWarning("Can't unequip non-exist Item");
+                return;
+            }
+
+            if (existingItem.Quantity > 1) existingItem.Quantity -= 1;
+            else InventoryItems.Remove(existingItem);
+        }
     }
 }

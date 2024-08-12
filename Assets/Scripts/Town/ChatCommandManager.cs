@@ -138,24 +138,24 @@ public class ChatCommandManager : MonoBehaviour
         string nickname = "not use param";
         string commandsList =
                 $"[System]: 명령어 목록은 다음과 같습니다\n" +
-                $"/help : 명령어 목록을 보여줍니다\n" +
-                $"/shop : 상품 목록을 보여줍니다\n" +
+                $"/help: 명령어 목록을 보여줍니다\n" +
+                $"/shop: 상품 목록을 보여줍니다\n" +
                 $"/stat: 캐릭터 스텟을 보여줍니다\n" +
                 $"/equipment: 장착한 아이템을 보여줍니다\n" +
                 $"/inven: 캐릭터 인벤토리를 보여줍니다\n" +
-                $"/w 닉네임 메세지: 귓속말을 보냅니다.\n" +
-                $"/t: 팀에게 채팅을 보냅니다.\n" +
+                $"/w [nickname] [message]: 귓속말을 보냅니다.\n" +
+                $"/t [message]: 팀 전체에게 채팅을 보냅니다.\n" +
                 $"/createTeam: 팀을 생성합니다.\n" +
-                $"/joinTeam nickname: 팀에 가입합니다.\n" +
-                $"/inviteTeam nickname: 팀에게 초대합니다.\n" +
-                $"/acceptTeam nickname: 초대를 수락합니다.\n" +
-                $"/kickMember nickname: 팀원을 추방합니다.\n" +
+                $"/joinTeam [nickname]: 팀에 가입합니다.\n" +
+                $"/inviteTeam [nickname]: 팀에게 초대합니다.\n" +
+                $"/acceptTeam [nickname]: 초대를 수락합니다.\n" +
+                $"/kickMember [nickname]: 팀원을 추방합니다.\n" +
                 $"/memlist: 팀 멤버를 조회합니다.\n" +
-                $"/buyItem itemName quantity: 아이템을 수량만큼 구매합니다.\n" +
-                $"/sellItem itemName quantity: 아이템을 수량만큼 판매합니다.\n" +
-                $"/equip itemId또는 /eq itemId: 장비를 장착합니다.\n" +
-                $"/unequip itemType, /ueq itemType: 장비를 탈착합니다.\n" +
-                $"/use itemId: 소비 아이템을 사용합니다\n";
+                $"/buyItem [itemName] [quantity] 또는 /buy [itemName] [quantity]: 아이템을 수량만큼 구매합니다.\n" +
+                $"/sellItem [itemName] [quantity] 또는 /sell [itemName] [quantity]: 아이템을 수량만큼 판매합니다.\n" +
+                $"/equip [itemId] 또는 /eq [itemId]: 장비를 장착합니다.\n" +
+                $"/unequip [itemType] 또는 /ueq [itemType]: 장비를 탈착합니다.\n" +
+                $"/useItem [itemId] 또는 /use [itemId]: 소비 아이템을 사용합니다\n";
 
         bool myChat = false;
 

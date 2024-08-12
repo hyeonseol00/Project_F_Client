@@ -48,6 +48,8 @@ public class NetworkManager
 		//	ipAddr = IPAddress.Parse("127.0.0.1");
 		//}
 		
+		if(ipString == "") ipAddr = IPAddress.Parse("127.0.0.1");
+
 		int port; 
 		if(int.TryParse(portString, out port) == false)
 			port = 3000;
