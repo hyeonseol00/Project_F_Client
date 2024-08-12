@@ -147,6 +147,47 @@ class PacketHandler
     }
 
     // ============== 100 Packet Type Handler End==================== 
+
+    // ============== 150 Packet Type Handler Begin==================== 
+
+    public static void S_GetQuestsHandler(PacketSession session, IMessage packet)
+    {
+        S_GetQuests pkt = packet as S_GetQuests;
+        if (pkt == null)
+            return;
+
+        Debug.Log($"S_GetQuestsHandler access! {pkt}");
+    }
+
+    public static void S_AcceptQuestsHandler(PacketSession session, IMessage packet)
+    {
+        S_AcceptQuest pkt = packet as S_AcceptQuest;
+        if (pkt == null)
+            return;
+
+        Debug.Log($"S_AcceptQuestsHandler access! {pkt}");
+    }
+
+    public static void S_UpdateQuestsHandler(PacketSession session, IMessage packet)
+    {
+        S_UpdateQuest pkt = packet as S_UpdateQuest;
+        if (pkt == null)
+            return;
+
+        Debug.Log($"S_UpdateQuestsHandler access! {pkt}");
+    }
+
+    public static void S_CompleteQuestsHandler(PacketSession session, IMessage packet)
+    {
+        S_CompleteQuest pkt = packet as S_CompleteQuest;
+        if (pkt == null)
+            return;
+
+        Debug.Log($"S_CompleteQuestsHandler access! {pkt}");
+    }
+
+    // ============== 150 Packet Type Handler End==================== 
+
     #endregion
 
 

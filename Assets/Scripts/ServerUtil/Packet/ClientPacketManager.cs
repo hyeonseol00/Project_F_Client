@@ -73,6 +73,15 @@ class PacketManager
 		_onRecv.Add((ushort)MsgId.SUnequipWeapon, MakePacket<S_UnequipWeapon>);
 		_handler.Add((ushort)MsgId.SUnequipWeapon, PacketHandler.S_UnequipWeaponHandler);
 
+		_onRecv.Add((ushort)MsgId.SGetQuests, MakePacket<S_GetQuests>);
+		_handler.Add((ushort)MsgId.SGetQuests, PacketHandler.S_GetQuestsHandler);
+		_onRecv.Add((ushort)MsgId.SAcceptQuest, MakePacket<S_AcceptQuest>);
+		_handler.Add((ushort)MsgId.SAcceptQuest, PacketHandler.S_AcceptQuestsHandler);
+		_onRecv.Add((ushort)MsgId.SUpdateQuest, MakePacket<S_UpdateQuest>);
+		_handler.Add((ushort)MsgId.SUpdateQuest, PacketHandler.S_UpdateQuestsHandler);
+		_onRecv.Add((ushort)MsgId.SCompleteQuest, MakePacket<S_CompleteQuest>);
+		_handler.Add((ushort)MsgId.SCompleteQuest, PacketHandler.S_CompleteQuestsHandler);
+
 		_onRecv.Add((ushort)MsgId.SRegister, MakePacket<S_Register>);
 		_handler.Add((ushort)MsgId.SRegister, PacketHandler.S_RegisterHandler);
 		_onRecv.Add((ushort)MsgId.SLogIn, MakePacket<S_LogIn>);
