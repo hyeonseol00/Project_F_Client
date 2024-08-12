@@ -233,7 +233,8 @@ public class HatcheryManager : MonoBehaviour
 				hittedPlayer.DeadMotion();
 				GameObject.Find("UIResult").transform.Find("LosePopup").gameObject.SetActive(true);
 			}
-			hittedPlayer.HitMotion();
+			else
+				hittedPlayer.HitMotion();
 			return;
 		}
 
@@ -242,7 +243,10 @@ public class HatcheryManager : MonoBehaviour
         {
 			int playerIdx = UIPlayerMappings[pkt.PlayerId];
 			uiOtherPlayersInformation[playerIdx].SetCurHP(pkt.PlayerCurHp);
-			hittedPlayer.HitMotion();
+			if (pkt.PlayerCurHp <= 0)
+				hittedPlayer.DeadMotion();
+			else
+				hittedPlayer.HitMotion();
 		}
         else
         {
