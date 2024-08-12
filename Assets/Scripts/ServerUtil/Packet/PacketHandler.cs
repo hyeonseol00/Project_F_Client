@@ -429,15 +429,16 @@ class PacketHandler
 		if (pkt == null)
 			return;
 
-        var hittedPlayer = HatcheryManager.Instance.GetPlayerAvatarById(pkt.PlayerId);
-        hittedPlayer.HitMotion();
-	}
+        HatcheryManager.Instance.SetPlayerCurHp(pkt);
+    }
 
 	public static void S_DespawnHatcheryHandler(PacketSession session, IMessage packet)
 	{
 		S_DespawnHatchery pkt = packet as S_DespawnHatchery;
 		if (pkt == null)
 			return;
-	}
+
+        HatcheryManager.Instance.ReleasePlayer(pkt.PlayerId);
+    }
 }
 

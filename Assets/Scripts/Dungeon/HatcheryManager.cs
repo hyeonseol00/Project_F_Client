@@ -218,4 +218,36 @@ public class HatcheryManager : MonoBehaviour
 		}
 
 	}
+
+	public void SetPlayerCurHp(S_SetPlayerHpHatchery pkt)
+	{
+		Character hittedPlayer = GetPlayerAvatarById(pkt.PlayerId);
+
+		// 피격 대상이 본인 캐릭터인 경우,
+		if (pkt.PlayerId == myPlayer.PlayerId)
+        {
+			uiMyPlayerInformation.SetCurHP(pkt.PlayerCurHp);
+			if (pkt.PlayerCurHp <= 0)
+			{
+				hittedPlayer.gameObject.layer = 11; // CharaterDead
+				hittedPlayer.DeadMotion();
+				GameObject.Find("UIResult").transform.Find("LosePopup").gameObject.SetActive(true);
+			}
+			hittedPlayer.HitMotion();
+			return;
+		}
+
+		// 피격 대상이 본인 캐릭터가 아닌 경우,
+		if (UIPlayerMappings.ContainsKey(pkt.PlayerId))
+        {
+			int playerIdx = UIPlayerMappings[pkt.PlayerId];
+			uiOtherPlayersInformation[playerIdx].SetCurHP(pkt.PlayerCurHp);
+			hittedPlayer.HitMotion();
+		}
+        else
+        {
+			Debug.LogError($"PlayerID: {pkt.PlayerId} is not exist!");
+        }
+
+	}
 }
