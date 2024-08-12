@@ -23,7 +23,7 @@ public class Character : MonoBehaviour
 	private Vector3 lastPos;
 	private float elapsedFromMovePacket;
 
-	private bool isDead = false;
+	public bool isDead = false;
 
 	void Start()
 	{

@@ -33,7 +33,8 @@ public class Attack : MonoBehaviour
         attackDelay += Time.deltaTime;
         isAttackReady = rate < attackDelay;
 
-        if (Input.GetButtonDown("Fire1") && isAttackReady)
+        var isDead = HatcheryManager.Instance.myPlayer.isDead;
+        if (Input.GetButtonDown("Fire1") && isAttackReady && !isDead)
         {
             StopCoroutine("TryAttack");
             StartCoroutine("TryAttack");
