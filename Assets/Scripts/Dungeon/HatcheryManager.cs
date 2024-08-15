@@ -27,12 +27,7 @@ public class HatcheryManager : MonoBehaviour
 
 	private string basePlayerPath = "DungeonPlayer/Character1";
 
-	[SerializeField] private UIPlayerInformationInHatchery uiMyPlayerInformation;
-	[SerializeField] private UIPlayerInformationInHatchery[] uiOtherPlayersInformation;
-
-	private Dictionary<int, int> UIPlayerMappings = new Dictionary<int, int>();
-	private static int membersN = 0;
-	private const int MAXPEOPLE = 4;
+	[SerializeField] private HatcheryUIManager hatcheryUIManager;
 
 	private void Start()
 	{
@@ -77,25 +72,14 @@ public class HatcheryManager : MonoBehaviour
 	public void OtherPlayerSpawn(S_SpawnPlayerHatchery spawnPacket)
 	{
 		var players = spawnPacket.Players;
-	
+		var isMine = false;
+
 		foreach (var playerInfo in players)
 		{
-			// 새로운 멤버가 들어왔다면 UI추가
+			// 새로운 플레이어가 들어왔다면 UI추가
             if (!playerList.ContainsKey(playerInfo.PlayerId)){
 
-				if (membersN + 1 >= MAXPEOPLE)
-				{
-					Debug.LogWarning("This dungeon is full");
-					break;
-				}
-
-				// UI 매핑에 해당 유저 추가
-				UIPlayerMappings.Add(playerInfo.PlayerId, membersN);
-
-				// UI 세팅
-				uiOtherPlayersInformation[membersN].gameObject.SetActive(true);
-				uiOtherPlayersInformation[membersN].Set(playerInfo);
-				membersN++;
+				hatcheryUIManager.OnPlayerEnter(playerInfo, isMine);
 			}
 
 			var player = CreatePlayer(playerInfo);
@@ -110,6 +94,10 @@ public class HatcheryManager : MonoBehaviour
 		{
 			Spawn(pkt.Player);
 			uiMonsterInfo.SetMainCamera();
+
+			// 본인 UI추가.
+			var isMine = true;
+			hatcheryUIManager.OnPlayerEnter(pkt.Player, isMine);
 		}
 		if (pkt.BossMaxHp > 0 && pkt.BossName != null && pkt.BossSpeed > 0)
 		{
@@ -126,8 +114,7 @@ public class HatcheryManager : MonoBehaviour
 			monster.transform.position = pos;
 			monster.transform.rotation = rot;
 		}
-
-		SetPlayerInfo(pkt);
+	
 	}
 
 	public void SetBossCurHp(int hp)
@@ -188,6 +175,7 @@ public class HatcheryManager : MonoBehaviour
 		playerList.Remove(playerId);
 
 		Destroy(player.gameObject);
+		hatcheryUIManager.OnOtherPlayerExit(playerId);
 	}
 
 	public Character GetPlayerAvatarById(int playerId)
@@ -205,28 +193,23 @@ public class HatcheryManager : MonoBehaviour
 		GameManager.Network.Send(leavePacket);
 	}
 
-	public void SetPlayerInfo(S_EnterHatchery pkt)
-	{
-
-		if (pkt.Player != null)
-		{
-			uiMyPlayerInformation.Set(pkt.Player);
-		}
-		else
-		{
-			Debug.Log($"Player data is not found");
-		}
-
-	}
-
 	public void SetPlayerCurHp(S_SetPlayerHpHatchery pkt)
 	{
+		
 		Character hittedPlayer = GetPlayerAvatarById(pkt.PlayerId);
 
-		// 피격 대상이 본인 캐릭터인 경우,
-		if (pkt.PlayerId == myPlayer.PlayerId)
+		// 수신받은 playerId를 가진 캐릭터가 던전에 없는 경우 오류 출력
+		if (!hittedPlayer)
         {
-			uiMyPlayerInformation.SetCurHP(pkt.PlayerCurHp);
+			Debug.LogError($"PlayerID: {pkt.PlayerId} is not exist!");
+			return;
+		}
+
+		// 피격 대상이 본인 캐릭터인 경우와 아닌 경우를 구분해서 로직 실행
+		if (pkt.PlayerId == myPlayer.PlayerId)
+		{
+			var isMine = true;
+			hatcheryUIManager.SetPlayerCurHP(pkt.PlayerId, pkt.PlayerCurHp, isMine);
 			if (pkt.PlayerCurHp <= 0)
 			{
 				hittedPlayer.gameObject.layer = 11; // CharaterDead
@@ -235,23 +218,19 @@ public class HatcheryManager : MonoBehaviour
 			}
 			else
 				hittedPlayer.HitMotion();
-			return;
+			
 		}
-
-		// 피격 대상이 본인 캐릭터가 아닌 경우,
-		if (UIPlayerMappings.ContainsKey(pkt.PlayerId))
+        else
         {
-			int playerIdx = UIPlayerMappings[pkt.PlayerId];
-			uiOtherPlayersInformation[playerIdx].SetCurHP(pkt.PlayerCurHp);
+			var isMine = false;
+			hatcheryUIManager.SetPlayerCurHP(pkt.PlayerId, pkt.PlayerCurHp, isMine);
 			if (pkt.PlayerCurHp <= 0)
 				hittedPlayer.DeadMotion();
 			else
 				hittedPlayer.HitMotion();
 		}
-        else
-        {
-			Debug.LogError($"PlayerID: {pkt.PlayerId} is not exist!");
-        }
 
+		return;
 	}
+	
 }
