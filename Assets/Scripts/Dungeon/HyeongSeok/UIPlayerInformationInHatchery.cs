@@ -28,15 +28,12 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
     private float fillWidth = 441;
     private float fillHeight = 40;
 
-
-    public void SetLevel(int level)
-    {
-        txtLv.text = $"Lv.{level}";
-    }
+    public int playerId { get; private set; }
 
     public void Set(PlayerInfo playerInfo)
     {
         //Debug.Log($"playerInfo: {playerInfo}");
+        SetPlayerId(playerInfo.PlayerId);
         SetName(playerInfo.Nickname);
         SetLevel(playerInfo.StatInfo.Level);
         SetFullHP(playerInfo.StatInfo.MaxHp);
@@ -45,9 +42,19 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
         SetCurMP(playerInfo.StatInfo.Mp);
     }
 
+    public void SetPlayerId(int playerId)
+    {
+        this.playerId = playerId;
+    }
+
     public void SetName(string nickname)
     {
         txtName.text = nickname;
+    }
+
+    public void SetLevel(int level)
+    {
+        txtLv.text = $"Lv.{level}";
     }
 
     public void SetFullHP(float hp)
@@ -62,7 +69,7 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
     public void SetCurHP(float hp)
     {
         curHP = Mathf.Min(hp, fullHP);
-        
+
         txtHp.text = $"{curHP} / {fullHP}";
 
         float per = curHP / fullHP;
@@ -71,19 +78,18 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
         txtHp.rectTransform.sizeDelta = new Vector2(txtHp.preferredWidth + 50, 40);
     }
 
-
     public void SetFullMP(float mp, bool recover = true)
     {
         fullMP = mp;
 
         SetCurMP(curMP);
-      
+
         txtMp.rectTransform.sizeDelta = new Vector2(txtMp.preferredWidth + 50, 40);
     }
 
     public void SetCurMP(float mp)
     {
-        curMP = Mathf.Min(mp, fullMP);  
+        curMP = Mathf.Min(mp, fullMP);
 
         txtMp.text = $"{curMP} / {fullMP}";
 
@@ -92,4 +98,5 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
 
         txtMp.rectTransform.sizeDelta = new Vector2(txtMp.preferredWidth + 50, 40);
     }
+
 }
