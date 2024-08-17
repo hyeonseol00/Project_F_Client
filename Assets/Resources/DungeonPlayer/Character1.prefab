@@ -100,8 +100,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1fe099f46a237c149a87837c65b177ef, type: 2}
-  m_sharedMaterial: {fileID: 6193584115982977352, guid: 1fe099f46a237c149a87837c65b177ef,
+  m_fontAsset: {fileID: 11400000, guid: 47b9374e1e10bfc42b76321d4318e5d3, type: 2}
+  m_sharedMaterial: {fileID: 2611188617644389782, guid: 47b9374e1e10bfc42b76321d4318e5d3,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -978,6 +978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiNameChat: {fileID: 136239557826147476}
+  isDead: 0
 --- !u!114 &5159890143931453789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2326,7 +2327,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7d885886c03304486eceba26cb579c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
   meleeArea: {fileID: 4833421380162517664}
   animator: {fileID: 1792359025717265844}
 --- !u!65 &4833421380162517664
@@ -2997,8 +2997,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Nickname
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1fe099f46a237c149a87837c65b177ef, type: 2}
-  m_sharedMaterial: {fileID: 6193584115982977352, guid: 1fe099f46a237c149a87837c65b177ef,
+  m_fontAsset: {fileID: 11400000, guid: 47b9374e1e10bfc42b76321d4318e5d3, type: 2}
+  m_sharedMaterial: {fileID: 2611188617644389782, guid: 47b9374e1e10bfc42b76321d4318e5d3,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
