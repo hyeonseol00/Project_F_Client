@@ -33,7 +33,7 @@ public class UIChat : MonoBehaviour
 
     private bool isOpen = true;
 
-    private List<GameObject> chatList;
+    private List<GameObject> chatList = new List<GameObject>();
 
     enum TabType { All, Team, System, DM };
 
@@ -47,8 +47,6 @@ public class UIChat : MonoBehaviour
 
         btnSend.onClick.AddListener(SendMessage);
         btnToggle.onClick.AddListener(ToggleChatWindow);
-
-        chatList = new List<GameObject>();
 
         btnAllTab.onClick.AddListener(() => filterChat(TabType.All));
         btnTeamTab.onClick.AddListener(() => filterChat(TabType.Team));
