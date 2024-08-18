@@ -553,6 +553,37 @@ Transform:
   - {fileID: 3656782603126332341}
   m_Father: {fileID: 4564000974275906038}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1513640271766795048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8537516034959646309}
+  m_Layer: 0
+  m_Name: Bullet Pos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8537516034959646309
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513640271766795048}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.48842448, y: -0.49602145, z: 0.5257029, w: -0.48891792}
+  m_LocalPosition: {x: 0.215, y: 1.293, z: 0.669}
+  m_LocalScale: {x: 1.831215, y: 0.99303097, z: 1.831214}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7452562335948309183}
+  m_LocalEulerAnglesHint: {x: 87.594, y: -42.776, z: -135.319}
 --- !u!1 &1649485241323599726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1716,6 +1747,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1746880955562502762}
+  - {fileID: 8537516034959646309}
   - {fileID: 352842149844741607}
   - {fileID: 9064268952446145607}
   - {fileID: 6555669843455829310}
@@ -2411,6 +2443,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meleeArea: {fileID: 4893686145741043920}
   animator: {fileID: 222527297580470913}
+  isMelee: 0
+  trailEffect: {fileID: 0}
+  bulletPos: {fileID: 8537516034959646309}
+  bullet: {fileID: 3456259344275569075, guid: f9e9edc38a853414dba8ff099bd687b9, type: 3}
 --- !u!65 &4893686145741043920
 BoxCollider:
   m_ObjectHideFlags: 0
