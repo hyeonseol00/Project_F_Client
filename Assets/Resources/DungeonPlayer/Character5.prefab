@@ -858,6 +858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiNameChat: {fileID: 5162543585090084468}
+  attackScript: {fileID: 8215676755780929925}
   isDead: 0
 --- !u!1 &2015686960628046273
 GameObject:

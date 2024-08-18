@@ -408,6 +408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiNameChat: {fileID: 4700201089576098190}
+  attackScript: {fileID: 8764566068712385216}
   isDead: 0
 --- !u!1 &807148922306589444
 GameObject:
@@ -1225,6 +1226,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meleeArea: {fileID: 1639057708766143533}
   animator: {fileID: 1758140424355224985}
+  isMelee: 1
+  trailEffect: {fileID: 0}
+  bulletPos: {fileID: 0}
+  bullet: {fileID: 0}
+  bulletSpeed: 50
+  beforeCastDelay: 0.41
 --- !u!65 &1639057708766143533
 BoxCollider:
   m_ObjectHideFlags: 0

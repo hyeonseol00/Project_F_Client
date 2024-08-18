@@ -794,6 +794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiNameChat: {fileID: 9101403334521713976}
+  attackScript: {fileID: 7646712694174931451}
   isDead: 0
 --- !u!1 &2625414351459408749
 GameObject:
@@ -2447,6 +2448,8 @@ MonoBehaviour:
   trailEffect: {fileID: 0}
   bulletPos: {fileID: 8537516034959646309}
   bullet: {fileID: 3456259344275569075, guid: f9e9edc38a853414dba8ff099bd687b9, type: 3}
+  bulletSpeed: 50
+  beforeCastDelay: 0.41
 --- !u!65 &4893686145741043920
 BoxCollider:
   m_ObjectHideFlags: 0
