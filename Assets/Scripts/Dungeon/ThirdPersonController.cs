@@ -9,6 +9,13 @@ public class ThirdPersonController : MonoBehaviour
 
     [SerializeField] private Transform characterBody;
     [SerializeField] private Transform cameraArm;
+    [SerializeField] private Camera _camera3pov;
+    [SerializeField] private Camera _camera1pov;
+
+    public float sensitivity = 5f;
+    public float zoomSpeed = 20f; // 줌 속도
+    public float minFov = 15f; // 최소 FOV (최대 줌인)
+    public float maxFov = 90f; // 최대 FOV (최대 줌아웃)
 
     Animator animator;
 
@@ -25,14 +32,25 @@ public class ThirdPersonController : MonoBehaviour
 
         if (!HatcheryManager.Instance.myPlayer.isDead)
             Move();
+
+        if (Input.GetKeyDown(KeyCode.F4)) 
+            changePerspective();
+
+        if (Input.GetKeyDown(KeyCode.LeftBracket))
+            sensitivity -= 0.5f;
+
+        if (Input.GetKeyDown(KeyCode.RightBracket))
+            sensitivity += 0.5f;
     }
 
     private void LookAround()
     {
+        // 마우스 이동으로 카메라 회전
         Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         Vector3 camAngle = cameraArm.rotation.eulerAngles;
 
-        float x = camAngle.x - mouseDelta.y;
+        float x = camAngle.x - mouseDelta.y * sensitivity;
+        float y = camAngle.y + mouseDelta.x * sensitivity;
 
         if (x < 180.0f)
         {
@@ -43,10 +61,19 @@ public class ThirdPersonController : MonoBehaviour
             x = Mathf.Clamp(x, 335.0f, 361.0f);
         }
 
-        cameraArm.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);
+        cameraArm.rotation = Quaternion.Euler(x, y, camAngle.z);
+
+        // 줌인 줌아웃(FOV 조절방식)
+        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+        float fov = _camera3pov.fieldOfView;
+
+        fov -= scrollInput * zoomSpeed;
+        fov = Mathf.Clamp(fov, minFov, maxFov); // 최소 및 최대값으로 제한
+
+        _camera3pov.fieldOfView = fov;
     }
 
-	private void Move()
+    private void Move()
 	{
         Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
@@ -69,4 +96,18 @@ public class ThirdPersonController : MonoBehaviour
 			GameManager.Network.Send(response);
 		}
 	}
+
+    void changePerspective()
+    {
+        if(_camera3pov.gameObject.activeSelf)
+        {
+            _camera3pov.gameObject.SetActive(false);
+            _camera1pov.gameObject.SetActive(true);
+        }
+        else
+        {
+            _camera3pov.gameObject.SetActive(true);
+            _camera1pov.gameObject.SetActive(false);
+        }
+    }
 }
