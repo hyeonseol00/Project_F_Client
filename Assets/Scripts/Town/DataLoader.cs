@@ -30,7 +30,9 @@ public class DataLoader : MonoBehaviour
 
     void LoadData()
     {
-        Items = ReadCSV<Item>("Assets/Scripts/CSV/Items.csv");
+        string fileName = "Items";
+        string path = Application.streamingAssetsPath + "/" + fileName + ".csv";
+        Items = ReadCSV<Item>(path);
 
         // 데이터 출력 (ID가 1부터 시작)
         if (Items != null)
