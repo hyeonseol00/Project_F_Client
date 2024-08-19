@@ -19,8 +19,8 @@ public class UIMonsterInformation : MonoBehaviour
     private float fullHP;
     private float curHP;
     
-    private float fillWidth = 180;
-    private float fillHeight = 30;
+    private float fillWidth = 1000;
+    private float fillHeight = 50;
 
     private void Start()
     {

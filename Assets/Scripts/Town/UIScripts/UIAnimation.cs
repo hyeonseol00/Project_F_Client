@@ -11,7 +11,10 @@ public class UIAnimation : MonoBehaviour
     [SerializeField] private Button[] btnList;
 
     private MyPlayer mPlayer;
- 
+
+    string[] animName = { "happy", "sad", "hi", "dance1", "dance2", "dance3", "dance4", "dance5", "dance6" };
+    private int animIdx = 0;
+
     void Start()
     {
     
