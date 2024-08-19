@@ -386,10 +386,14 @@ class PacketHandler
         if (pkt == null)
             return;
 
+        //Debug.Log($"S_TryAttackHandler access! {pkt}");
+
         var player = HatcheryManager.Instance.GetPlayerAvatarById(pkt.PlayerId);
+        bool isMine = HatcheryManager.Instance.myPlayer.PlayerId == pkt.PlayerId;
         if (player)
         {
-            player.AttackMotion();
+            Vector3 unitDir = new Vector3(pkt.RotX, pkt.RotY, pkt.RotZ);
+            player.Attack(isMine, unitDir);
         }
     }
 

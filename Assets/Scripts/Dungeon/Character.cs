@@ -8,6 +8,7 @@ using UnityEngine.AI;
 public class Character : MonoBehaviour
 {
 	[SerializeField] private UINameChat uiNameChat;
+	[SerializeField] private Attack attackScript;
 
 	public MyPlayer mPlayer { get; private set; }
 
@@ -95,9 +96,13 @@ public class Character : MonoBehaviour
 		elapsedFromMovePacket = 0.0f;
 	}
 
-	public void AttackMotion()
+	public void Attack(bool isMine, Vector3 unitDir)
 	{
-		animator.SetBool("Anim1", true);
+		if(attackScript.currentAttackCoroutine != null)
+        {
+			StopCoroutine(attackScript.currentAttackCoroutine);
+		}
+		attackScript.currentAttackCoroutine = StartCoroutine(attackScript.TryAttack(isMine, unitDir));
 	}
 
 	public void HitMotion()

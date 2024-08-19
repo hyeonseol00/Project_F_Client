@@ -145,17 +145,26 @@ public class ChatCommandManager : MonoBehaviour
                 $"/inven: 캐릭터 인벤토리를 보여줍니다\n" +
                 $"/w [nickname] [message]: 귓속말을 보냅니다.\n" +
                 $"/t [message]: 팀 전체에게 채팅을 보냅니다.\n" +
+                // =======================팀=====================
                 $"/createTeam: 팀을 생성합니다.\n" +
                 $"/joinTeam [nickname]: 팀에 가입합니다.\n" +
                 $"/inviteTeam [nickname]: 팀에게 초대합니다.\n" +
                 $"/acceptTeam [nickname]: 초대를 수락합니다.\n" +
                 $"/kickMember [nickname]: 팀원을 추방합니다.\n" +
                 $"/memlist: 팀 멤버를 조회합니다.\n" +
+                // =======================아이템=====================
                 $"/buyItem [itemName] [quantity] 또는 /buy [itemName] [quantity]: 아이템을 수량만큼 구매합니다.\n" +
                 $"/sellItem [itemName] [quantity] 또는 /sell [itemName] [quantity]: 아이템을 수량만큼 판매합니다.\n" +
                 $"/equip [itemId] 또는 /eq [itemId]: 장비를 장착합니다.\n" +
                 $"/unequip [itemType] 또는 /ueq [itemType]: 장비를 탈착합니다.\n" +
-                $"/useItem [itemId] 또는 /use [itemId]: 소비 아이템을 사용합니다\n";
+                $"/useItem [itemId] 또는 /use [itemId]: 소비 아이템을 사용합니다\n" +
+                $"/upAbility [abilityType] [quantity] 또는 /ua [abilityType] [quantity]: 능력치 포인트를 사용합니다\n" +
+                // =======================퀘스트=====================
+                $"/questList: 퀘스트 목록을 확인합니다\n" +
+                $"/acceptQuest [questId]: 퀘스트를 수락합니다\n" +
+                $"/completeQuest [questId]: 퀘스트를 완료합니다\n" +
+                $"/questReward [questId]: 완료한 퀘스트 보상을 받습니다\n" +
+                $"/questProgress [questId]: 퀘스트의 진행도를 확인합니다\n";
 
         bool myChat = false;
 

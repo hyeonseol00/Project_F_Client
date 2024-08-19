@@ -314,15 +314,15 @@ public class Player : MonoBehaviour
                 return;
         }
 
-        // 이미 장착 중인 아이템을 탈착한다면, 탈착하는 아이템에 대한 플레이어의 스텟/인벤토리 정보를 갱신한다.
+        // 이미 장착 중인 아이템을 탈착한다면, 탈착하는 아이템은 인벤에 추가하고, 플레이어의 스텟/인벤토리 정보를 갱신한다.
         if (prevEquippedItem != null)
         {
-            updateInven(prevEquippedItem, false);
+            updateInven(prevEquippedItem, true);
             updatePlayerStat(prevEquippedItem, false);
         }
 
-        // 장착한 아이템에 대한 플레이어의 스텟/인벤토리 정보를 갱신한다.
-        updateInven(equippingItem, true);
+        // 장착한 아이템은 인벤에서 빼고, 플레이어의 스텟/인벤토리 정보를 갱신한다.
+        updateInven(equippingItem, false);
         updatePlayerStat(equippingItem, true);
 
         // UI에 적용한다(HP/MP 바)
@@ -361,8 +361,8 @@ public class Player : MonoBehaviour
                 break;
         }
 
-        // 탈착한 아이템에 대한 플레이어의 스텟/인벤토리 정보를 갱신한다.
-        updateInven(unequippedItem, false);
+        // 탈착한 아이템은 인벤에 넣고 플레이어의 스텟/인벤토리 정보를 갱신한다.
+        updateInven(unequippedItem, true);
         updatePlayerStat(unequippedItem, false);
 
         // UI에 적용한다(HP/MP 바)

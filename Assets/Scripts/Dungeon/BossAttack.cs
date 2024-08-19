@@ -11,7 +11,7 @@ public class BossAttack : MonoBehaviour
 
     IEnumerator TryAttack()
     {
-        animator.SetBool("Attack1", true);
+        animator.SetBool("Attack2", true);
 
         yield return new WaitForSeconds(0.41f);
         meleeArea.enabled = true;

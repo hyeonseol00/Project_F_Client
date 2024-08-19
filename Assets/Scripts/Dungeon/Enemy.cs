@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.tag == "Weapon")
+		if (other.tag == "Weapon" || other.tag == "Bullet")
 		{
 			// Attack attack = other.GetComponent<Attack>();
 			// curHealth -= attack.damage;
