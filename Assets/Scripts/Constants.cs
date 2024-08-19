@@ -11,7 +11,13 @@ public class Constants
     public static readonly int TownPlayerAnim1 = Animator.StringToHash("Anim1");
     public static readonly int TownPlayerAnim2 = Animator.StringToHash("Anim2");
     public static readonly int TownPlayerAnim3 = Animator.StringToHash("Anim3");
-    
+    public static readonly int TownPlayerAnim4 = Animator.StringToHash("Anim4");
+    public static readonly int TownPlayerAnim5 = Animator.StringToHash("Anim5");
+    public static readonly int TownPlayerAnim6 = Animator.StringToHash("Anim6");
+    public static readonly int TownPlayerAnim7 = Animator.StringToHash("Anim7");
+    public static readonly int TownPlayerAnim8 = Animator.StringToHash("Anim8");
+    public static readonly int TownPlayerAnim9 = Animator.StringToHash("Anim9");
+
     public static readonly int PlayerBattleAttack1 = Animator.StringToHash("Attack1");
     public static readonly int PlayerBattleDie = Animator.StringToHash("Die");
     public static readonly int PlayerBattleHit = Animator.StringToHash("Hit");

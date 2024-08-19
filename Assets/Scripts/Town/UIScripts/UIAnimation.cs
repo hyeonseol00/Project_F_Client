@@ -7,34 +7,44 @@ using UnityEngine.UI;
 
 public class UIAnimation : MonoBehaviour
 {
-    [SerializeField] private Button btnBattle;
-    [SerializeField] private Button[] btnList;
+    [SerializeField] private Button leftBtn;
+    [SerializeField] private Button btn;
+    [SerializeField] private Button rightBtn;
+    [SerializeField] private TextMeshProUGUI btnText;
 
     private MyPlayer mPlayer;
 
-    string[] animName = { "happy", "sad", "hi", "dance1", "dance2", "dance3", "dance4", "dance5", "dance6" };
+    string[] animName = { "Happy", "Sad", "Hi", "Dance1", "Dance2", "Dance3", "Dance4", "Dance5", "Dance6" };
     private int animIdx = 0;
 
     void Start()
     {
-    
-        for (int i = 0; i < btnList.Length; i++)
+
+        btn.onClick.AddListener(() =>
         {
-            int idx = i;
-            btnList[i].onClick.AddListener(() =>
-            {
-                PlayAnimation(idx);
-            });
-        }
-        
+            PlayAnimation();
+        });
+
+        leftBtn.onClick.AddListener(() =>
+        {
+            animIdx = animIdx - 1 >= 0 ? animIdx - 1 : animName.Length - 1;
+            btnText.text = animName[animIdx];
+        });
+
+        rightBtn.onClick.AddListener(() =>
+        {
+            animIdx = (animIdx + 1) % animName.Length;
+            btnText.text = animName[animIdx];
+        });
+
         mPlayer = TownManager.Instance.myPlayer.mPlayer;
     }
     
-    private void PlayAnimation(int idx)
+    private void PlayAnimation()
     {
         if (mPlayer == null)
             return;
 
-        mPlayer.AnimationExecute(idx);
+        mPlayer.AnimationExecute(animIdx);
     }
 }

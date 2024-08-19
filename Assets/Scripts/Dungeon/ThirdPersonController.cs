@@ -37,7 +37,7 @@ public class ThirdPersonController : MonoBehaviour
             changePerspective();
 
         if (Input.GetKeyDown(KeyCode.LeftBracket))
-            sensitivity -= 0.5f;
+            sensitivity -= sensitivity >= 0.5f ? 0.5f : 0;
 
         if (Input.GetKeyDown(KeyCode.RightBracket))
             sensitivity += 0.5f;

@@ -17,8 +17,6 @@ public class MyPlayer : MonoBehaviour
     
     private Vector3 lastPos;
     
-    
-
     private List<int> animHash = new List<int>(); 
     
     private void Awake()
@@ -38,6 +36,12 @@ public class MyPlayer : MonoBehaviour
         animHash.Add(Constants.TownPlayerAnim1);
         animHash.Add(Constants.TownPlayerAnim2);
         animHash.Add(Constants.TownPlayerAnim3);
+        animHash.Add(Constants.TownPlayerAnim4);
+        animHash.Add(Constants.TownPlayerAnim5);
+        animHash.Add(Constants.TownPlayerAnim6);
+        animHash.Add(Constants.TownPlayerAnim7);
+        animHash.Add(Constants.TownPlayerAnim8);
+        animHash.Add(Constants.TownPlayerAnim9);
     }
 
     void Update()
