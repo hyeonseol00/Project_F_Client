@@ -112,6 +112,14 @@ class PacketManager
 		Action<PacketSession, ArraySegment<byte>, ushort> action = null;
 		if (_onRecv.TryGetValue(id, out action))
 			action.Invoke(session, buffer, id);
+
+		if (!(id == (byte)MsgId.SMove ||
+			id == (byte)MsgId.SChat ||
+			id == (byte)MsgId.SAnimation ||
+			id == (byte)MsgId.SSpawn ||
+			id == (byte)MsgId.SMoveAtHatchery ||
+			id == (byte)MsgId.STryAttack))
+			GameManager.Instance.isSendPacketReady = true;
 	}
 
 	void MakePacket<T>(PacketSession session, ArraySegment<byte> buffer, ushort id) where T : IMessage, new()

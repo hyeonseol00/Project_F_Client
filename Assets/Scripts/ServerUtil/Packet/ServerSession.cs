@@ -13,7 +13,19 @@ public class ServerSession : PacketSession
 	{
 		string msgName = packet.Descriptor.Name.Replace("_", String.Empty);
 		MsgId msgId = (MsgId)Enum.Parse(typeof(MsgId), msgName);
-			
+		// Debug.Log($"{msgId}");
+
+		if (!(msgId == MsgId.CMove ||
+			msgId == MsgId.CMoveAtHatchery ||
+			msgId == MsgId.CAnimation ||
+			msgId == MsgId.CAttackBoss ||
+			msgId == MsgId.CTryAttack ||
+			msgId == MsgId.CPlayerHit ||
+			msgId == MsgId.CAnimation))
+		{
+			GameManager.Instance.isSendPacketReady = false;
+		}
+
 		ushort size = (ushort)packet.CalculateSize();
 		// byte[] sendBuff = new byte[size + 4]; 
 		// Array.Copy(BitConverter.GetBytes((ushort)(size + 4)), 0, sendBuff, 0, sizeof(ushort)); // 어느정도 크기의 데이터인지
