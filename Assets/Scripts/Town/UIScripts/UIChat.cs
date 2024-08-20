@@ -111,7 +111,7 @@ public class UIChat : MonoBehaviour
 
         msgItem.text = $"{msg}";
 
-        //      AdjustTextContainerHeight(msgItem); // 적절한 높이로 msgItem를 조절
+        AdjustTextContainerHeight(msgItem); // 적절한 높이로 msgItem를 조절
 
         if (msg.StartsWith("[All]"))
         {
@@ -149,20 +149,20 @@ public class UIChat : MonoBehaviour
         }
     }
 
-    //    private void AdjustTextContainerHeight(TMP_Text tmpText)
-    //    {
-    //        // 텍스트가 업데이트된 후 레이아웃을 강제로 갱신
-    //        Canvas.ForceUpdateCanvases();
-    //        tmpText.ForceMeshUpdate();
+    private void AdjustTextContainerHeight(TMP_Text tmpText)
+    {
+        // 텍스트가 업데이트된 후 레이아웃을 강제로 갱신
+        Canvas.ForceUpdateCanvases();
+        tmpText.ForceMeshUpdate();
 
-    //        // 텍스트 내용에 맞는 이상적인 높이 계산
-    //        float preferredHeight = tmpText.preferredHeight;
+        // 텍스트 내용에 맞는 이상적인 높이 계산
+        float preferredHeight = tmpText.preferredHeight;
 
-    //        // 텍스트 컨테이너(RectTransform)의 높이를 이상적인 높이로 설정
-    //        var sizeDelta = tmpText.rectTransform.sizeDelta;
-    //        sizeDelta.y = preferredHeight;
-    //        tmpText.rectTransform.sizeDelta = sizeDelta;
-    //    }
+        // 텍스트 컨테이너(RectTransform)의 높이를 이상적인 높이로 설정
+        var sizeDelta = tmpText.rectTransform.sizeDelta;
+        sizeDelta.y = preferredHeight;
+        tmpText.rectTransform.sizeDelta = sizeDelta;
+    }
 
     private void filterChat(TabType TabNo)
     {
