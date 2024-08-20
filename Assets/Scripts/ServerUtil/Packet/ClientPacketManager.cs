@@ -114,8 +114,6 @@ class PacketManager
 			action.Invoke(session, buffer, id);
 
 		if (!(id == (byte)MsgId.SMove ||
-			id == (byte)MsgId.SChat ||
-			id == (byte)MsgId.SAnimation ||
 			id == (byte)MsgId.SSpawn ||
 			id == (byte)MsgId.SMoveAtHatchery ||
 			id == (byte)MsgId.STryAttack))
