@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     
     public string UserName;
     public int ClassIdx;
+
+    public bool isSendPacketReady;
     
     private void Awake()
     {
@@ -35,6 +37,8 @@ public class GameManager : MonoBehaviour
             network = new NetworkManager();
         
             DontDestroyOnLoad(gameObject);
+
+            isSendPacketReady = true;
         }
         else
         {

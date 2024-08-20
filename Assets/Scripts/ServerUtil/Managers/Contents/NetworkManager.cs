@@ -13,7 +13,8 @@ public class NetworkManager
 
 	public void Send(IMessage packet)
 	{
-		_session.Send(packet);
+		if (GameManager.Instance.isSendPacketReady)
+			_session.Send(packet);
 	}
 
 	public void Init()
