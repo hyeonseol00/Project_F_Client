@@ -172,8 +172,9 @@ public class UIStart : MonoBehaviour
 		C_LogIn logInPacket = new C_LogIn
 		{
 			Nickname = inputNickname.text,
-			Password = inputPassword.text
-		};
+			Password = inputPassword.text,
+            ClientVersion = Constants.clientVersion
+        };
 
 		GameManager.Network.Send(logInPacket);
 	}
