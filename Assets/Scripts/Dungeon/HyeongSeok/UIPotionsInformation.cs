@@ -1,3 +1,4 @@
+using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -47,16 +48,13 @@ public class UIPotionsInformation : MonoBehaviour
                 disableImageList[idx].enabled = true;
             }
 
-            //if(Level < requireLevel[idx]) 
-            //    disableImageList[idx].enabled = true;
+            if (Level < requireLevel[idx])
+                disableImageList[idx].enabled = true;
         }
     }
 
     public void TryUsePotion(int idx)
     {
-        
-        int quantity = int.Parse(potionCntList[idx].text);
-
         if (disableImageList[idx].enabled)
         {
             Debug.Log("쿨타임 중이거나, 사용할 수 없는 물약입니다.");
@@ -64,18 +62,27 @@ public class UIPotionsInformation : MonoBehaviour
         }
 
         // 패킷 전송 어쩌구저쩌구
-        if (quantity - 1 > 0)
+        C_TryUsePotion tryUsePacket = new C_TryUsePotion
         {
-            potionCntList[idx].text = (quantity - 1).ToString();
+            ItemId = idx+POTIONS_IDX_OFFSET
+        };
 
-            disableImageList[idx].enabled = true;
-            coolTimeList[idx] = StartCoroutine(coolTime(idx, COOL_TIME));
-        }
-        else
-        {
-            potionCntList[idx].text = "0";
-            disableImageList[idx].enabled = true;
-        }
+        GameManager.Network.Send(tryUsePacket);
+
+        //int quantity = int.Parse(potionCntList[idx].text);
+
+        //if (quantity - 1 > 0)
+        //{
+        //    potionCntList[idx].text = (quantity - 1).ToString();
+
+        //    disableImageList[idx].enabled = true;
+        //    coolTimeList[idx] = StartCoroutine(coolTime(idx, COOL_TIME));
+        //}
+        //else
+        //{
+        //    potionCntList[idx].text = "0";
+        //    disableImageList[idx].enabled = true;
+        //}
     }
 
     public void ProcessUsePotionEvent(int itemId, int quantity)

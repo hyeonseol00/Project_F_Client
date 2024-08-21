@@ -193,7 +193,7 @@ public class HatcheryManager : MonoBehaviour
 		GameManager.Network.Send(leavePacket);
 	}
 
-	public void SetPlayerCurHp(S_SetPlayerHpHatchery pkt)
+	public void SetPlayerCurHpMp(S_SetPlayerHpMpHatchery pkt)
 	{
 		
 		Character hittedPlayer = GetPlayerAvatarById(pkt.PlayerId);
@@ -209,28 +209,38 @@ public class HatcheryManager : MonoBehaviour
 		if (pkt.PlayerId == myPlayer.PlayerId)
 		{
 			var isMine = true;
-			hatcheryUIManager.SetPlayerCurHP(pkt.PlayerId, pkt.PlayerCurHp, isMine);
+			bool isAttcked = hatcheryUIManager.SetPlayerCurHPMP(pkt.PlayerId, pkt.PlayerCurHp, pkt.PlayerCurMp, isMine);
 			if (pkt.PlayerCurHp <= 0)
 			{
 				hittedPlayer.gameObject.layer = 11; // CharaterDead
 				hittedPlayer.DeadMotion();
 				GameObject.Find("UIResult").transform.Find("LosePopup").gameObject.SetActive(true);
 			}
-			else
+            else if(isAttcked)
+            {
 				hittedPlayer.HitMotion();
+			}
+				
 			
 		}
         else
         {
 			var isMine = false;
-			hatcheryUIManager.SetPlayerCurHP(pkt.PlayerId, pkt.PlayerCurHp, isMine);
+			bool isAttcked = hatcheryUIManager.SetPlayerCurHPMP(pkt.PlayerId, pkt.PlayerCurHp, pkt.PlayerCurHp, isMine);
 			if (pkt.PlayerCurHp <= 0)
 				hittedPlayer.DeadMotion();
-			else
+			else if (isAttcked)
+			{
 				hittedPlayer.HitMotion();
+			}
 		}
 
 		return;
 	}
-	
+
+	public void SetPotion(S_TryUsePotion pkt)
+	{
+		hatcheryUIManager.SetPotion(pkt.ItemId, pkt.Quantity);
+		return;
+	}
 }

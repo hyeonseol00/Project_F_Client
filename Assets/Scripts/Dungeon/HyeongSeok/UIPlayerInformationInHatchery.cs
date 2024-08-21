@@ -44,7 +44,6 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
         SetFullMP(playerInfo.StatInfo.MaxMp);
         SetCurHP(playerInfo.StatInfo.Hp);
         SetCurMP(playerInfo.StatInfo.Mp);
-        SetPotions(playerInfo.Inven, playerInfo.StatInfo.Level);
     }
 
     public void SetPlayerId(int playerId)
@@ -71,8 +70,10 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
         txtHp.rectTransform.sizeDelta = new Vector2(txtHp.preferredWidth + 50, 40);
     }
 
-    public void SetCurHP(float hp)
+    public bool SetCurHP(float hp)
     {
+        bool isAttcked = curHP > hp;
+
         curHP = Mathf.Min(hp, fullHP);
 
         txtHp.text = $"{curHP} / {fullHP}";
@@ -81,6 +82,8 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
         imgHpFill.rectTransform.sizeDelta = new Vector2(fillWidth * per, fillHeight);
 
         txtHp.rectTransform.sizeDelta = new Vector2(txtHp.preferredWidth + 50, 40);
+
+        return isAttcked;
     }
 
     public void SetFullMP(float mp, bool recover = true)
@@ -110,7 +113,7 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
         Dictionary<int, int> Potions = new Dictionary<int, int>();
         foreach (var potion in _potions)
         {
-            Debug.Log($"{potion.Id}, {potion.Quantity}");
+            //Debug.Log($"{potion.Id}, {potion.Quantity}");
             Potions.Add(potion.Id, potion.Quantity);
         }
 

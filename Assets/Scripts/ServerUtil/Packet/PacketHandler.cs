@@ -427,13 +427,15 @@ class PacketHandler
         HatcheryManager.Instance.bossWeapon.TryBossAttack();
     }
 
-	public static void S_SetPlayerHpHatcheryHandler(PacketSession session, IMessage packet)
+	public static void S_SetPlayerHpMpHatcheryHandler(PacketSession session, IMessage packet)
 	{
-		S_SetPlayerHpHatchery pkt = packet as S_SetPlayerHpHatchery;
+		S_SetPlayerHpMpHatchery pkt = packet as S_SetPlayerHpMpHatchery;
 		if (pkt == null)
 			return;
 
-        HatcheryManager.Instance.SetPlayerCurHp(pkt);
+        //Debug.Log($"S_SetPlayerHpMpHatcheryHandler access! {pkt}");
+
+        HatcheryManager.Instance.SetPlayerCurHpMp(pkt);
     }
 
 	public static void S_DespawnHatcheryHandler(PacketSession session, IMessage packet)
@@ -443,6 +445,17 @@ class PacketHandler
 			return;
 
         HatcheryManager.Instance.ReleasePlayer(pkt.PlayerId);
+    }
+
+    public static void S_TryUsePotionHandler(PacketSession session, IMessage packet)
+    {
+        S_TryUsePotion pkt = packet as S_TryUsePotion;
+        if (pkt == null)
+            return;
+
+        //Debug.Log($"S_TryUsePotionHandler access! {pkt}");
+
+        HatcheryManager.Instance.SetPotion(pkt);
     }
 }
 
