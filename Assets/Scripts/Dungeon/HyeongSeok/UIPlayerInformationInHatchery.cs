@@ -44,7 +44,7 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
         SetFullMP(playerInfo.StatInfo.MaxMp);
         SetCurHP(playerInfo.StatInfo.Hp);
         SetCurMP(playerInfo.StatInfo.Mp);
-        SetPotions(playerInfo.Inven);
+        SetPotions(playerInfo.Inven, playerInfo.StatInfo.Level);
     }
 
     public void SetPlayerId(int playerId)
@@ -103,7 +103,7 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
 
         txtMp.rectTransform.sizeDelta = new Vector2(txtMp.preferredWidth + 50, 40);
     }
-    public void SetPotions(Inventory Inven)
+    public void SetPotions(Inventory Inven, int Level)
     {
         var _potions = Inven.Items.Where(Item => 46 <= Item.Id && Item.Id <= 50);
 
@@ -114,6 +114,6 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
             Potions.Add(potion.Id, potion.Quantity);
         }
 
-        uIPotionsInformation.SetPotionsUI(Potions);
+        uIPotionsInformation.SetPotionsUI(Potions, Level);
     }
 }

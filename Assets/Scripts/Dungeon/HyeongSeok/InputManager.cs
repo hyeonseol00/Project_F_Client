@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,28 +7,21 @@ public class InputManager : MonoBehaviour
 {
     [SerializeField] private UIPotionsInformation uIPotionsInformation;
 
+    enum PotionType
+    {
+        HpPotion = 0, MpPotion, Elixer_S, Elixer_M, Elixer_L
+    }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+
+        foreach (int potionType in Enum.GetValues(typeof(PotionType)))
         {
-            uIPotionsInformation.usePotion(0);
+            if (Input.GetKeyDown(KeyCode.Alpha1 + potionType))
+            {
+                uIPotionsInformation.TryUsePotion(potionType);
+            }
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            uIPotionsInformation.usePotion(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            uIPotionsInformation.usePotion(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            uIPotionsInformation.usePotion(3);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            uIPotionsInformation.usePotion(4);
-        }
+
     }
 }
