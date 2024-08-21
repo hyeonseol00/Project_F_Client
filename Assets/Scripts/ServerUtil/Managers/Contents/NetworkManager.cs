@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
 using Google.Protobuf;
+using Google.Protobuf.Protocol;
+using UnityEditor.Sprites;
 
 public class NetworkManager
 {
@@ -69,8 +71,14 @@ public class NetworkManager
 	{
 		List<PacketMessage> list = PacketQueue.Instance.PopAll();
 		foreach (PacketMessage packet in list)
-		{
-			Action<PacketSession, IMessage> handler = PacketManager.Instance.GetPacketHandler(packet.Id);
+        {
+            if (!(packet.Id == (byte)MsgId.SMove ||
+                packet.Id == (byte)MsgId.SSpawn ||
+                packet.Id == (byte)MsgId.SMoveAtHatchery ||
+                packet.Id == (byte)MsgId.STryAttack))
+                GameManager.Instance.isSendPacketReady = true;
+
+            Action<PacketSession, IMessage> handler = PacketManager.Instance.GetPacketHandler(packet.Id);
 			if (handler != null)
 				handler.Invoke(_session, packet.Message);
 		}	

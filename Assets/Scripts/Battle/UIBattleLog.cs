@@ -112,6 +112,11 @@ public class UIBattleLog : MonoBehaviour
 
     void Response(int idx)
     {
+        foreach(var btn in btns)
+            btn.interactable = false;
+
+        txtLog.text = "서버와 통신 중...";
+
         C_PlayerResponse response = new C_PlayerResponse() { ResponseCode = idx };
         GameManager.Network.Send(response);
     }

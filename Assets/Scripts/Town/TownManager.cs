@@ -100,10 +100,7 @@ public class TownManager : MonoBehaviour
         var tr = playerInfo.Transform;
         Vector3 eRot = new Vector3(0, tr.Rot, 0);
         var spawnRot = Quaternion.Euler(eRot);
-
-		var spawnPos = spawnArea.position;
-		spawnPos.x += tr.PosX;
-		spawnPos.z += tr.PosZ;
+		var spawnPos = new Vector3(tr.PosX, tr.PosY, tr.PosZ);
 
         var playerId = playerInfo.PlayerId;
         var playerResPath = playerDb.GetValueOrDefault(playerInfo.Class, basePlayerPath);
