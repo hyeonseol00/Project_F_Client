@@ -115,7 +115,7 @@ public class UIBattleLog : MonoBehaviour
         foreach(var btn in btns)
             btn.interactable = false;
 
-        txtLog.text = "¼­¹ö¿Í Åë½Å Áß...";
+        txtLog.text = "ì„œë²„ì™€ í†µì‹  ì¤‘...";
 
         C_PlayerResponse response = new C_PlayerResponse() { ResponseCode = idx };
         GameManager.Network.Send(response);

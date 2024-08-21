@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Assets.Scripts.Town.Data;
 using Google.Protobuf.Protocol;
 using TMPro;
 using UnityEngine;
@@ -18,6 +20,8 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
     [SerializeField] private TMP_Text txtMp;
     [SerializeField] private Image imgMpFill;
     [SerializeField] private Image imgMpBack;
+
+    [SerializeField] private UIPotionsInformation uIPotionsInformation;
 
     private float fullHP;
     private float curHP;
@@ -66,8 +70,10 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
         txtHp.rectTransform.sizeDelta = new Vector2(txtHp.preferredWidth + 50, 40);
     }
 
-    public void SetCurHP(float hp)
+    public bool SetCurHP(float hp)
     {
+        bool isAttcked = curHP > hp;
+
         curHP = Mathf.Min(hp, fullHP);
 
         txtHp.text = $"{curHP} / {fullHP}";
@@ -76,6 +82,8 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
         imgHpFill.rectTransform.sizeDelta = new Vector2(fillWidth * per, fillHeight);
 
         txtHp.rectTransform.sizeDelta = new Vector2(txtHp.preferredWidth + 50, 40);
+
+        return isAttcked;
     }
 
     public void SetFullMP(float mp, bool recover = true)
@@ -98,5 +106,17 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
 
         txtMp.rectTransform.sizeDelta = new Vector2(txtMp.preferredWidth + 50, 40);
     }
+    public void SetPotions(Inventory Inven, int Level)
+    {
+        var _potions = Inven.Items.Where(Item => 46 <= Item.Id && Item.Id <= 50);
 
+        Dictionary<int, int> Potions = new Dictionary<int, int>();
+        foreach (var potion in _potions)
+        {
+            //Debug.Log($"{potion.Id}, {potion.Quantity}");
+            Potions.Add(potion.Id, potion.Quantity);
+        }
+
+        uIPotionsInformation.SetPotionsUI(Potions, Level);
+    }
 }
