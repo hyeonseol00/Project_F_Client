@@ -150,6 +150,8 @@ public class Player : MonoBehaviour
     {
         if (!IsMine) return;
 
+        var isClientCLI = true;
+
         // if message is client cmd, access this
         if (msg[0] == '/')
         {
@@ -169,7 +171,8 @@ public class Player : MonoBehaviour
                 action.Invoke(data);
                 return;
             }
-
+            else
+                isClientCLI = false;
         }
 
         C_Chat chatPacket = new C_Chat
@@ -180,6 +183,9 @@ public class Player : MonoBehaviour
         };
 
         GameManager.Network.Send(chatPacket);
+
+        if (!isClientCLI)
+            GameManager.Instance.isSendPacketReady = false;
     }
 
     public void RecvMessage(string msg)

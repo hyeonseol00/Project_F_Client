@@ -128,6 +128,7 @@ public class UIChat : MonoBehaviour
         else if (msg.StartsWith("[System]"))
         {
             msgItem.color = new Color(1f, 0.64f, 0f);
+            GameManager.Instance.isSendPacketReady = true;
         }
         else
         {
