@@ -6,7 +6,6 @@ using System.Net;
 using UnityEngine;
 using Google.Protobuf;
 using Google.Protobuf.Protocol;
-using UnityEditor.Sprites;
 
 public class NetworkManager
 {
