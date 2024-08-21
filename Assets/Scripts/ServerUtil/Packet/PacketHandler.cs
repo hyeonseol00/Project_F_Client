@@ -457,5 +457,41 @@ class PacketHandler
 
         HatcheryManager.Instance.SetPotion(pkt);
     }
+
+    public static void S_EnterSecondPhaseHandler(PacketSession session, IMessage packet)
+    {
+        // S_EnterSecondPhase pkt = packet as S_EnterSecondPhase;
+        //if (pkt == null)
+        //    return;
+
+        //Debug.Log($"S_EnterSecondPhaseHandler access! {pkt}");
+        // bindTime, updatedBossSpeed
+        // 내 캐릭터 10초 바인드
+        HatcheryManager.Instance.EnterSecondPhase(10.0f, 10.0f);
+    }
+
+    public static void S_EnterThridPhaseHandler(PacketSession session, IMessage packet)
+    {
+        //S_EnterThridPhase pkt = packet as S_EnterThridPhase;
+        //if (pkt == null)
+        //    return;
+
+        //Debug.Log($"S_EnterThridPhaseHandler access! {pkt}");
+        // deathCountTime
+        // 죽음의 카운트다운 30초 시작
+        HatcheryManager.Instance.EnterThridPhase(30.0f);
+        
+    }
+
+    public static void S_SetNotificationInHatcheryHandler(PacketSession session, IMessage packet)
+    {
+        //S_NotificationInHatchery pkt = packet as S_NotificationInHatchery;
+        //if (pkt == null)
+        //    return;
+
+        //Debug.Log($"S_NotificationInHatcheryHandler access! {pkt}");
+        HatcheryManager.Instance.SetNotification("Hello");
+
+    }
 }
 

@@ -23,5 +23,12 @@ public class InputManager : MonoBehaviour
             }
         }
 
+        if(Input.GetKeyDown(KeyCode.B)){
+            HatcheryManager.Instance.EnterSecondPhase(10.0f, 10.0f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.N)){
+            HatcheryManager.Instance.EnterThridPhase(30.1f);
+        }
     }
 }

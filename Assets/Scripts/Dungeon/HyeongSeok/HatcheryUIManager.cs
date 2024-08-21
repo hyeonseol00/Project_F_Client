@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Google.Protobuf.Protocol;
+using TMPro;
 
 public class HatcheryUIManager : MonoBehaviour
 {
     [SerializeField] private UIPlayerInformationInHatchery mPlayerUI; // 본인 UI
     [SerializeField] private UIPotionsInformation mPotionUI; // 본인 UI
+    [SerializeField] private TMP_Text txtDeathCounter; // 죽음의 카운트 다운
+    [SerializeField] private TMP_Text notificationMsg; // 알림 메세지
 
     [SerializeField] private GameObject playerUIPrefab;  // UI Prefab 참조
     [SerializeField] private Transform uiParent;         // UI를 배치할 부모 객체
@@ -14,6 +17,7 @@ public class HatcheryUIManager : MonoBehaviour
     private List<UIPlayerInformationInHatchery> playerUIList = new List<UIPlayerInformationInHatchery>();
 
     private const int MAXPEOPLE = 4;
+    private const float DISPLAY_MSG_TIME = 5.0f;
 
     // 플레이어가 던전에 입장했을 때 호출
     public void OnPlayerEnter(PlayerInfo playerInfo, bool isMine)
@@ -84,4 +88,32 @@ public class HatcheryUIManager : MonoBehaviour
         }
     }
 
+    private IEnumerator DisplayNotification(string msg)
+    {
+        notificationMsg.text = msg;
+        notificationMsg.gameObject.transform.parent.gameObject.SetActive(true);
+        
+        yield return new WaitForSeconds(DISPLAY_MSG_TIME);
+
+        notificationMsg.text = "";
+        notificationMsg.gameObject.transform.parent.gameObject.SetActive(false);
+    }
+
+    public void startDeathCounter(float countTime)
+    {
+        txtDeathCounter.gameObject.transform.parent.gameObject.SetActive(true);
+        StartCoroutine("processDeathCounter", countTime);
+    }
+    private IEnumerator processDeathCounter(float remainingTime)
+    {
+        while (remainingTime - Time.deltaTime > 0)
+        {
+            // 남은 시간 갱신
+            remainingTime -= Time.deltaTime;
+            txtDeathCounter.text = "사망까지\n" + remainingTime.ToString("F2") + "초";
+            yield return null; // 다음 프레임까지 대기
+        }
+
+        txtDeathCounter.text = "즉사기 발동!";
+    }
 }
