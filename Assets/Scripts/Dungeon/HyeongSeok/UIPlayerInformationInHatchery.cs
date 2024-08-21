@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Assets.Scripts.Town.Data;
 using Google.Protobuf.Protocol;
 using TMPro;
 using UnityEngine;
@@ -18,6 +20,8 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
     [SerializeField] private TMP_Text txtMp;
     [SerializeField] private Image imgMpFill;
     [SerializeField] private Image imgMpBack;
+
+    [SerializeField] private UIPotionsInformation uIPotionsInformation;
 
     private float fullHP;
     private float curHP;
@@ -40,6 +44,7 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
         SetFullMP(playerInfo.StatInfo.MaxMp);
         SetCurHP(playerInfo.StatInfo.Hp);
         SetCurMP(playerInfo.StatInfo.Mp);
+        SetPotions(playerInfo.Inven);
     }
 
     public void SetPlayerId(int playerId)
@@ -98,5 +103,17 @@ public class UIPlayerInformationInHatchery : MonoBehaviour
 
         txtMp.rectTransform.sizeDelta = new Vector2(txtMp.preferredWidth + 50, 40);
     }
+    public void SetPotions(Inventory Inven)
+    {
+        var _potions = Inven.Items.Where(Item => 46 <= Item.Id && Item.Id <= 50);
 
+        Dictionary<int, int> Potions = new Dictionary<int, int>();
+        foreach (var potion in _potions)
+        {
+            Debug.Log($"{potion.Id}, {potion.Quantity}");
+            Potions.Add(potion.Id, potion.Quantity);
+        }
+
+        uIPotionsInformation.SetPotionsUI(Potions);
+    }
 }

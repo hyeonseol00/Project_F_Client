@@ -105,7 +105,7 @@ public class TownManager : MonoBehaviour
 		spawnPos.x += tr.PosX;
 		spawnPos.z += tr.PosZ;
 
-		var playerId = playerInfo.PlayerId;
+        var playerId = playerInfo.PlayerId;
         var playerResPath = playerDb.GetValueOrDefault(playerInfo.Class, basePlayerPath);
         var playerRes = Resources.Load<Player>(playerResPath);
         var player = Instantiate(playerRes, spawnPos, spawnRot);
