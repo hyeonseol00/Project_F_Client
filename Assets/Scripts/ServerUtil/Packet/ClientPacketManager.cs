@@ -91,10 +91,13 @@ class PacketManager
 		_handler.Add((ushort)MsgId.SBossMove, PacketHandler.S_BossMoveHandler);
 		_onRecv.Add((ushort)MsgId.SBossTryAttack, MakePacket<S_BossTryAttack>);
 		_handler.Add((ushort)MsgId.SBossTryAttack, PacketHandler.S_BossTryAttackHandler);
-		_onRecv.Add((ushort)MsgId.SSetPlayerHpHatchery, MakePacket<S_SetPlayerHpHatchery>);
-		_handler.Add((ushort)MsgId.SSetPlayerHpHatchery, PacketHandler.S_SetPlayerHpHatcheryHandler);
+		_onRecv.Add((ushort)MsgId.SSetPlayerHpmpHatchery, MakePacket<S_SetPlayerHpMpHatchery>);
+		_handler.Add((ushort)MsgId.SSetPlayerHpmpHatchery, PacketHandler.S_SetPlayerHpMpHatcheryHandler);
 		_onRecv.Add((ushort)MsgId.SDespawnHatchery, MakePacket<S_DespawnHatchery>);
 		_handler.Add((ushort)MsgId.SDespawnHatchery, PacketHandler.S_DespawnHatcheryHandler);
+		_onRecv.Add((ushort)MsgId.STryUsePotion, MakePacket<S_TryUsePotion>);
+		_handler.Add((ushort)MsgId.STryUsePotion, PacketHandler.S_TryUsePotionHandler);
+
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

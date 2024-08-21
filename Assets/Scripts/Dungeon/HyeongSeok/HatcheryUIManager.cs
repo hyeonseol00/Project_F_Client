@@ -6,6 +6,7 @@ using Google.Protobuf.Protocol;
 public class HatcheryUIManager : MonoBehaviour
 {
     [SerializeField] private UIPlayerInformationInHatchery mPlayerUI; // 본인 UI
+    [SerializeField] private UIPotionsInformation mPotionUI; // 본인 UI
 
     [SerializeField] private GameObject playerUIPrefab;  // UI Prefab 참조
     [SerializeField] private Transform uiParent;         // UI를 배치할 부모 객체
@@ -20,6 +21,7 @@ public class HatcheryUIManager : MonoBehaviour
         if (isMine)
         {
             mPlayerUI.Set(playerInfo);
+            mPlayerUI.SetPotions(playerInfo.Inven, playerInfo.StatInfo.Level);
             return;
         }
 
@@ -50,17 +52,27 @@ public class HatcheryUIManager : MonoBehaviour
         }
     }
 
-    // 플레이어가 던전에서 HP가 갱신되었을 때 호출
-    public void SetPlayerCurHP(int playerId, float updatedHp, bool isMine)
+    // 플레이어가 던전에서 HP/MP가 갱신되었을 때 호출
+    public bool SetPlayerCurHPMP(int playerId, float updatedHp, float updatedMp, bool isMine)
     {
+        bool isAttcked = false;
+
         if (isMine)
         {
-            mPlayerUI.SetCurHP(updatedHp);
-            return;
+            isAttcked = mPlayerUI.SetCurHP(updatedHp);
+            mPlayerUI.SetCurMP(updatedMp);
+            return isAttcked;
         }
 
         UIPlayerInformationInHatchery playerUI = playerUIList.Find(ui => ui.playerId == playerId);
-        playerUI.SetCurHP(updatedHp);
+        isAttcked = playerUI.SetCurHP(updatedHp);
+        playerUI.SetCurHP(updatedMp);
+        return isAttcked;
+    }
+
+    public void SetPotion(int itemId, int quantity)
+    {
+        mPotionUI.ProcessUsePotionEvent(itemId, quantity);
     }
 
     // UI 패널의 위치를 업데이트 (간격 유지)
