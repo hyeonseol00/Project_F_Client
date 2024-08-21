@@ -13,16 +13,27 @@ public class ServerSession : PacketSession
 	{
 		string msgName = packet.Descriptor.Name.Replace("_", String.Empty);
 		MsgId msgId = (MsgId)Enum.Parse(typeof(MsgId), msgName);
-		// Debug.Log($"{msgId}");
+        // Debug.Log($"{msgId}");
 
-		if (!(msgId == MsgId.CMove ||
+        // Debug.Log($"{msgId}: {GameManager.Instance.isSendPacketReady}");
+        if (msgId == MsgId.CMove ||
 			msgId == MsgId.CMoveAtHatchery ||
 			msgId == MsgId.CAnimation ||
 			msgId == MsgId.CAttackBoss ||
 			msgId == MsgId.CTryAttack ||
 			msgId == MsgId.CPlayerHit ||
-			msgId == MsgId.CAnimation))
+			msgId == MsgId.CAnimation)
 		{
+			// 위에 해당하는 패킷들은 블락 면제
+		}
+		else if (!GameManager.Instance.isSendPacketReady)
+		{
+			// 면제대상이 아닌데 전송 준비되지 않았으면 함수 탈출
+			return;
+		}
+		else
+		{
+			// 면제대상이 아닌데 전송 준비되었으면 블락하고 함수 진행
 			GameManager.Instance.isSendPacketReady = false;
 		}
 

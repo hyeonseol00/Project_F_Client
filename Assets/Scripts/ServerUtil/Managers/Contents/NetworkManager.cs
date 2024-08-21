@@ -15,8 +15,7 @@ public class NetworkManager
 
 	public void Send(IMessage packet)
 	{
-		if (GameManager.Instance.isSendPacketReady)
-			_session.Send(packet);
+		_session.Send(packet);
 	}
 
 	public void Init()
@@ -75,8 +74,11 @@ public class NetworkManager
             if (!(packet.Id == (byte)MsgId.SMove ||
                 packet.Id == (byte)MsgId.SSpawn ||
                 packet.Id == (byte)MsgId.SMoveAtHatchery ||
+                packet.Id == (byte)MsgId.SBossMove ||
                 packet.Id == (byte)MsgId.STryAttack))
                 GameManager.Instance.isSendPacketReady = true;
+
+			// Debug.Log($"{Enum.GetName(typeof(MsgId), packet.Id)}");
 
             Action<PacketSession, IMessage> handler = PacketManager.Instance.GetPacketHandler(packet.Id);
 			if (handler != null)
