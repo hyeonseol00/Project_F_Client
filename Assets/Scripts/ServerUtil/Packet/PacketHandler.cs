@@ -376,6 +376,10 @@ class PacketHandler
 
         if (pkt.BossCurHp <= 0)
         {
+            if (HatcheryManager.Instance.phase == 3)
+            {
+                HatcheryManager.Instance.EndThridPhase();
+            }
             HatcheryManager.Instance.monster.Dead();
         }
     }
@@ -460,37 +464,38 @@ class PacketHandler
 
     public static void S_EnterSecondPhaseHandler(PacketSession session, IMessage packet)
     {
-        // S_EnterSecondPhase pkt = packet as S_EnterSecondPhase;
-        //if (pkt == null)
-        //    return;
+        S_EnterSecondPhase pkt = packet as S_EnterSecondPhase;
+        if (pkt == null)
+            return;
 
-        //Debug.Log($"S_EnterSecondPhaseHandler access! {pkt}");
-        // bindTime, updatedBossSpeed
+        Debug.Log($"S_EnterSecondPhaseHandler access! {pkt}");
+
         // 내 캐릭터 10초 바인드
-        HatcheryManager.Instance.EnterSecondPhase(10.0f, 10.0f);
+        HatcheryManager.Instance.EnterSecondPhase(pkt.BindTime, pkt.UpdatedBossSpeed);
     }
 
-    public static void S_EnterThridPhaseHandler(PacketSession session, IMessage packet)
+    public static void S_EnterThirdPhaseHandler(PacketSession session, IMessage packet)
     {
-        //S_EnterThridPhase pkt = packet as S_EnterThridPhase;
-        //if (pkt == null)
-        //    return;
+        S_EnterThirdPhase pkt = packet as S_EnterThirdPhase;
+        if (pkt == null)
+            return;
 
-        //Debug.Log($"S_EnterThridPhaseHandler access! {pkt}");
-        // deathCountTime
+        Debug.Log($"S_EnterThridPhaseHandler access! {pkt}");
+
         // 죽음의 카운트다운 30초 시작
-        HatcheryManager.Instance.EnterThridPhase(30.0f);
-        
+        HatcheryManager.Instance.EnterThridPhase(pkt.DeathCountTime);     
     }
 
-    public static void S_SetNotificationInHatcheryHandler(PacketSession session, IMessage packet)
+    public static void S_DisplayNotificationInHatcheryHandler(PacketSession session, IMessage packet)
     {
-        //S_NotificationInHatchery pkt = packet as S_NotificationInHatchery;
-        //if (pkt == null)
-        //    return;
+        S_DisplayNotificationHatchery pkt = packet as S_DisplayNotificationHatchery;
+        if (pkt == null)
+            return;
 
-        //Debug.Log($"S_NotificationInHatcheryHandler access! {pkt}");
-        HatcheryManager.Instance.SetNotification("Hello");
+        Debug.Log($"S_DisplayNotificationInHatcheryHandler access! {pkt}");
+
+        // 공지 알림 추가
+        HatcheryManager.Instance.SetNotification(pkt.Msg);
 
     }
 }

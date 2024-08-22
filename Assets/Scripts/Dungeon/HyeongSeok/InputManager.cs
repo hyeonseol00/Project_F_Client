@@ -30,5 +30,15 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.N)){
             HatcheryManager.Instance.EnterThridPhase(30.1f);
         }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            HatcheryManager.Instance.EndThridPhase();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Comma))
+        {
+            HatcheryManager.Instance.SetNotification("Hello world");
+        }
     }
 }

@@ -19,6 +19,8 @@ public class HatcheryUIManager : MonoBehaviour
     private const int MAXPEOPLE = 4;
     private const float DISPLAY_MSG_TIME = 5.0f;
 
+    private Coroutine ThirdPhase = null;
+
     // 플레이어가 던전에 입장했을 때 호출
     public void OnPlayerEnter(PlayerInfo playerInfo, bool isMine)
     {
@@ -102,8 +104,15 @@ public class HatcheryUIManager : MonoBehaviour
     public void startDeathCounter(float countTime)
     {
         txtDeathCounter.gameObject.transform.parent.gameObject.SetActive(true);
-        StartCoroutine("processDeathCounter", countTime);
+        ThirdPhase = StartCoroutine("processDeathCounter", countTime);
     }
+
+    public void stopDeathCounter()
+    {
+        if(ThirdPhase != null)
+            StopCoroutine(ThirdPhase);
+    }
+
     private IEnumerator processDeathCounter(float remainingTime)
     {
         while (remainingTime - Time.deltaTime > 0)
