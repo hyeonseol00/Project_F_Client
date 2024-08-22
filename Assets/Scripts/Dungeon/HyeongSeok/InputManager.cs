@@ -6,7 +6,7 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     [SerializeField] private UIPotionsInformation uIPotionsInformation;
-
+    
     enum PotionType
     {
         HpPotion = 0, MpPotion, Elixer_S, Elixer_M, Elixer_L
@@ -22,5 +22,6 @@ public class InputManager : MonoBehaviour
                 uIPotionsInformation.TryUsePotion(potionType);
             }
         }
+
     }
 }

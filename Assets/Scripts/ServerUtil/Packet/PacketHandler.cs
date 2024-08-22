@@ -414,7 +414,8 @@ class PacketHandler
         Vector3 move = new Vector3(tr.PosX, tr.PosY, tr.PosZ);
         Vector3 eRot = new Vector3(0, tr.Rot, 0);
 
-        monster.SetCoordinates(move, eRot);
+        if(monster)
+            monster.SetCoordinates(move, eRot);
 
         // 2. 단위 벡터 보스한테 박아두고 지속적으로 움직이게 Update()
         Vector3 unitVec = new Vector3(pkt.BossUnitVector.UnitX, 0, pkt.BossUnitVector.UnitZ);

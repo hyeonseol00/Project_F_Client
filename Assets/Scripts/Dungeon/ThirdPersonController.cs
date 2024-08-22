@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class ThirdPersonController : MonoBehaviour
 {
-    float speed = 5.0f;
-
     [SerializeField] private Transform characterBody;
     [SerializeField] private Transform cameraArm;
     [SerializeField] private Camera _camera3pov;
     [SerializeField] private Camera _camera1pov;
+    [SerializeField] private SkillDescription _skillDescription;
 
+    public float speed = 5.0f;
     public float sensitivity = 5f;
     public float zoomSpeed = 20f; // 줌 속도
     public float minFov = 15f; // 최소 FOV (최대 줌인)
@@ -41,6 +41,11 @@ public class ThirdPersonController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.RightBracket))
             sensitivity += 0.5f;
+
+        if (Input.GetKeyDown(KeyCode.Mouse1)){
+            _skillDescription.useSkill();
+        }
+            
     }
 
     private void LookAround()

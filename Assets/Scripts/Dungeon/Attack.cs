@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
-    float rate = 1.0f;
+    public float rate = 1f;
+
     [SerializeField] BoxCollider meleeArea;
     [SerializeField] Animator animator;
 
@@ -14,23 +15,32 @@ public class Attack : MonoBehaviour
     [SerializeField] Transform bulletPos;
     [SerializeField] GameObject bullet;
     [SerializeField] float bulletSpeed = 50.0f;
-    [SerializeField] float beforeCastDelay = 0.41f;
+    [SerializeField] float beforeCastDelay = 0.41f; // 선딜레이
 
     bool isAttackReady;
     float attackDelay;
 
-    public Coroutine currentAttackCoroutine { get; set; }
+    private const float ATTACK_ENABLE_TIME = 0.1f;
+
+    public Coroutine AttackCoroutine { get; set; }
+
+    public void StartAttack(bool isMine, Vector3 unitDir)
+    {
+        AttackCoroutine = StartCoroutine(TryAttack(isMine, unitDir));
+    }
 
     public IEnumerator TryAttack(bool isMine, Vector3 unitDir)
     {
         // 애니메이션 시작.
+        animator.SetFloat("AttackSpeed", 1/rate);
         animator.SetBool("Anim1", true);
-        yield return new WaitForSeconds(beforeCastDelay);
+        
+        yield return new WaitForSeconds(beforeCastDelay * rate);
 
         if (isMelee)
         {
             meleeArea.enabled = true;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(ATTACK_ENABLE_TIME * rate);
             meleeArea.enabled = false;
         }
         else
@@ -45,6 +55,7 @@ public class Attack : MonoBehaviour
             if (!isMine) instantBullet.tag = "Untagged";
 
         }
+        AttackCoroutine = null;
     }
 
     void SendTryAttackPkt()
@@ -81,16 +92,11 @@ public class Attack : MonoBehaviour
         isAttackReady = rate < attackDelay;
 
         var isDead = HatcheryManager.Instance.myPlayer.isDead;
-        if (Input.GetButtonDown("Fire1") && isAttackReady && !isDead)
+        if (Input.GetButtonDown("Fire1") && !isDead && isAttackReady)
         {
+            Debug.Log($"attackDelay {attackDelay}");
             SendTryAttackPkt();
+            attackDelay = 0.0f;
         }
-
-        //if (isMelee)    // 근거리
-        //{
-        //    StopCoroutine("TryAttack");
-        //    StartCoroutine("TryAttack");
-        //    attackDelay = 0.0f;
-        //}
     }
 }

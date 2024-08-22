@@ -99,11 +99,7 @@ public class Character : MonoBehaviour
 
 	public void Attack(bool isMine, Vector3 unitDir)
 	{
-		if(attackScript.currentAttackCoroutine != null)
-        {
-			StopCoroutine(attackScript.currentAttackCoroutine);
-		}
-		attackScript.currentAttackCoroutine = StartCoroutine(attackScript.TryAttack(isMine, unitDir));
+		attackScript.StartAttack(isMine, unitDir);
 	}
 
 	public void HitMotion()

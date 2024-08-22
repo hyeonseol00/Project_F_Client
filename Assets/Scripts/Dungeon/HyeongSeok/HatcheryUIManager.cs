@@ -125,4 +125,9 @@ public class HatcheryUIManager : MonoBehaviour
 
         txtDeathCounter.text = "즉사기 발동!";
     }
+
+    //public void useSkill()
+    //{
+    //    mSkillUI.
+    //}
 }
