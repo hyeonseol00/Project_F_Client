@@ -29,6 +29,8 @@ public class HatcheryManager : MonoBehaviour
 
 	[SerializeField] private HatcheryUIManager hatcheryUIManager;
 
+	public int phase = 1;
+
 	private void Start()
 	{
 		// �׽�Ʈ �ڵ�
@@ -240,4 +242,38 @@ public class HatcheryManager : MonoBehaviour
 		hatcheryUIManager.SetPotion(pkt.ItemId, pkt.Quantity);
 		return;
 	}
+
+	public void EnterSecondPhase(float bindTime, float updatedBossSpeed)
+	{
+		phase = 2;
+		hatcheryUIManager.StartCoroutine("DisplayNotification", $"2페이즈 돌입: 보스의 움직임이 빨라지고, 플레이어들이 {bindTime.ToString("F1")}초동안 움직임이 봉인됩니다!");
+		monster.speed = updatedBossSpeed;
+		myPlayer.StartCoroutine("BindMovement", bindTime);
+	}
+
+	public void EnterThridPhase(float countTime)
+	{
+		phase = 3;
+		hatcheryUIManager.StartCoroutine("DisplayNotification", $"3페이즈 돌입: {countTime.ToString("F1")}초 뒤에 광역 즉사기를 시전합니다.");
+		hatcheryUIManager.startDeathCounter(countTime);
+	}
+
+	public void EndThridPhase()
+	{
+		hatcheryUIManager.stopDeathCounter();
+	}
+
+	public void SetNotification(string msg)
+	{
+		hatcheryUIManager.StartCoroutine("DisplayNotification", msg);
+	}
+
+	public void SelectButton(int btnIdx)
+	{
+		monster.OffBtnsInteractable();
+
+        C_HatcherySelectReward response = new C_HatcherySelectReward { SelectedBtn = btnIdx };
+
+        GameManager.Network.Send(response);
+    }
 }
