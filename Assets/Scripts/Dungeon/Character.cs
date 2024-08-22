@@ -25,6 +25,7 @@ public class Character : MonoBehaviour
 	private float elapsedFromMovePacket;
 
 	public bool isDead = false;
+	public bool canMove = true;
 
 	void Start()
 	{
@@ -119,5 +120,12 @@ public class Character : MonoBehaviour
 	public bool getIsDead()
     {
 		return isDead;
+	}
+
+	IEnumerator BindMovement(float bindTime)
+	{
+		canMove = false;
+		yield return new WaitForSeconds(bindTime);
+		canMove = true;
 	}
 }
