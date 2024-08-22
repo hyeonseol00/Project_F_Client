@@ -22,23 +22,5 @@ public class InputManager : MonoBehaviour
                 uIPotionsInformation.TryUsePotion(potionType);
             }
         }
-
-        if(Input.GetKeyDown(KeyCode.B)){
-            HatcheryManager.Instance.EnterSecondPhase(10.0f, 10.0f);
-        }
-
-        if (Input.GetKeyDown(KeyCode.N)){
-            HatcheryManager.Instance.EnterThridPhase(30.1f);
-        }
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            HatcheryManager.Instance.EndThridPhase();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Comma))
-        {
-            HatcheryManager.Instance.SetNotification("Hello world");
-        }
     }
 }

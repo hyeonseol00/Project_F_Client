@@ -468,7 +468,7 @@ class PacketHandler
         if (pkt == null)
             return;
 
-        Debug.Log($"S_EnterSecondPhaseHandler access! {pkt}");
+        //Debug.Log($"S_EnterSecondPhaseHandler access! {pkt}");
 
         // 내 캐릭터 10초 바인드
         HatcheryManager.Instance.EnterSecondPhase(pkt.BindTime, pkt.UpdatedBossSpeed);
@@ -480,7 +480,7 @@ class PacketHandler
         if (pkt == null)
             return;
 
-        Debug.Log($"S_EnterThridPhaseHandler access! {pkt}");
+        //Debug.Log($"S_EnterThridPhaseHandler access! {pkt}");
 
         // 죽음의 카운트다운 30초 시작
         HatcheryManager.Instance.EnterThridPhase(pkt.DeathCountTime);     
@@ -492,7 +492,7 @@ class PacketHandler
         if (pkt == null)
             return;
 
-        Debug.Log($"S_DisplayNotificationInHatcheryHandler access! {pkt}");
+        //Debug.Log($"S_DisplayNotificationInHatcheryHandler access! {pkt}");
 
         // 공지 알림 추가
         HatcheryManager.Instance.SetNotification(pkt.Msg);

@@ -125,11 +125,7 @@ public class Character : MonoBehaviour
 	IEnumerator BindMovement(float bindTime)
 	{
 		canMove = false;
-		Debug.Log("Stop!");
-
 		yield return new WaitForSeconds(bindTime);
-
 		canMove = true;
-		Debug.Log("canMove!");
 	}
 }
