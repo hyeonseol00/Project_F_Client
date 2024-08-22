@@ -1,7 +1,9 @@
 using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -10,8 +12,10 @@ public class Enemy : MonoBehaviour
 	[SerializeField] Animator animator;
 	[SerializeField] UIMonsterInformation monsterUI;
 	[SerializeField] RectTransform winPopup;
+    [SerializeField] TextMeshProUGUI winMessage;
+    [SerializeField] RectTransform btns;
 
-	Vector3 unitVector;
+    Vector3 unitVector;
 	bool isDead = false;
 
 	private void Update()
@@ -74,10 +78,57 @@ public class Enemy : MonoBehaviour
 
 	}
 
-	public void Dead()
+	public void Dead(S_KillBoss pkt)
 	{
 		isDead = true;
 		animator.SetBool("Die", true);
-		winPopup.gameObject.SetActive(true);
+
+		winMessage.text = pkt.Message;
+
+		var btnComponents = btns.GetComponentsInChildren<Button>();
+		for (int i = 0; i < btnComponents.Length; i++) 
+		{
+			var btnText = btnComponents[i].GetComponentInChildren<TextMeshProUGUI>();
+			btnText.text = pkt.BtnTexts[i];
+
+			if (HatcheryManager.Instance.myPlayer.PlayerId == pkt.PlayerId)
+                btnComponents[i].interactable = true;
+            else
+				btnComponents[i].interactable = false;
+        }
+
+        winPopup.gameObject.SetActive(true);
 	}
+
+	public void ConfirmReward(S_HatcheryConfirmReward pkt)
+    {
+		StartCoroutine(SetConfirmUI(pkt));
+    }
+
+	public IEnumerator SetConfirmUI(S_HatcheryConfirmReward pkt)
+    {
+        winMessage.text = pkt.Message;
+
+        var btnComponents = btns.GetComponentsInChildren<Button>();
+        for (int i = 0; i < btnComponents.Length; i++)
+        {
+            var btnText = btnComponents[i].GetComponentInChildren<TextMeshProUGUI>();
+            btnText.text = pkt.BtnTexts[i];
+        }
+
+        var btnColors = btnComponents[pkt.SelectedBtn].colors;
+        btnColors.disabledColor = UnityEngine.Color.green;
+        btnComponents[pkt.SelectedBtn].colors = btnColors;
+
+        yield return new WaitForSeconds(5.0f);
+
+		HatcheryManager.Instance.LeaveHatchery();
+    }
+
+	public void OffBtnsInteractable()
+    {
+        var btnComponents = btns.GetComponentsInChildren<Button>();
+        for (int i = 0; i < btnComponents.Length; i++)
+            btnComponents[i].interactable = false;
+    }
 }

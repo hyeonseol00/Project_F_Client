@@ -240,4 +240,13 @@ public class HatcheryManager : MonoBehaviour
 		hatcheryUIManager.SetPotion(pkt.ItemId, pkt.Quantity);
 		return;
 	}
+
+	public void SelectButton(int btnIdx)
+	{
+		monster.OffBtnsInteractable();
+
+        C_HatcherySelectReward response = new C_HatcherySelectReward { SelectedBtn = btnIdx };
+
+        GameManager.Network.Send(response);
+    }
 }
