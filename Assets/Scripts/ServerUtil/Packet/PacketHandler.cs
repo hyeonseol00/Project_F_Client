@@ -380,7 +380,7 @@ class PacketHandler
             {
                 HatcheryManager.Instance.EndThridPhase();
             }
-            HatcheryManager.Instance.monster.Dead();
+            //HatcheryManager.Instance.monster.Dead();
         }
     }
 
@@ -498,6 +498,24 @@ class PacketHandler
         // 공지 알림 추가
         HatcheryManager.Instance.SetNotification(pkt.Msg);
 
+    }
+
+    public static void S_KillBossHandler(PacketSession session, IMessage packet)
+    {
+        S_KillBoss pkt = packet as S_KillBoss;
+        if (pkt == null)
+            return;
+
+        HatcheryManager.Instance.monster.Dead(pkt);
+    }
+
+    public static void S_HatcheryConfirmRewardHandler(PacketSession session, IMessage packet)
+    {
+        S_HatcheryConfirmReward pkt = packet as S_HatcheryConfirmReward;
+        if (pkt == null)
+            return;
+
+        HatcheryManager.Instance.monster.ConfirmReward(pkt);
     }
 }
 
