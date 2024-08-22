@@ -267,4 +267,13 @@ public class HatcheryManager : MonoBehaviour
 	{
 		hatcheryUIManager.StartCoroutine("DisplayNotification", msg);
 	}
+
+	public void SelectButton(int btnIdx)
+	{
+		monster.OffBtnsInteractable();
+
+        C_HatcherySelectReward response = new C_HatcherySelectReward { SelectedBtn = btnIdx };
+
+        GameManager.Network.Send(response);
+    }
 }

@@ -103,7 +103,11 @@ class PacketManager
 		_handler.Add((ushort)MsgId.SEnterThirdPhase, PacketHandler.S_EnterThirdPhaseHandler);
 		_onRecv.Add((ushort)MsgId.SDisplayNotificationHatchery, MakePacket<S_DisplayNotificationHatchery>);
 		_handler.Add((ushort)MsgId.SDisplayNotificationHatchery, PacketHandler.S_DisplayNotificationInHatcheryHandler);
-	}
+        _onRecv.Add((ushort)MsgId.SKillBoss, MakePacket<S_KillBoss>);
+        _handler.Add((ushort)MsgId.SKillBoss, PacketHandler.S_KillBossHandler);
+        _onRecv.Add((ushort)MsgId.SHatcheryConfirmReward, MakePacket<S_HatcheryConfirmReward>);
+        _handler.Add((ushort)MsgId.SHatcheryConfirmReward, PacketHandler.S_HatcheryConfirmRewardHandler);
+    }
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)
 	{
