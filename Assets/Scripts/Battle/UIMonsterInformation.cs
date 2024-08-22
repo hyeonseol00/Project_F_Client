@@ -31,7 +31,8 @@ public class UIMonsterInformation : MonoBehaviour
 
     private void Update()
     {
-        transform.rotation = camTr.rotation;
+        if(camTr != null)
+            transform.rotation = camTr.rotation;
     }
 
     public void SetMainCamera()
