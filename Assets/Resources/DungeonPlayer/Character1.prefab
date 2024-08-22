@@ -1919,7 +1919,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 4833421380162517664}
   thirdPersonControllerScript: {fileID: 5159890143931453789}
-  attackScript: {fileID: 0}
+  attackScript: {fileID: 264997443585691081}
+  weaponPrefab: {fileID: 1494647256383319165}
   Class: 0
 --- !u!1 &3283959611828345060
 GameObject:
@@ -2514,7 +2515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7d885886c03304486eceba26cb579c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rate: 0.5
+  rate: 1
   meleeArea: {fileID: 4833421380162517664}
   animator: {fileID: 1792359025717265844}
   isMelee: 1
@@ -2543,7 +2544,7 @@ BoxCollider:
   m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1.5, y: 1.5, z: 1.5}
-  m_Center: {x: 0, y: 0.9, z: 1.2}
+  m_Center: {x: 0, y: 0.9, z: 1}
 --- !u!1 &5282800433796554302
 GameObject:
   m_ObjectHideFlags: 0
@@ -4930,15 +4931,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4938831626590102, guid: 49861bdc4ee2dd544b19a340b871619c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4938831626590102, guid: 49861bdc4ee2dd544b19a340b871619c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4938831626590102, guid: 49861bdc4ee2dd544b19a340b871619c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4938831626590102, guid: 49861bdc4ee2dd544b19a340b871619c, type: 3}
       propertyPath: m_LocalPosition.x

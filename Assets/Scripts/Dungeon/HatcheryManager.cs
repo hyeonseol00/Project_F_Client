@@ -121,10 +121,10 @@ public class HatcheryManager : MonoBehaviour
 
 	public void SetBossCurHp(int hp)
 	{
-		if (uiMonsterInfo.GetCurHP() > hp)
-		{
-			monster.HitAnimation();
-		}
+		//if (uiMonsterInfo.GetCurHP() > hp)
+		//{
+		//	monster.HitAnimation();
+		//}
 		uiMonsterInfo.SetCurHP(hp);
 	}
 

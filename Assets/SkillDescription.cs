@@ -11,6 +11,8 @@ public class SkillDescription : MonoBehaviour
     [SerializeField] private BoxCollider weapon;
     [SerializeField] private ThirdPersonController thirdPersonControllerScript;
     [SerializeField] private Attack attackScript;
+    [SerializeField] private Transform weaponPrefab;
+    [SerializeField] private Transform CharacterPrefab;
 
     private Coroutine activatedSkillCoroutine = null;
     private Coroutine coolTimeCoroutine = null;
@@ -20,18 +22,18 @@ public class SkillDescription : MonoBehaviour
     public CharacterClass Class;
 
     // skill coolTime
-    private const float SPEAR_MAN_COOLTIME = 10.0f;
+    private const float SPEAR_MAN_COOLTIME = 15.0f;
     private const float SWORD_MAN_COOLTIME = 20.0f;
     private const float CROSSBOW_MAN_COOLTIME = 15.0f;
-    private const float HAMMER_MAN_COOLTIME = 20.0f;
-    private const float MAGE_COOLTIME = 10.0f;
+    private const float HAMMER_MAN_COOLTIME = 15.0f;
+    private const float MAGE_COOLTIME = 20.0f;
 
     // skill activeTime
     private const float SPEAR_MAN_ACTIVETIME = 5.0f;
     private const float SWORD_MAN_ACTIVETIME = 10.0f;
     private const float CROSSBOW_MAN_ACTIVETIME = 7.5f;
     private const float HAMMER_MAN_ACTIVETIME = 10.0f;
-    private const float MAGE_ACTIVETIME = 0.5f;
+    private const float MAGE_ACTIVETIME = 10.0f;
 
     private const float fillHeight = 150;
     private const float fillWidth = 150;
@@ -78,14 +80,22 @@ public class SkillDescription : MonoBehaviour
     {
         skillIconImage.color = new Color(1.0f, 0.5f, 0.5f); // 스킬 사용 중 표시
 
-        thirdPersonControllerScript.speed *= 1.5f;
-        weapon.size = new Vector3(1.5f, 1.5f, 2.5f);    
+        thirdPersonControllerScript.speed *= 5f;
+        attackScript.rate /= 5f;
+        // 공격 범위 조정
+        weapon.center = new Vector3(0.0f, 0.9f, 3.0f);          
+        weapon.size = new Vector3(1.5f, 1.5f, 5.0f);
+        weaponPrefab.localScale = new Vector3(20.0f, 20.0f, 20.0f);
         yield return new WaitForSeconds(activatingTime);
 
         skillIconImage.color = new Color(1.0f, 1.0f, 1.0f);// 스킬 사용 중 색깔 제자리로
 
-        thirdPersonControllerScript.speed /= 1.5f;
+        thirdPersonControllerScript.speed /= 5f;
+        attackScript.rate *= 5f;
+        // 공격 범위 정상화
+        weapon.center = new Vector3(0.0f, 0.9f, 1.0f);
         weapon.size = new Vector3(1.5f, 1.5f, 1.5f);
+        weaponPrefab.localScale = new Vector3(5.0f, 5.0f, 5.0f);
         activatedSkillCoroutine = null;
         yield return coolTimeCoroutine = StartCoroutine("coolTime", SPEAR_MAN_COOLTIME);
     }
@@ -113,13 +123,13 @@ public class SkillDescription : MonoBehaviour
 
         // 스킬 활성화 코드
         Debug.Log("석궁 스킬 활성화!");
-        attackScript.rate /= 2f;
+        attackScript.rate /= 5f;
         yield return new WaitForSeconds(activatingTime);
 
         skillIconImage.color = new Color(1.0f, 1.0f, 1.0f);// 스킬 사용 중 색깔 제자리로
 
         // 스킬 비활성화 코드
-        attackScript.rate *= 2f;
+        attackScript.rate *= 5f;
         Debug.Log("석궁 스킬 끝!");
 
         activatedSkillCoroutine = null;
@@ -132,13 +142,18 @@ public class SkillDescription : MonoBehaviour
 
         // 스킬 활성화 코드
         Debug.Log("해머 스킬 활성화!");
+        attackScript.rate *= 2.5f;
+        thirdPersonControllerScript.speed /= 2f;
+        CharacterPrefab.localScale *= 2.0f;
         yield return new WaitForSeconds(activatingTime);
 
         skillIconImage.color = new Color(1.0f, 1.0f, 1.0f);// 스킬 사용 중 색깔 제자리로
 
         // 스킬 비활성화 코드
         Debug.Log("해머 스킬 끝!");
-
+        attackScript.rate /= 2.5f;
+        thirdPersonControllerScript.speed *= 2f;
+        CharacterPrefab.localScale /= 2.0f;
         activatedSkillCoroutine = null;
         yield return coolTimeCoroutine = StartCoroutine("coolTime", HAMMER_MAN_COOLTIME);
     }
@@ -149,13 +164,14 @@ public class SkillDescription : MonoBehaviour
 
         // 스킬 활성화 코드
         Debug.Log("마법사 스킬 활성화!");
-        yield return new WaitForSeconds(activatingTime);
+        HatcheryManager.Instance.myPlayer.canMove = false;
+        yield return StartCoroutine("coolTime", activatingTime); // 정신 집중
 
         skillIconImage.color = new Color(1.0f, 1.0f, 1.0f);// 스킬 사용 중 색깔 제자리로
 
         // 스킬 비활성화 코드
         Debug.Log("마법사 스킬 끝!");
-
+        HatcheryManager.Instance.myPlayer.canMove = true;
         activatedSkillCoroutine = null;
         yield return coolTimeCoroutine = StartCoroutine("coolTime", MAGE_COOLTIME);
     }

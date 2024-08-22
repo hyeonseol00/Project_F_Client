@@ -725,7 +725,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 2847092268736918817}
-  _thirdPersonController: {fileID: 5217117549270882346}
+  thirdPersonControllerScript: {fileID: 0}
+  attackScript: {fileID: 8215676755780929925}
   Class: 4
 --- !u!1 &1760671741792199740
 GameObject:
@@ -3186,6 +3187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7d885886c03304486eceba26cb579c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rate: 1
   meleeArea: {fileID: 2847092268736918817}
   animator: {fileID: 6045283533479319344}
   isMelee: 0
