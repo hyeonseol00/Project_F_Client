@@ -97,8 +97,11 @@ class PacketManager
 		_handler.Add((ushort)MsgId.SDespawnHatchery, PacketHandler.S_DespawnHatcheryHandler);
 		_onRecv.Add((ushort)MsgId.STryUsePotion, MakePacket<S_TryUsePotion>);
 		_handler.Add((ushort)MsgId.STryUsePotion, PacketHandler.S_TryUsePotionHandler);
-
-	}
+        _onRecv.Add((ushort)MsgId.SKillBoss, MakePacket<S_KillBoss>);
+        _handler.Add((ushort)MsgId.SKillBoss, PacketHandler.S_KillBossHandler);
+        _onRecv.Add((ushort)MsgId.SHatcheryConfirmReward, MakePacket<S_HatcheryConfirmReward>);
+        _handler.Add((ushort)MsgId.SHatcheryConfirmReward, PacketHandler.S_HatcheryConfirmRewardHandler);
+    }
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)
 	{

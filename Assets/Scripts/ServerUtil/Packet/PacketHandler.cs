@@ -376,7 +376,7 @@ class PacketHandler
 
         if (pkt.BossCurHp <= 0)
         {
-            HatcheryManager.Instance.monster.Dead();
+            //HatcheryManager.Instance.monster.Dead();
         }
     }
 
@@ -456,6 +456,24 @@ class PacketHandler
         //Debug.Log($"S_TryUsePotionHandler access! {pkt}");
 
         HatcheryManager.Instance.SetPotion(pkt);
+    }
+
+    public static void S_KillBossHandler(PacketSession session, IMessage packet)
+    {
+        S_KillBoss pkt = packet as S_KillBoss;
+        if (pkt == null)
+            return;
+
+        HatcheryManager.Instance.monster.Dead(pkt);
+    }
+
+    public static void S_HatcheryConfirmRewardHandler(PacketSession session, IMessage packet)
+    {
+        S_HatcheryConfirmReward pkt = packet as S_HatcheryConfirmReward;
+        if (pkt == null)
+            return;
+
+        HatcheryManager.Instance.monster.ConfirmReward(pkt);
     }
 }
 
