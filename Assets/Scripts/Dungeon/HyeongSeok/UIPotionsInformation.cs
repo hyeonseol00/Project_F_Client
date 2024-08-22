@@ -105,7 +105,7 @@ public class UIPotionsInformation : MonoBehaviour
 
     }
 
-    IEnumerator coolTime(int idx, float remainingTime)
+    private IEnumerator coolTime(int idx, float remainingTime)
     {
         while (remainingTime > 0)
         {
@@ -119,4 +119,5 @@ public class UIPotionsInformation : MonoBehaviour
         disableImageList[idx].rectTransform.sizeDelta = new Vector2(fillHeight, 100);
         coolTimeList[idx] = null;
     }
+  
 }

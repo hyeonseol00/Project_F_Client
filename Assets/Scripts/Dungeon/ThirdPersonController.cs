@@ -30,7 +30,7 @@ public class ThirdPersonController : MonoBehaviour
     {
         LookAround();
 
-        if (!HatcheryManager.Instance.myPlayer.isDead)
+        if (!HatcheryManager.Instance.myPlayer.isDead && HatcheryManager.Instance.myPlayer.canMove)
             Move();
 
         if (Input.GetKeyDown(KeyCode.F4)) 

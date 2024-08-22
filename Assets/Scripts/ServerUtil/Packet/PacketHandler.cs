@@ -376,6 +376,10 @@ class PacketHandler
 
         if (pkt.BossCurHp <= 0)
         {
+            if (HatcheryManager.Instance.phase == 3)
+            {
+                HatcheryManager.Instance.EndThridPhase();
+            }
             HatcheryManager.Instance.monster.Dead();
         }
     }
@@ -456,6 +460,43 @@ class PacketHandler
         //Debug.Log($"S_TryUsePotionHandler access! {pkt}");
 
         HatcheryManager.Instance.SetPotion(pkt);
+    }
+
+    public static void S_EnterSecondPhaseHandler(PacketSession session, IMessage packet)
+    {
+        S_EnterSecondPhase pkt = packet as S_EnterSecondPhase;
+        if (pkt == null)
+            return;
+
+        //Debug.Log($"S_EnterSecondPhaseHandler access! {pkt}");
+
+        // 내 캐릭터 10초 바인드
+        HatcheryManager.Instance.EnterSecondPhase(pkt.BindTime, pkt.UpdatedBossSpeed);
+    }
+
+    public static void S_EnterThirdPhaseHandler(PacketSession session, IMessage packet)
+    {
+        S_EnterThirdPhase pkt = packet as S_EnterThirdPhase;
+        if (pkt == null)
+            return;
+
+        //Debug.Log($"S_EnterThridPhaseHandler access! {pkt}");
+
+        // 죽음의 카운트다운 30초 시작
+        HatcheryManager.Instance.EnterThridPhase(pkt.DeathCountTime);     
+    }
+
+    public static void S_DisplayNotificationInHatcheryHandler(PacketSession session, IMessage packet)
+    {
+        S_DisplayNotificationHatchery pkt = packet as S_DisplayNotificationHatchery;
+        if (pkt == null)
+            return;
+
+        //Debug.Log($"S_DisplayNotificationInHatcheryHandler access! {pkt}");
+
+        // 공지 알림 추가
+        HatcheryManager.Instance.SetNotification(pkt.Msg);
+
     }
 }
 

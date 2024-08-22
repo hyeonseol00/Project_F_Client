@@ -22,6 +22,5 @@ public class InputManager : MonoBehaviour
                 uIPotionsInformation.TryUsePotion(potionType);
             }
         }
-
     }
 }
