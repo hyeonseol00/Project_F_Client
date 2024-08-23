@@ -15,6 +15,7 @@ public class SkillDescription : MonoBehaviour
     [SerializeField] private Attack attackScript;
     [SerializeField] private Transform weaponPrefab;
     [SerializeField] private Transform CharacterPrefab;
+    [SerializeField] private GameObject SkillEffect;
 
     private Coroutine activatedSkillCoroutine = null;
     private Coroutine coolTimeCoroutine = null;
@@ -220,16 +221,24 @@ public class SkillDescription : MonoBehaviour
             // 스킬 활성화 코드    
             Debug.Log("전사 스킬 활성화!");
             skillIconImage.color = new UnityEngine.Color(1.0f, 0.5f, 0.5f); // 스킬 사용 중 표시
-
+            SkillEffect.SetActive(true);
             yield return new WaitForSeconds(activatingTime);
 
             // 스킬 비활성화 코드
             Debug.Log("전사 스킬 끝!");
             skillIconImage.color = new UnityEngine.Color(1.0f, 1.0f, 1.0f);// 스킬 사용 중 색깔 제자리로
+            SkillEffect.SetActive(false);
 
             // 쿨타임 시작
             activatedSkillCoroutine = null;
             yield return coolTimeCoroutine = StartCoroutine("coolTime", SWORD_MAN_COOLTIME);
+        }
+        else
+        {
+            SkillEffect.SetActive(true);
+            yield return new WaitForSeconds(activatingTime);
+            SkillEffect.SetActive(false);
+            yield return null;
         }
     }
 
