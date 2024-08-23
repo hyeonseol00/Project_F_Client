@@ -524,7 +524,7 @@ class PacketHandler
         if (pkt == null)
             return;
 
-        Debug.Log($"S_TrySkillHandle access! {pkt}");
+        //Debug.Log($"S_TrySkillHandle access! {pkt}");
 
         Character player = HatcheryManager.Instance.GetPlayerAvatarById(pkt.PlayerId);
         bool isMine = player.PlayerId == HatcheryManager.Instance.myPlayer.PlayerId;

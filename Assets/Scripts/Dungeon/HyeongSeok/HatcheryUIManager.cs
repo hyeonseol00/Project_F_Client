@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Google.Protobuf.Protocol;
 using TMPro;
+using UnityEngine.UI;
 
 public class HatcheryUIManager : MonoBehaviour
 {
@@ -14,12 +15,16 @@ public class HatcheryUIManager : MonoBehaviour
     [SerializeField] private GameObject playerUIPrefab;  // UI Prefab 참조
     [SerializeField] private Transform uiParent;         // UI를 배치할 부모 객체
 
+    [SerializeField] private Image skillDisableImage;
+
     private List<UIPlayerInformationInHatchery> playerUIList = new List<UIPlayerInformationInHatchery>();
 
     private const int MAXPEOPLE = 4;
     private const float DISPLAY_MSG_TIME = 5.0f;
 
     private Coroutine ThirdPhase = null;
+
+    private const int SKILL_COST = 300;
 
     // 플레이어가 던전에 입장했을 때 호출
     public void OnPlayerEnter(PlayerInfo playerInfo, bool isMine)
@@ -67,6 +72,9 @@ public class HatcheryUIManager : MonoBehaviour
         {
             isAttcked = mPlayerUI.SetCurHP(updatedHp);
             mPlayerUI.SetCurMP(updatedMp);
+            if (updatedMp < SKILL_COST) skillDisableImage.enabled = true;
+            else skillDisableImage.enabled = false;
+
             return isAttcked;
         }
 

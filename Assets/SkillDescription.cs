@@ -42,11 +42,11 @@ public class SkillDescription : MonoBehaviour
     private const float MAGE_ACTIVETIME = 10.0f;
 
     // mana
-    private const int SPEAR_MAN_MANACOST = 100;
-    private const int SWORD_MAN_MANACOST = 200;
-    private const int CROSSBOW_MAN_MANACOST = 300;
-    private const int HAMMER_MAN_MANACOST = 400;
-    private const int MAGE_MANACOST = 500;
+    //private const int SPEAR_MAN_MANACOST = 100;
+    //private const int SWORD_MAN_MANACOST = 200;
+    //private const int CROSSBOW_MAN_MANACOST = 300;
+    //private const int HAMMER_MAN_MANACOST = 400;
+    //private const int MAGE_MANACOST = 500;
 
     private const float fillHeight = 150;
     private const float fillWidth = 150;
@@ -60,44 +60,28 @@ public class SkillDescription : MonoBehaviour
         disableImage = GameObject.Find("UIBattle/SkillIcon/DisableImage").GetComponent<Image>();
         disableImage2 = GameObject.Find("UIBattle/SkillIcon/DisableImage2").GetComponent<Image>();
         skillIconImage = GameObject.Find("UIBattle/SkillIcon/Image").GetComponent<Image>();
-        //skillmanaCostTxt = GameObject.Find("UIBattle/SkillIcon/txtSkillCost").GetComponent<TMP_Text>();
-        //MpText = GameObject.Find("UIPlayerInfo/MyInfo/Image/imgMpBack/image").GetComponent<TMP_Text>();
 
-        switch (Class)
-        {
-            case CharacterClass.SpearMan:
-                manaCost = SPEAR_MAN_MANACOST;
-                break;
-            case CharacterClass.SwordMan:
-                manaCost = SWORD_MAN_MANACOST;
-                break;
-            case CharacterClass.CrossbowMan:
-                manaCost = CROSSBOW_MAN_MANACOST;
-                break;
-            case CharacterClass.HammerMan:
-                manaCost = HAMMER_MAN_MANACOST;
-                break;
-            case CharacterClass.Mage:
-                manaCost = MAGE_MANACOST;
-                break;
-            default:
-                break;   
-        }
-
-        skillmanaCostTxt.text = manaCost.ToString();
+        //switch (Class)
+        //{
+        //    case CharacterClass.SpearMan:
+        //        manaCost = SPEAR_MAN_MANACOST;
+        //        break;
+        //    case CharacterClass.SwordMan:
+        //        manaCost = SWORD_MAN_MANACOST;
+        //        break;
+        //    case CharacterClass.CrossbowMan:
+        //        manaCost = CROSSBOW_MAN_MANACOST;
+        //        break;
+        //    case CharacterClass.HammerMan:
+        //        manaCost = HAMMER_MAN_MANACOST;
+        //        break;
+        //    case CharacterClass.Mage:
+        //        manaCost = MAGE_MANACOST;
+        //        break;
+        //    default:
+        //        break;   
+        //}
     }
-
-    //private void Update()
-    //{
-    //    if (int.Parse(MpText.text) < manaCost)
-    //    {
-    //        disableImage2.enabled = true;
-    //    }
-    //    else
-    //    {
-    //        disableImage2.enabled = false;
-    //    }
-    //}
 
     public void trySkill()
     {
