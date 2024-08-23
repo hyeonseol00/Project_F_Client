@@ -85,8 +85,8 @@ public class Character : MonoBehaviour
 			ThirdPersonController thirdPersonController = gameObject.GetComponent<ThirdPersonController>();
 			Destroy(thirdPersonController);
 
-			GameObject weapon = transform.Find("Player1").Find("Weapon").gameObject;
-			Destroy(weapon);
+			//GameObject weapon = transform.Find("Player1").Find("Weapon").gameObject;
+			//Destroy(weapon);
 		}
 
 		isInit = true;
