@@ -23,9 +23,6 @@ public class SkillDescription : MonoBehaviour
     private Image disableImage2;
     private Image skillIconImage;
 
-    private TMP_Text skillmanaCostTxt;
-    private TMP_Text MpText;
-
     public CharacterClass Class;
 
     // skill coolTime
@@ -42,46 +39,16 @@ public class SkillDescription : MonoBehaviour
     private const float HAMMER_MAN_ACTIVETIME = 10.0f;
     private const float MAGE_ACTIVETIME = 10.0f;
 
-    // mana
-    //private const int SPEAR_MAN_MANACOST = 100;
-    //private const int SWORD_MAN_MANACOST = 200;
-    //private const int CROSSBOW_MAN_MANACOST = 300;
-    //private const int HAMMER_MAN_MANACOST = 400;
-    //private const int MAGE_MANACOST = 500;
-
     private const float fillHeight = 150;
     private const float fillWidth = 150;
 
     private const float MAX_RATE = 0.2f;    // 최대 공속
-
-    private int manaCost;
 
     private void Start()
     {
         disableImage = GameObject.Find("UIBattle/SkillIcon/DisableImage").GetComponent<Image>();
         disableImage2 = GameObject.Find("UIBattle/SkillIcon/DisableImage2").GetComponent<Image>();
         skillIconImage = GameObject.Find("UIBattle/SkillIcon/Image").GetComponent<Image>();
-
-        //switch (Class)
-        //{
-        //    case CharacterClass.SpearMan:
-        //        manaCost = SPEAR_MAN_MANACOST;
-        //        break;
-        //    case CharacterClass.SwordMan:
-        //        manaCost = SWORD_MAN_MANACOST;
-        //        break;
-        //    case CharacterClass.CrossbowMan:
-        //        manaCost = CROSSBOW_MAN_MANACOST;
-        //        break;
-        //    case CharacterClass.HammerMan:
-        //        manaCost = HAMMER_MAN_MANACOST;
-        //        break;
-        //    case CharacterClass.Mage:
-        //        manaCost = MAGE_MANACOST;
-        //        break;
-        //    default:
-        //        break;   
-        //}
     }
 
     public void trySkill()
@@ -167,9 +134,9 @@ public class SkillDescription : MonoBehaviour
         if (isMine)
         {
             var originalRate = attackScript.rate;
+            var originalSpeed = thirdPersonControllerScript.speed;
 
             // 스킬 활성화 코드
-            Debug.Log("창술사 스킬 활성화!");
             skillIconImage.color = new UnityEngine.Color(1.0f, 0.5f, 0.5f); // 스킬 사용 중 표시
 
             // 이속, 공속 상승
@@ -183,11 +150,10 @@ public class SkillDescription : MonoBehaviour
 
 
             // 스킬 비활성화 코드
-            Debug.Log("창술사 스킬 끝!");
             skillIconImage.color = new UnityEngine.Color(1.0f, 1.0f, 1.0f);// 스킬 사용 중 색깔 제자리로
-            
+
             // 이속, 공속 정상화
-            thirdPersonControllerScript.speed /= 5f;
+            thirdPersonControllerScript.speed = originalSpeed;
             attackScript.rate = originalRate;
             // 공격 범위 정상화
             weapon.center = new Vector3(0.0f, 0.9f, 1.0f);
@@ -219,13 +185,11 @@ public class SkillDescription : MonoBehaviour
         if (isMine)
         {
             // 스킬 활성화 코드    
-            Debug.Log("전사 스킬 활성화!");
             skillIconImage.color = new UnityEngine.Color(1.0f, 0.5f, 0.5f); // 스킬 사용 중 표시
             SkillEffect.SetActive(true);
             yield return new WaitForSeconds(activatingTime);
 
             // 스킬 비활성화 코드
-            Debug.Log("전사 스킬 끝!");
             skillIconImage.color = new UnityEngine.Color(1.0f, 1.0f, 1.0f);// 스킬 사용 중 색깔 제자리로
             SkillEffect.SetActive(false);
 
@@ -249,7 +213,6 @@ public class SkillDescription : MonoBehaviour
             var originalRate = attackScript.rate;
 
             // 스킬 활성화 코드
-            Debug.Log("석궁 스킬 활성화!");
             skillIconImage.color = new UnityEngine.Color(1.0f, 0.5f, 0.5f); // 스킬 사용 중 표시
 
 
@@ -257,7 +220,6 @@ public class SkillDescription : MonoBehaviour
             yield return new WaitForSeconds(activatingTime);
 
             // 스킬 비활성화 코드
-            Debug.Log("석궁 스킬 끝!");
             skillIconImage.color = new UnityEngine.Color(1.0f, 1.0f, 1.0f); // 스킬 사용 중 색깔 제자리로
 
             attackScript.rate = originalRate;
@@ -271,28 +233,29 @@ public class SkillDescription : MonoBehaviour
 
     private IEnumerator ProcessHammerManSkill(float activatingTime, bool isMine)
     {
+        var originalRate = attackScript.rate;
+        var originalSpeed = thirdPersonControllerScript.speed;
+
         if (isMine)
         {
             // 스킬 활성화 코드
-            Debug.Log("해머 스킬 활성화!");
             skillIconImage.color = new UnityEngine.Color(1.0f, 0.5f, 0.5f); // 스킬 사용 중 표시
 
             // 공속 감소, 이속 감소, 캐릭터 크기 증가
             attackScript.rate *= 2.5f;
             thirdPersonControllerScript.speed /= 2f;
-            CharacterPrefab.localScale *= 2.0f;
+            CharacterPrefab.localScale = new Vector3(2.0f, 2.0f, 2.0f);
             SkillEffect.SetActive(true);
             yield return new WaitForSeconds(activatingTime);
 
             // 스킬 비활성화 코드
-            Debug.Log("해머 스킬 끝!");
             skillIconImage.color = new UnityEngine.Color(1.0f, 1.0f, 1.0f);// 스킬 사용 중 색깔 제자리로
 
 
             // 공속, 이속, 캐릭터 크기 정상화
-            attackScript.rate /= 2.5f;
-            thirdPersonControllerScript.speed *= 2f;
-            CharacterPrefab.localScale /= 2.0f;
+            attackScript.rate = originalRate;
+            thirdPersonControllerScript.speed = originalSpeed;
+            CharacterPrefab.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             SkillEffect.SetActive(false);
 
             // 쿨타임 시작
@@ -301,10 +264,10 @@ public class SkillDescription : MonoBehaviour
         }
         else
         {
-            CharacterPrefab.localScale *= 2.0f;
+            CharacterPrefab.localScale = new Vector3(2.0f, 2.0f, 2.0f);
             SkillEffect.SetActive(true);
             yield return new WaitForSeconds(activatingTime);
-            CharacterPrefab.localScale /= 2.0f;
+            CharacterPrefab.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             SkillEffect.SetActive(false);
             yield return null;
         }
@@ -316,7 +279,6 @@ public class SkillDescription : MonoBehaviour
         if (isMine)
         {
             // 스킬 활성화 코드
-            Debug.Log("마법사 스킬 활성화!");
             skillIconImage.color = new UnityEngine.Color(1.0f, 0.5f, 0.5f); // 스킬 사용 중 표시
 
 
@@ -324,7 +286,6 @@ public class SkillDescription : MonoBehaviour
             yield return new WaitForSeconds(activatingTime);
 
             // 스킬 비활성화 코드
-            Debug.Log("마법사 스킬 끝!");
             skillIconImage.color = new UnityEngine.Color(1.0f, 1.0f, 1.0f);// 스킬 사용 중 색깔 제자리로
 
             attackScript.bullet.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
@@ -345,7 +306,6 @@ public class SkillDescription : MonoBehaviour
     }
 
     // =====================클래스 스킬 끝============================
-
     private IEnumerator coolTime(float coolTime)
     {
         float remainingTime = coolTime;
