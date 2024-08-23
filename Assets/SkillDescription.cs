@@ -281,6 +281,7 @@ public class SkillDescription : MonoBehaviour
             attackScript.rate *= 2.5f;
             thirdPersonControllerScript.speed /= 2f;
             CharacterPrefab.localScale *= 2.0f;
+            SkillEffect.SetActive(true);
             yield return new WaitForSeconds(activatingTime);
 
             // 스킬 비활성화 코드
@@ -292,6 +293,7 @@ public class SkillDescription : MonoBehaviour
             attackScript.rate /= 2.5f;
             thirdPersonControllerScript.speed *= 2f;
             CharacterPrefab.localScale /= 2.0f;
+            SkillEffect.SetActive(false);
 
             // 쿨타임 시작
             activatedSkillCoroutine = null;
