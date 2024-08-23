@@ -302,8 +302,10 @@ public class SkillDescription : MonoBehaviour
         else
         {
             CharacterPrefab.localScale *= 2.0f;
+            SkillEffect.SetActive(true);
             yield return new WaitForSeconds(activatingTime);
             CharacterPrefab.localScale /= 2.0f;
+            SkillEffect.SetActive(false);
             yield return null;
         }
         
