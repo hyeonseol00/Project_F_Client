@@ -691,8 +691,8 @@ GameObject:
   - component: {fileID: 8533696024879542239}
   - component: {fileID: 6048393094278992652}
   - component: {fileID: 3360764785999475352}
-  - component: {fileID: 8244550730304821166}
   - component: {fileID: 1813364571181554146}
+  - component: {fileID: 8244550730304821166}
   m_Layer: 0
   m_Name: Character3
   m_TagString: Player
@@ -767,22 +767,6 @@ CapsuleCollider:
   m_Height: 1.7757921
   m_Direction: 1
   m_Center: {x: 0, y: 0.8995862, z: 0}
---- !u!114 &8244550730304821166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2443586769180292494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a12d23dd0591174f8ecb97812c70370, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiNameChat: {fileID: 9101403334521713976}
-  attackScript: {fileID: 7646712694174931451}
-  isDead: 0
-  canMove: 1
 --- !u!114 &1813364571181554146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -805,6 +789,22 @@ MonoBehaviour:
   zoomSpeed: 20
   minFov: 15
   maxFov: 90
+--- !u!114 &8244550730304821166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2443586769180292494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a12d23dd0591174f8ecb97812c70370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiNameChat: {fileID: 9101403334521713976}
+  attackScript: {fileID: 7646712694174931451}
+  isDead: 0
+  canMove: 1
 --- !u!1 &2625414351459408749
 GameObject:
   m_ObjectHideFlags: 0
@@ -2227,6 +2227,8 @@ MonoBehaviour:
   weapon: {fileID: 4893686145741043920}
   thirdPersonControllerScript: {fileID: 0}
   attackScript: {fileID: 7646712694174931451}
+  weaponPrefab: {fileID: 0}
+  CharacterPrefab: {fileID: 0}
   Class: 2
 --- !u!1 &6307306634015775306
 GameObject:

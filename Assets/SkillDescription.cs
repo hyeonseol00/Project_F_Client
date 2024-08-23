@@ -38,7 +38,7 @@ public class SkillDescription : MonoBehaviour
     private const float fillHeight = 150;
     private const float fillWidth = 150;
 
-    private const float MAX_RATE = 0.2f;
+    private const float MAX_RATE = 0.2f;    // 최대 공속
     private void Start()
     {
         disableImage = GameObject.Find("UIBattle/SkillIcon/DisableImage").GetComponent<Image>();

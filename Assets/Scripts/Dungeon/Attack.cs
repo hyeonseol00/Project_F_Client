@@ -47,6 +47,7 @@ public class Attack : MonoBehaviour
         {
             // 탄환 생성 및 발사
             GameObject instantBullet = Instantiate(bullet, bulletPos.position, bulletPos.rotation);
+            instantBullet.SetActive(true);
 
             Rigidbody bulletRigid = instantBullet.GetComponent<Rigidbody>();
             bulletRigid.velocity = unitDir * bulletSpeed;
