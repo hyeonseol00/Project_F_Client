@@ -13,7 +13,7 @@ public class Attack : MonoBehaviour
     [SerializeField] bool isMelee = true;
     [SerializeField] TrailRenderer trailEffect;
     [SerializeField] Transform bulletPos;
-    [SerializeField] GameObject bullet;
+    public GameObject bullet;
     [SerializeField] float bulletSpeed = 50.0f;
     [SerializeField] float beforeCastDelay = 0.41f; // 선딜레이
 

@@ -12,7 +12,7 @@ public class UIPotionsInformation : MonoBehaviour
     private const int POTIONS_IDX_OFFSET = 46;
     private const int POTIONS_N = 5;
 
-    private const float COOL_TIME = 5.0f;
+    private const float COOL_TIME = 30.0f;
 
     private List<TMP_Text> potionCntList = new List<TMP_Text>();
     private List<Image> disableImageList = new List<Image>();
