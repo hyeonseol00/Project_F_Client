@@ -438,7 +438,7 @@ class PacketHandler
 		if (pkt == null)
 			return;
 
-        //Debug.Log($"S_SetPlayerHpMpHatcheryHandler access! {pkt}");
+        Debug.Log($"S_SetPlayerHpMpHatcheryHandler access! {pkt}");
 
         HatcheryManager.Instance.SetPlayerCurHpMp(pkt);
     }
@@ -516,6 +516,19 @@ class PacketHandler
             return;
 
         HatcheryManager.Instance.monster.ConfirmReward(pkt);
+    }
+
+    public static void S_TrySkillHandler(PacketSession session, IMessage packet)
+    {
+        S_TrySkill pkt = packet as S_TrySkill;
+        if (pkt == null)
+            return;
+
+        Debug.Log($"S_TrySkillHandle access! {pkt}");
+
+        Character player = HatcheryManager.Instance.GetPlayerAvatarById(pkt.PlayerId);
+        player.Skill();
+
     }
 }
 

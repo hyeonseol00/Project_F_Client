@@ -9,6 +9,7 @@ public class Character : MonoBehaviour
 {
 	[SerializeField] private UINameChat uiNameChat;
 	[SerializeField] private Attack attackScript;
+	[SerializeField] private SkillDescription skillDescriptionScript;
 
 	public MyPlayer mPlayer { get; private set; }
 
@@ -31,6 +32,7 @@ public class Character : MonoBehaviour
 	{
 		character = transform.Find("Player1").gameObject;
 		animator = character.GetComponent<Animator>();
+		if (PlayerId != HatcheryManager.Instance.myPlayer.PlayerId) attackScript.enabled = false;	// 한 번 막아보자
 	}
 
 	private void FixedUpdate()
@@ -100,6 +102,11 @@ public class Character : MonoBehaviour
 	public void Attack(bool isMine, Vector3 unitDir)
 	{
 		attackScript.StartAttack(isMine, unitDir);
+	}
+
+	public void Skill()
+	{
+		skillDescriptionScript.useSkill();
 	}
 
 	public void HitMotion()

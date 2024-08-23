@@ -43,7 +43,7 @@ public class ThirdPersonController : MonoBehaviour
             sensitivity += 0.5f;
 
         if (Input.GetKeyDown(KeyCode.Mouse1)){
-            _skillDescription.useSkill();
+            _skillDescription.trySkill();
         }
             
     }
