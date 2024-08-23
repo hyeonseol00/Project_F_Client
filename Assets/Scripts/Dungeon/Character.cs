@@ -104,9 +104,9 @@ public class Character : MonoBehaviour
 		attackScript.StartAttack(isMine, unitDir);
 	}
 
-	public void Skill()
+	public void Skill(bool isMine)
 	{
-		skillDescriptionScript.useSkill();
+		skillDescriptionScript.useSkill(isMine);
 	}
 
 	public void HitMotion()

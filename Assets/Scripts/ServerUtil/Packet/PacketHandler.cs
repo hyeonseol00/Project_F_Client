@@ -438,7 +438,7 @@ class PacketHandler
 		if (pkt == null)
 			return;
 
-        Debug.Log($"S_SetPlayerHpMpHatcheryHandler access! {pkt}");
+        //Debug.Log($"S_SetPlayerHpMpHatcheryHandler access! {pkt}");
 
         HatcheryManager.Instance.SetPlayerCurHpMp(pkt);
     }
@@ -527,7 +527,9 @@ class PacketHandler
         Debug.Log($"S_TrySkillHandle access! {pkt}");
 
         Character player = HatcheryManager.Instance.GetPlayerAvatarById(pkt.PlayerId);
-        player.Skill();
+        bool isMine = player.PlayerId == HatcheryManager.Instance.myPlayer.PlayerId;
+
+        player.Skill(isMine);
 
     }
 }

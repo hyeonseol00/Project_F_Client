@@ -95,7 +95,7 @@ public class Attack : MonoBehaviour
         var isDead = HatcheryManager.Instance.myPlayer.isDead;
         if (Input.GetButtonDown("Fire1") && !isDead && isAttackReady)
         {
-            Debug.Log($"attackDelay {attackDelay}");
+            //Debug.Log($"attackDelay {attackDelay}");
             SendTryAttackPkt();
             attackDelay = 0.0f;
         }
