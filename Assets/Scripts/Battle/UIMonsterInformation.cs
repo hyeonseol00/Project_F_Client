@@ -15,6 +15,9 @@ public class UIMonsterInformation : MonoBehaviour
     [SerializeField] private TMP_Text txtHp;
     [SerializeField] private Image imgNameBg;
     [SerializeField] private Image imgHpFill;
+    [SerializeField] private TMP_Text txtNameOnMonster;
+    [SerializeField] private GameObject UpgradedMonsterFX1;
+    [SerializeField] private GameObject UpgradedMonsterFX2;
 
     public float fillWidth = 180;
     public float fillHeight = 30;
@@ -43,6 +46,16 @@ public class UIMonsterInformation : MonoBehaviour
     public void SetName(string nickname)
     {
         txtName.text = nickname;
+        if(nickname == "팬텀나이트" || nickname == "리저드킹" || nickname == "강화된 팬텀나이트")
+        {
+            txtNameOnMonster.text = nickname;
+            if (nickname != "팬텀나이트")
+            {
+                UpgradedMonsterFX1.SetActive(true);
+                UpgradedMonsterFX2.SetActive(true);
+            }
+        }
+        
         imgNameBg.rectTransform.sizeDelta = new Vector2(txtName.preferredWidth + 50, 50);
     }
 

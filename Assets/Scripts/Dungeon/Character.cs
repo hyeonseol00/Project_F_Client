@@ -9,6 +9,7 @@ public class Character : MonoBehaviour
 {
 	[SerializeField] private UINameChat uiNameChat;
 	[SerializeField] private Attack attackScript;
+	[SerializeField] private SkillDescription skillDescriptionScript;
 
 	public MyPlayer mPlayer { get; private set; }
 
@@ -31,6 +32,7 @@ public class Character : MonoBehaviour
 	{
 		character = transform.Find("Player1").gameObject;
 		animator = character.GetComponent<Animator>();
+		if (PlayerId != HatcheryManager.Instance.myPlayer.PlayerId) attackScript.enabled = false;	// 한 번 막아보자
 	}
 
 	private void FixedUpdate()
@@ -83,8 +85,8 @@ public class Character : MonoBehaviour
 			ThirdPersonController thirdPersonController = gameObject.GetComponent<ThirdPersonController>();
 			Destroy(thirdPersonController);
 
-			GameObject weapon = transform.Find("Player1").Find("Weapon").gameObject;
-			Destroy(weapon);
+			//GameObject weapon = transform.Find("Player1").Find("Weapon").gameObject;
+			//Destroy(weapon);
 		}
 
 		isInit = true;
@@ -99,11 +101,12 @@ public class Character : MonoBehaviour
 
 	public void Attack(bool isMine, Vector3 unitDir)
 	{
-		if(attackScript.currentAttackCoroutine != null)
-        {
-			StopCoroutine(attackScript.currentAttackCoroutine);
-		}
-		attackScript.currentAttackCoroutine = StartCoroutine(attackScript.TryAttack(isMine, unitDir));
+		attackScript.StartAttack(isMine, unitDir);
+	}
+
+	public void Skill(bool isMine)
+	{
+		skillDescriptionScript.useSkill(isMine);
 	}
 
 	public void HitMotion()

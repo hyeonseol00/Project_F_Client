@@ -414,7 +414,8 @@ class PacketHandler
         Vector3 move = new Vector3(tr.PosX, tr.PosY, tr.PosZ);
         Vector3 eRot = new Vector3(0, tr.Rot, 0);
 
-        monster.SetCoordinates(move, eRot);
+        if(monster)
+            monster.SetCoordinates(move, eRot);
 
         // 2. 단위 벡터 보스한테 박아두고 지속적으로 움직이게 Update()
         Vector3 unitVec = new Vector3(pkt.BossUnitVector.UnitX, 0, pkt.BossUnitVector.UnitZ);
@@ -515,6 +516,21 @@ class PacketHandler
             return;
 
         HatcheryManager.Instance.monster.ConfirmReward(pkt);
+    }
+
+    public static void S_TrySkillHandler(PacketSession session, IMessage packet)
+    {
+        S_TrySkill pkt = packet as S_TrySkill;
+        if (pkt == null)
+            return;
+
+        //Debug.Log($"S_TrySkillHandle access! {pkt}");
+
+        Character player = HatcheryManager.Instance.GetPlayerAvatarById(pkt.PlayerId);
+        bool isMine = player.PlayerId == HatcheryManager.Instance.myPlayer.PlayerId;
+
+        player.Skill(isMine);
+
     }
 }
 

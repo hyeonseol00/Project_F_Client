@@ -43,7 +43,8 @@ public class UINameChat : MonoBehaviour
     
     void Update()
     {
-        transform.rotation = camTr.rotation;
+        if(camTr != null)
+            transform.rotation = camTr.rotation;
         
         if (_msgList.Count != 0)
         {

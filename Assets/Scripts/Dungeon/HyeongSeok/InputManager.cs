@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
     [SerializeField] private UIPotionsInformation uIPotionsInformation;
+    [SerializeField] private GameObject SkillExplanation;
 
     enum PotionType
     {
@@ -22,5 +24,11 @@ public class InputManager : MonoBehaviour
                 uIPotionsInformation.TryUsePotion(potionType);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            SkillExplanation.SetActive(!SkillExplanation.activeSelf);
+        }
+
     }
 }
