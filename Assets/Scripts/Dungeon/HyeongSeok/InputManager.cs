@@ -25,7 +25,7 @@ public class InputManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             SkillExplanation.SetActive(!SkillExplanation.activeSelf);
         }

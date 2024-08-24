@@ -35,7 +35,7 @@ public class SkillDescription : MonoBehaviour
     // skill activeTime
     private const float SPEAR_MAN_ACTIVETIME = 5.0f;
     private const float SWORD_MAN_ACTIVETIME = 10.0f;
-    private const float CROSSBOW_MAN_ACTIVETIME = 7.5f;
+    private const float CROSSBOW_MAN_ACTIVETIME = 3.0f;
     private const float HAMMER_MAN_ACTIVETIME = 10.0f;
     private const float MAGE_ACTIVETIME = 10.0f;
 
