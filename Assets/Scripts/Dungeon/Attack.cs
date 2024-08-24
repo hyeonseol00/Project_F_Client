@@ -39,9 +39,12 @@ public class Attack : MonoBehaviour
 
         if (isMelee)
         {
-            meleeArea.enabled = true;
-            yield return new WaitForSeconds(ATTACK_ENABLE_TIME * rate);
-            meleeArea.enabled = false;
+            if (isMine)
+            {
+                meleeArea.enabled = true;
+                yield return new WaitForSeconds(ATTACK_ENABLE_TIME * rate);
+                meleeArea.enabled = false;
+            }
         }
         else
         {
