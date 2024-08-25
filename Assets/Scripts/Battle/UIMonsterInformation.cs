@@ -46,7 +46,7 @@ public class UIMonsterInformation : MonoBehaviour
     public void SetName(string nickname)
     {
         txtName.text = nickname;
-        if(nickname == "팬텀나이트" || nickname == "리저드킹" || nickname == "강화된 팬텀나이트")
+        if(nickname == "팬텀나이트" || nickname == "리저드킹" || nickname == "나이트로드")
         {
             txtNameOnMonster.text = nickname;
             if (nickname != "팬텀나이트")
