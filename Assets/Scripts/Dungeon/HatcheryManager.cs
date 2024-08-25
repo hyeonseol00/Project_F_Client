@@ -246,7 +246,7 @@ public class HatcheryManager : MonoBehaviour
 	public void EnterSecondPhase(float bindTime, float updatedBossSpeed)
 	{
 		phase = 2;
-		hatcheryUIManager.StartCoroutine("DisplayNotification", $"2페이즈 돌입: 보스의 움직임이 빨라지고, 플레이어들이 {bindTime.ToString("F1")}초동안 움직임이 봉인됩니다!");
+		hatcheryUIManager.StartCoroutine("DisplayNotification", $"2페이즈 돌입: 보스의 이동속도가 빨라지고 공격이 고정 데미지로 변경되며, 플레이어들을 {bindTime.ToString("F1")}초동안 속박합니다!");
 		monster.speed = updatedBossSpeed;
 		myPlayer.StartCoroutine("BindMovement", bindTime);
 	}

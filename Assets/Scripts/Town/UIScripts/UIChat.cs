@@ -27,6 +27,8 @@ public class UIChat : MonoBehaviour
     [SerializeField] private Button btnSystemTab;
     [SerializeField] private Button btnDMTab;
 
+    [SerializeField] private TMP_Text notificationMsg;
+
     private float _baseChatItemWidth;
 
     private Player player;
@@ -34,6 +36,8 @@ public class UIChat : MonoBehaviour
     private bool isOpen = true;
 
     private List<GameObject> chatList = new List<GameObject>();
+
+    private const float DISPLAY_MSG_TIME = 20.0f;
 
     enum TabType { All, Team, System, DM };
 
@@ -110,7 +114,6 @@ public class UIChat : MonoBehaviour
         var msgItem = Instantiate(txtChatItemBase, chatItemRoot);
 
         msgItem.text = $"{msg}";
-
         AdjustTextContainerHeight(msgItem); // 적절한 높이로 msgItem를 조절
 
         if (msg.StartsWith("[All]"))
@@ -129,6 +132,11 @@ public class UIChat : MonoBehaviour
         {
             msgItem.color = new Color(1f, 0.64f, 0f);
             GameManager.Instance.isSendPacketReady = true;
+        }
+        else if (msg.StartsWith("[Event]"))
+        {
+            StartCoroutine("DisplayNotification", msg);
+            return;
         }
         else
         {
@@ -224,5 +232,16 @@ public class UIChat : MonoBehaviour
 
         if (textComp.textInfo.lineCount > 1)
             textComp.rectTransform.sizeDelta = new Vector2(_baseChatItemWidth, textComp.preferredHeight + 12);
+    }
+
+    IEnumerator DisplayNotification(string msg)
+    {
+        notificationMsg.text = msg;
+        notificationMsg.gameObject.transform.parent.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(DISPLAY_MSG_TIME);
+
+        notificationMsg.text = "";
+        notificationMsg.gameObject.transform.parent.gameObject.SetActive(false);
     }
 }
