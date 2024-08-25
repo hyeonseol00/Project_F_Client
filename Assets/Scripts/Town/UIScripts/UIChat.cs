@@ -111,6 +111,12 @@ public class UIChat : MonoBehaviour
 
         StopAllCoroutines();
 
+        if (msg.StartsWith("[Event]"))
+        {
+            StartCoroutine("DisplayNotification", msg);
+            return;
+        }
+
         var msgItem = Instantiate(txtChatItemBase, chatItemRoot);
 
         msgItem.text = $"{msg}";
@@ -132,11 +138,6 @@ public class UIChat : MonoBehaviour
         {
             msgItem.color = new Color(1f, 0.64f, 0f);
             GameManager.Instance.isSendPacketReady = true;
-        }
-        else if (msg.StartsWith("[Event]"))
-        {
-            StartCoroutine("DisplayNotification", msg);
-            return;
         }
         else
         {
